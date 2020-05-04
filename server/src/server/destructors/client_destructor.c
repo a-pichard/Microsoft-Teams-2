@@ -14,6 +14,7 @@ void client_destructor(void *data)
 
     if (client->req)
         free(client->req);
-    // todo : destroy complete write_q
+    ll_destroy(client->write_q, &write_q_destructor);
     close(client->fd);
+    free(client);
 }

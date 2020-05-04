@@ -10,6 +10,7 @@
 
 void ll_destroy(ll_t **list, void(*destructor)(void*))
 {
+    ll_t **start = list;
     ll_t *current = *list;
 
     while (*list != NULL) {
@@ -18,4 +19,5 @@ void ll_destroy(ll_t **list, void(*destructor)(void*))
         destructor(current);
         free(current);
     }
+    *start = NULL;
 }

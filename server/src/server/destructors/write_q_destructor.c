@@ -7,7 +7,7 @@
 
 #include <stdlib.h>
 
-void client_destructor(void *data)
+void write_q_destructor(void *data)
 {
     if (data)
         free(data);

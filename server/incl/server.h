@@ -60,7 +60,7 @@ void send_message(server_t *, int);
 
 // destructors
 void client_destructor(void *data);
-void client_destructor(void *data);
+void write_q_destructor(void *data);
 
 // error
 void raise_err(bool valid, const char *msg);

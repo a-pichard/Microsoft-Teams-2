@@ -6,7 +6,6 @@
 */
 
 #include "server.h"
-#include "errors.h"
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -15,10 +14,10 @@ static linked_list_t *get_new_elem(const char *msg, bool disconnection)
 {
     linked_list_t *tmp = malloc(sizeof(write_queue_t));
 
-    raise_error(tmp != NULL, "malloc() ");
+    raise_err(tmp != NULL, "malloc() ");
     tmp->disconnection = disconnection;
     tmp->msg = strdup(msg);
-    raise_error(tmp != NULL, "strdup() ");
+    raise_err(tmp != NULL, "strdup() ");
     tmp->next = NULL;
     return (tmp);
 }

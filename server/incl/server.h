@@ -40,21 +40,19 @@ typedef struct {
 } server_t;
 
 // Init
+void input_error_handling(int, char **);
 void init_server(server_t *, int port);
 server_t *server_address(server_t *server);
 int init_main_server_socket(int port);
 void init_users(server_t *);
 void destroy_server(void);
 
-// Server
-void handle_client(server_t *server, client_t *client);
-void disconnect_client(server_t *, int);
-void respond_to(int fd, const char *msg);
-void parse_cmd(char **, const char *, char **, char **);
-void control_cmds(client_t *, char *, char *);
-
 //main function
 void run_server(server_t *);
+
+// Server
+void handle_client(server_t *server, client_t *client);
+void parse_cmd(char **, const char *, char **, char **);
 
 // write queue
 void write_q(client_t *client, const char *msg);
@@ -62,5 +60,9 @@ void send_message(server_t *, int);
 
 // destructors
 void client_destructor(void *data);
+void client_destructor(void *data);
+
+// error
+void raise_err(bool valid, const char *msg);
 
 #endif /* !SERVER_H_ */

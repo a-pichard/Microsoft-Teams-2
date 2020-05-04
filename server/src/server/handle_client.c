@@ -6,7 +6,6 @@
 */
 
 #include "server.h"
-#include "errors.h"
 #include "cmd.h"
 #include <unistd.h>
 #include <stdlib.h>
@@ -49,7 +48,7 @@ void handle_client(server_t *server, client_t *client)
     int ret = 0;
 
     ret = read(client->fd, buffer, BUFFER_READ_SIZE);
-    raise_error(ret >= 0, "read() ");
+    raise_err(ret >= 0, "read() ");
     if (ret == 0)
         return ll_erase(server->clients, client, &client_destructor);
     client_request(server, client, buffer);

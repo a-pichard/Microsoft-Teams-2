@@ -9,5 +9,4 @@
 
 void help(server_t *server, client_t *client, const char *data)
 {
-    
 }

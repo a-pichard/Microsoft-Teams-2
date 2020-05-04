@@ -5,10 +5,7 @@
 ** client_utils
 */
 
-#include "errors.h"
 #include "server.h"
-#include <unistd.h>
-#include <string.h>
 #include <stdlib.h>
 
 void client_destructor(void *data)

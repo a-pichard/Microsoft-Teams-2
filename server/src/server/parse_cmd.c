@@ -6,7 +6,6 @@
 */
 
 #include "server.h"
-#include "errors.h"
 #include <string.h>
 #include <stdlib.h>
 
@@ -14,7 +13,7 @@ static char *check_strdup(const char *s)
 {
     char *res = strdup(s);
 
-    raise_error(res != NULL, "strdup() ");
+    raise_err(res != NULL, "strdup() ");
     return (res);
 }
 
@@ -27,7 +26,7 @@ static char *my_strcat(const char *s1, const char *s2)
     int j = 0;
 
     res = malloc(sizeof(char) * (len1 + len2 + 1));
-    raise_error(res != NULL, "malloc() ");
+    raise_err(res != NULL, "malloc() ");
     for (; i < len1; i++)
         res[i] = s1[i];
     for (; j < len2; j++)

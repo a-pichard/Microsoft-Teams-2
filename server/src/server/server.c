@@ -6,7 +6,6 @@
 */
 
 #include "server.h"
-#include "errors.h"
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
@@ -27,7 +26,7 @@ static void accept_new_client_connection(server_t *server)
     char *ok_msg = "TODO: user connected\r\n";
 
     client_sock = accept(server->server_fd, client_info, &size);
-    raise_error(client_sock != -1, "accept() ");
+    raise_err(client_sock != -1, "accept() ");
     init_new_client(client, client_sock);
     ll_push_back(&server->clients, (void *)client);
     write_q(client, ok_msg);
@@ -67,18 +66,17 @@ static void parse_io(server_t *server, fd_set *rset, fd_set *wset)
 void run_server(server_t *server)
 {
     int max_fd;
-    int nb_fd_ready;
+    int ret;
     fd_set rset;
     fd_set wset;
 
     while (1) {
         max_fd = reset_selected_fd(server, &rset, &wset);
-        nb_fd_ready = select(max_fd, &rset, &wset, NULL, NULL);
-        raise_error(nb_fd_ready != -1, "select() ");
+        ret = select(max_fd, &rset, &wset, NULL, NULL);
+        raise_err(ret != -1, "select() ");
         if (FD_ISSET(server->server_fd, &rset)) {
             accept_new_client_connection(server);
             FD_CLR(server->server_fd, &rset);
-            nb_fd_ready--;
         }
         parse_io(server, &rset, &wset);
     }

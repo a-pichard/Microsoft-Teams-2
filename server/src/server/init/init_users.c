@@ -6,9 +6,7 @@
 */
 
 #include "server.h"
-#include "errors.h"
 #include <stdlib.h>
-#include <string.h>
 
 void init_users(server_t *server)
 {

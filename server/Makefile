@@ -1,83 +1,63 @@
 ##
 ## EPITECH PROJECT, 2020
-## NWP_myftp_2019
+## CCP_plazza_2019
 ## File description:
 ## Makefile
 ##
 
-SRC	=	src/main.c	\
-		src/debug.c	\
-		src/error/helper.c	\
-		src/error/input_error_handling.c	\
-		src/error/raise_error.c	\
-		src/init/init_server.c	\
-		src/init/init_socket.c	\
-		src/init/destroy.c	\
-		src/server/server.c	\
-		src/server/parse_cmd.c	\
-		src/server/handle_client.c	\
-		src/server/disconnect_client.c	\
-		src/server/control_cmd.c	\
-		src/server/send.c	\
-		src/cmd/utils/auth.c	\
-		src/cmd/utils/get_path.c	\
-		src/cmd/utils/fork.c	\
-		src/cmd/utils/open_file.c	\
-		src/cmd/utils/list_utils.c	\
-		src/cmd/user.c	\
-		src/cmd/pass.c	\
-		src/cmd/quit.c	\
-		src/cmd/pwd.c	\
-		src/cmd/noop.c	\
-		src/cmd/pasv.c	\
-		src/cmd/port.c	\
-		src/cmd/retr.c	\
-		src/cmd/cwd.c	\
-		src/cmd/cdup.c	\
-		src/cmd/list.c	\
-		src/cmd/stor.c	\
-		src/cmd/dele.c	\
-		src/cmd/help.c	\
-		src/cmd/syst.c	\
-		src/cmd/type.c
+GREEN	=	\e[1;32m
+WHITE	=	\e[0m
+ORANGE	=	\e[1;33m
+RED	=	\e[1;31m
+BLUE	=	\e[1;34m
 
-SRC_NBONUS	=	src/init/init_users.c
-
-SRC_BONUS	=	src/init/init_users_bonus.c
-
-OBJ	=	$(SRC:.c=.o)
-
-OBJ_NBONUS	=	$(SRC_NBONUS:.c=.o)
-
-OBJ_BONUS	=	$(SRC_BONUS:.c=.o)
-
-CFLAGS	=	-Iincl -Wall -Wextra
-
-NAME	=	myftp
-
+CC	=	gcc
+ROOT	=	.
+NAME	=	myteams_server
 TEST_NAME	=	unit_tests
-
+RM	=	rm -f
+INCL_DIR	=	$(ROOT)/incl
+OBJ_DIR	=	$(ROOT)/obj
+SRC_DIR	=	$(ROOT)/src
+TESTS_DIR = $(ROOT)/tests
+CFLAGS	=	-Wall -Wextra -I$(INCL_DIR)
+LD_FLAGS = -lpthread -lrt
+MAIN	=	$(ROOT)/src/main.c
+SRC_TESTS	=	$(shell find $(SRC_DIR) $(TESTS_DIR) -type f -name '*.c' -not -path $(MAIN) 2> /dev/null)
+SRC	=	$(shell find $(SRC_DIR)/ -type f -name '*.cpp')
+COVERAGE_FILE	=	*.gcda *.gcno
 all:	$(NAME)
+debug: CFLAGS += -DDEBUG -g
+debug: $(NAME)
 
-$(NAME):	$(OBJ) $(OBJ_NBONUS)
-	gcc -o $(NAME) $(OBJ) $(OBJ_NBONUS) $(CFLAGS)
+OBJ	=	$(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
+
+$(OBJ_DIR)/%.o:	$(SRC_DIR)/%.cpp
+	@mkdir -p $(dir $@)
+	@printf "%-70b->%70b\n$(WHITE)" "$(RED)[$(BLUE)$<$(RED)]" "$(RED)[$(GREEN)$@$(RED)]"
+	@$(CC) $(CFLAGS) -c $< -o $@
+
+$(NAME):	$(OBJ)
+	@printf "$(RED)linking $(NAME)...$(WHITE)\n"
+	@$(CC) -o $(NAME) $^ $(LD_FLAGS)
+	@printf "$(RED)finish $(NAME)!$(WHITE)\n"
+
+tests_run	:
+	@$(RM) $(COVERAGE_FILE)
+	@printf "$(RED)testing...$(WHITE)"
+	$(CC) -o $(TEST_NAME) $(SRC_TESTS) -g -lcriterion $(LD_FLAGS) $(CFLAGS) -ftest-coverage -fprofile-arcs
+	./${TEST_NAME}
 
 clean:
-	rm -f $(OBJ) *.gc* tests/client_files/* tests/server_files/*
+	@$(RM) $(COVERAGE_FILE)
+	@$(RM) -R $(OBJ_DIR)
+	@printf "$(RED)clean$(WHITE)\n"
 
-fclean:	clean
-	rm -f $(NAME) $(TEST_NAME)
+fclean: clean
+	@$(RM) $(TEST_NAME)
+	@$(RM) $(NAME)
+	@printf "$(RED)fclean$(WHITE)\n"
 
-re:	fclean all
+re: fclean all
 
-tests_run: clean
-	cp tests/transfer_files_test/client* tests/client_files
-	cp tests/transfer_files_test/server* tests/server_files
-	cp tests/transfer_files_test/to_rm* tests/server_files
-	gcc -o $(TEST_NAME) $(SRC) $(SRC_NBONUS) --coverage $(CFLAGS)
-	tests/run_tests.sh
-
-bonus:	$(OBJ) $(OBJ_BONUS)
-	gcc -o $(NAME) $(OBJ) $(OBJ_BONUS) $(CFLAGS)
-
-.PHONY:	all clean fclean re tests_run bonus
+.PHONE: all clean fclean re

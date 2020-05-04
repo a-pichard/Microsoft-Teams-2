@@ -74,3 +74,8 @@ void disconnect_client(server_t *server, int id)
     free(server->clients);
     server->clients = clients;
 }
+
+void destroy_client(void *client)
+{
+
+}

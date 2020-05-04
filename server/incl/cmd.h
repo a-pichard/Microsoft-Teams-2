@@ -10,40 +10,18 @@
 
 #include "server.h"
 
-#define F_NAME {"PWD",  \
-    "NOOP", \
-    "PASV", \
-    "PORT", \
-    "RETR", \
-    "CWD",  \
-    "CDUP", \
-    "LIST", \
-    "STOR", \
-    "DELE", \
-    "SYST", \
-    "TYPE", \
+#define F_NAME {"help", \
     NULL    \
 };
 
-#define F_FUNC {&pwd,   \
-    &noop,  \
-    &pasv,  \
-    &port,  \
-    &retr,  \
-    &cwd,   \
-    &cdup,  \
-    &list,  \
-    &stor,  \
-    &dele,  \
-    &syst,  \
-    &type   \
+#define F_FUNC {&help,  \
+    NULL   \
 }
 
 #define TIMEOUT_IN_SEC 15
 
 // index of functions pointer
-typedef void (*log_f_t)(char *, client_t *, user_t *, int);
-typedef void (*cmd_t)(client_t *, char *);
+typedef void (*cmd_t)(server_t *server, client_t *client, const char *data);
 
 // utils
 void auth(client_t *, user_t *, int);
@@ -56,21 +34,6 @@ int open_file(client_t *, char *, int);
 char *get_cmd_line(const char *);
 
 // cmds
-void user(char *, client_t *, user_t *, int);
-void pass(char *, client_t *, user_t *, int);
-void quit(char *, client_t *, user_t *, int);
-void help(char *, client_t *, user_t *, int);
-void pwd(client_t *, char *);
-void noop(client_t *, char *);
-void pasv(client_t *, char *);
-void port(client_t *, char *);
-void retr(client_t *, char *);
-void cwd(client_t *, char *);
-void cdup(client_t *, char *);
-void list(client_t *, char *);
-void stor(client_t *, char *);
-void dele(client_t *, char *);
-void syst(client_t *, char *);
-void type(client_t *, char *);
+void help(server_t *server, client_t *client, const char *data);
 
 #endif /* !CMD_H_ */

@@ -14,36 +14,23 @@
 static void init_new_client(client_t *client, int client_sock)
 {
     client->fd = client_sock;
-    client->data_fd = -1;
     client->req = NULL;
-    client->username = NULL;
-    client->password = NULL;
-    client->is_logged = false;
-    client->home = NULL;
-    client->wd = strdup("/");
-    raise_error(client->wd != NULL, "strdup() ");
-    client->mode = NOMODE;
     client->write_q = NULL;
 }
 
 static void accept_new_client_connection(server_t *server)
 {
-    socklen_t size;
+    struct sockaddr *client_info = NULL;
+    socklen_t size = sizeof(client_info);
     int client_sock;
-    int idx = server->nb_client;
-    struct sockaddr *client_info;
-    char *ok_msg = "220 Service ready for new user.\r\n";
+    client_t *client = malloc(sizeof(client_t));
+    char *ok_msg = "TODO: user connected\r\n";
 
-    server->clients = realloc(server->clients, sizeof(client_t) * (idx + 1));
-    raise_error(server->clients != NULL, "realloc()) ");
-    server->nb_client += 1;
-    size = sizeof(server->clients[idx].client_info);
-    client_info = (struct sockaddr *)(&server->clients[idx].client_info);
     client_sock = accept(server->server_fd, client_info, &size);
     raise_error(client_sock != -1, "accept() ");
-    init_new_client(&server->clients[idx], client_sock);
-    write_q(&server->clients[idx], ok_msg, false);
-    new_connection_debug(server->debug, &server->clients[idx]);
+    init_new_client(client, client_sock);
+    ll_push_back(&server->clients, (void *)client);
+    write_q(client, ok_msg);
 }
 
 static int reset_selected_fd(server_t *server, fd_set *rset, fd_set *wset)
@@ -53,25 +40,27 @@ static int reset_selected_fd(server_t *server, fd_set *rset, fd_set *wset)
     FD_ZERO(wset);
     FD_ZERO(rset);
     FD_SET(server->server_fd, rset);
-    for (int i = 0; i < server->nb_client; i++) {
-        FD_SET(server->clients[i].fd, rset);
-        if (server->clients[i].write_q != NULL)
-            FD_SET(server->clients[i].fd, wset);
-        if (server->clients[i].fd > max_fd)
-            max_fd = server->clients[i].fd;
+    for (ll_t *c = server->clients; c != NULL; c = c->next) {
+        FD_SET(((client_t *)(c->data))->fd, rset);
+        if (((client_t *)(c->data))->write_q != NULL)
+            FD_SET(((client_t *)(c->data))->fd, wset);
+        if (((client_t *)(c->data))->fd > max_fd)
+            max_fd = ((client_t *)(c->data))->fd;
     }
     return (max_fd + 1);
 }
 
 static void parse_io(server_t *server, fd_set *rset, fd_set *wset)
 {
-    for (int i = 0; i < server->nb_client; i++) {
-        if (FD_ISSET(server->clients[i].fd, rset))
-            handle_client(server, i);
+    ll_t *client = NULL;
+
+    for (client = server->clients; client != NULL; client = client->next) {
+        if (FD_ISSET(((client_t *)(client->data))->fd, rset))
+            handle_client(server, client);
     }
-    for (int i = 0; i < server->nb_client; i++) {
-        if (FD_ISSET(server->clients[i].fd, wset))
-            send_message(server, i);
+    for (client = server->clients; client != NULL; client = client->next) {
+        if (FD_ISSET(((client_t *)(client->data))->fd, wset))
+            send_message(server, client);
     }
 }
 

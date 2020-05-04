@@ -11,9 +11,9 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-static write_queue_t *get_new_elem(const char *msg, bool disconnection)
+static linked_list_t *get_new_elem(const char *msg, bool disconnection)
 {
-    write_queue_t *tmp = malloc(sizeof(write_queue_t));
+    linked_list_t *tmp = malloc(sizeof(write_queue_t));
 
     raise_error(tmp != NULL, "malloc() ");
     tmp->disconnection = disconnection;
@@ -23,7 +23,7 @@ static write_queue_t *get_new_elem(const char *msg, bool disconnection)
     return (tmp);
 }
 
-void write_q(client_t *client, const char *msg, bool disconnection)
+void write_q(client_t *client, const char *msg)
 {
     write_queue_t *tmp;
 

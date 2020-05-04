@@ -16,61 +16,39 @@
 #include <stdbool.h>
 #include <arpa/inet.h>
 #include <sys/select.h>
+#include <linked_list.h>
 
-typedef struct write_queue_s {
-    char *msg;
-    bool disconnection;
-    struct write_queue_s *next;
-} write_queue_t;
-
-typedef enum {
-    PASSIVE,
-    ACTIVE,
-    NOMODE
-} transfer_mode_t;
+#define DEFAULT_NAME_LENGTH 32
+#define DEFAULT_DESCRIPTION_LENGTH 255
+#define DEFAULT_BODY_LENGTH 512
 
 typedef struct {
-    char *username;
-    char *password;
-    char *home;
+    char name[DEFAULT_NAME_LENGTH];
 } user_t;
 
 typedef struct {
     int fd;
-    int data_fd;
-    struct sockaddr_in data_info;
-    transfer_mode_t mode;
-    struct sockaddr_in client_info;
     char *req;
-    char *username;
-    char *password;
-    char *home;
-    char *wd;
-    bool is_logged;
-    write_queue_t *write_q;
+    ll_t *write_q;
 } client_t;
 
 typedef struct {
     int server_fd;
     int port;
-    user_t *users;
-    int nb_users;
-    client_t *clients;
-    int nb_client;
-    bool debug;
+    ll_t *users;
+    ll_t *clients;
 } server_t;
 
 // Init
-void init_server(server_t *, int, const char *, bool);
+void init_server(server_t *, int port);
 server_t *server_address(server_t *server);
+int init_main_server_socket(int port);
+void init_users(server_t *);
 void destroy_server(void);
-int init_main_server_socket(int);
-void init_users(server_t *, const char *);
 
 // Server
-void handle_client(server_t *, int);
+void handle_client(server_t *server, client_t *client);
 void disconnect_client(server_t *, int);
-void destroy_write_q(write_queue_t *);
 void respond_to(int fd, const char *msg);
 void parse_cmd(char **, const char *, char **, char **);
 void control_cmds(client_t *, char *, char *);
@@ -78,13 +56,11 @@ void control_cmds(client_t *, char *, char *);
 //main function
 void run_server(server_t *);
 
-//debug
-void new_connection_debug(bool, client_t *);
-void new_request_debug(bool, int, const char *, const char *);
-void new_disconnection_debug(bool, int);
-
 // write queue
-void write_q(client_t *, const char *, bool);
+void write_q(client_t *client, const char *msg);
 void send_message(server_t *, int);
+
+// destructors
+void client_destructor(void *data);
 
 #endif /* !SERVER_H_ */

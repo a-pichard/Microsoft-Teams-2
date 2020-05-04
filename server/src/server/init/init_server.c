@@ -21,13 +21,11 @@ server_t *server_address(server_t *server)
     return (save);
 }
 
-void init_server(server_t *server, int port, const char *a_home, bool debug)
+void init_server(server_t *server, int port)
 {
     server_address(server);
     server->server_fd = init_main_server_socket(port);
     server->port = port;
-    init_users(server, a_home);
+    init_users(server);
     server->clients = NULL;
-    server->nb_client = 0;
-    server->debug = debug;
 }

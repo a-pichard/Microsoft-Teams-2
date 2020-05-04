@@ -12,7 +12,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-static log_f_t index_of(const char **narr, log_f_t *funcs, char *cmd)
+static cmd_t index_of(const char **narr, cmd_t *funcs, char *cmd)
 {
     int i = 0;
 
@@ -26,34 +26,31 @@ static log_f_t index_of(const char **narr, log_f_t *funcs, char *cmd)
     return (NULL);
 }
 
-static void client_request(server_t *serv, int id, int ret, const char *req)
+static void client_request(server_t *serv, client_t *client, const char *req)
 {
     char *cmd = NULL;
     char *data = NULL;
-    log_f_t funcs[] = {&user, &pass, &quit, &help};
-    log_f_t func = NULL;
-    const char *log_n[] = {"USER", "PASS", "QUIT", "HELP", NULL};
+    cmd_t funcs[] = {};
+    cmd_t func = NULL;
+    const char *command_string[] = {"hel"};
 
-    if (ret == 0)
-        return disconnect_client(serv, id);
-    parse_cmd(&serv->clients[id].req, req, &cmd, &data);
+    parse_cmd(client->req, req, &cmd, &data);
     if (cmd == NULL && data == NULL)
         return;
-    new_request_debug(serv->debug, serv->clients[id].fd, cmd, data);
-    if ((func = index_of(log_n, funcs, cmd)) != NULL)
-        (func)(data, &serv->clients[id], serv->users, serv->nb_users);
-    else
-        control_cmds(&serv->clients[id], cmd, data);
+    if ((func = index_of(command_string, funcs, cmd)) != NULL)
+        (func)(serv, client, data);
     if (data != NULL)
         free(data);
 }
 
-void handle_client(server_t *server, int id)
+void handle_client(server_t *server, client_t *client)
 {
     char buffer[BUFFER_READ_SIZE] = { 0 };
     int ret = 0;
 
-    ret = read(server->clients[id].fd, buffer, BUFFER_READ_SIZE);
+    ret = read(client->fd, buffer, BUFFER_READ_SIZE);
     raise_error(ret >= 0, "read() ");
-    client_request(server, id, ret, buffer);
+    if (ret == 0)
+        return ll_erase(server->clients, client, &client_destructor);
+    client_request(server, client, buffer);
 }

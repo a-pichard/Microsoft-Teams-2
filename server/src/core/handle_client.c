@@ -42,8 +42,6 @@ static void client_request(server_t *serv, client_t *client, const char *req)
         free(cmd);
     if (data != NULL)
         free(data);
-    char *toto = NULL;
-    free(toto);
 }
 
 void handle_client(server_t *server, client_t *client)

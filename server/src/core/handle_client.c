@@ -31,17 +31,19 @@ static void client_request(server_t *serv, client_t *client, const char *req)
     char *data = NULL;
     cmd_t funcs[] = {&help};
     cmd_t func = NULL;
-    const char *command_string[] = {"help"};
+    const char *command_string[] = {"help", NULL};
 
-    dprintf(1, "passage\n");
     parse_cmd(&client->req, req, &cmd, &data);
     if (cmd == NULL && data == NULL)
         return;
-    dprintf(1, "%s --> \"%s\"\n", cmd, data);
     if ((func = index_of(command_string, funcs, cmd)) != NULL)
         (func)(serv, client, data);
+    else
+        free(cmd);
     if (data != NULL)
         free(data);
+    char *toto = NULL;
+    free(toto);
 }
 
 void handle_client(server_t *server, client_t *client)

@@ -9,4 +9,5 @@
 
 void help(server_t *server UNUSED, client_t *client UNUSED, const char *data UNUSED)
 {
+    write_q(client, "bonjour tu veux du shit");
 }

@@ -24,20 +24,3 @@ void ll_erase(ll_t **list, void *data, void(*destructor)(void*))
         current = &(*current)->next;
     }
 }
-//55a2c0
-// void ll_erase(ll_t **list, void *data, void(*destructor)(void *))
-// {
-//     ll_t **prev = list;
-//     ll_t *current = *list;
-
-//     while (current) {
-//         if (current->data == data) {
-//             *prev = current->next;
-//             destructor(current->data);
-//             free(current);
-//             break;
-//         }
-//         *prev = current;
-//         current = current->next;
-//     }
-// }

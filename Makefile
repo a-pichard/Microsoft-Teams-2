@@ -28,7 +28,7 @@ SERVER = myteams_server
 COMMON = libcommon.a
 
 all : $(CLIENT) $(SERVER)
-	@printf "$(GREEN)Project built!$(WHITE)"
+	@printf "$(GREEN)Project built!$(WHITE)\n"
 
 $(COMMON):
 	@printf "$(RED)MAKING: common\n$(WHITE)"
@@ -47,6 +47,15 @@ $(SERVER) : $(COMMON)
 	@make -s -C $(SERVER_DIR)
 	@cp $(SERVER_DIR)/$(SERVER) $(SERVER)
 
+debug:
+	make -s -C $(COMMON_DIR) debug
+	cp $(COMMON_DIR)/$(COMMON) $(COMMON)
+	cp $(COMMON) $(CLIENT_DIR)/$(COMMON)
+	make -s -C $(CLIENT_DIR) debug
+	cp $(CLIENT_DIR)/$(CLIENT) $(CLIENT)
+	cp $(COMMON) $(SERVER_DIR)/$(COMMON)
+	make -s -C $(SERVER_DIR) debug
+	cp $(SERVER_DIR)/$(SERVER) $(SERVER)
 
 fclean:
 	@make -s -C $(COMMON_DIR) fclean

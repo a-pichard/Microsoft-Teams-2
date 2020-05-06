@@ -64,6 +64,7 @@ void send_message(client_t *client);
 // destructors
 void client_destructor(void *data);
 void write_q_destructor(void *data);
+void user_destructor(void *data);
 
 // error
 void raise_err(bool valid, const char *msg);

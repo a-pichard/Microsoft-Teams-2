@@ -14,7 +14,7 @@ void destroy_server(void)
 {
     server_t *server = server_address(NULL);
 
-    ll_destroy(&server->users, NULL); // TODO: ADD USER DESTRUCTOR
+    ll_destroy(&server->users, &user_destructor);
     ll_destroy(&server->clients, &client_destructor);
     close(server->server_fd);
 }

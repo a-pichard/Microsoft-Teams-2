@@ -6,7 +6,7 @@ BLUE	=	\e[1;34m
 
 CC	=	gcc
 ROOT	=	.
-NAME	=	common.a
+NAME	=	libcommon.a
 RM	=	rm -f
 INCL_DIR	=	$(ROOT)/incl
 OBJ_DIR	=	$(ROOT)/obj

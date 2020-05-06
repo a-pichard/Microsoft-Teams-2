@@ -20,11 +20,11 @@ INCL_DIR	=	$(ROOT)/incl
 OBJ_DIR	=	$(ROOT)/obj
 SRC_DIR	=	$(ROOT)/src
 TESTS_DIR = $(ROOT)/tests
-CFLAGS	=	-Wall -Wextra -I$(INCL_DIR)
-LD_FLAGS = -lpthread -lrt
+CFLAGS	=	-Wall -Wextra -I$(INCL_DIR) -I ../common/incl
+LD_FLAGS = libcommon.a
 MAIN	=	$(ROOT)/src/main.c
 SRC_TESTS	=	$(shell find $(SRC_DIR) $(TESTS_DIR) -type f -name '*.c' -not -path $(MAIN) 2> /dev/null)
-SRC	=	$(shell find $(SRC_DIR)/ -type f -name '*.cpp')
+SRC	=	$(shell find $(SRC_DIR)/ -type f -name '*.c')
 COVERAGE_FILE	=	*.gcda *.gcno
 all:	$(NAME)
 debug: CFLAGS += -DDEBUG -g
@@ -32,7 +32,7 @@ debug: $(NAME)
 
 OBJ	=	$(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 
-$(OBJ_DIR)/%.o:	$(SRC_DIR)/%.cpp
+$(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
 	@printf "%-70b->%70b\n$(WHITE)" "$(RED)[$(BLUE)$<$(RED)]" "$(RED)[$(GREEN)$@$(RED)]"
 	@$(CC) $(CFLAGS) -c $< -o $@

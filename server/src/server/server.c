@@ -55,11 +55,11 @@ static void parse_io(server_t *server, fd_set *rset, fd_set *wset)
 
     for (client = server->clients; client != NULL; client = client->next) {
         if (FD_ISSET(((client_t *)(client->data))->fd, rset))
-            handle_client(server, client);
+            handle_client(server, client->data);
     }
     for (client = server->clients; client != NULL; client = client->next) {
         if (FD_ISSET(((client_t *)(client->data))->fd, wset))
-            send_message(server, client);
+            send_message(client->data);
     }
 }
 

@@ -13,8 +13,7 @@ void ll_push_back(ll_t **first, void *data)
     ll_t *new = ll_create(data);
     ll_t **current = first;
 
-    while ((*current)->next != NULL) {
+    while (*current)
         current = &(*current)->next;
-    }
     *current = new;
 }

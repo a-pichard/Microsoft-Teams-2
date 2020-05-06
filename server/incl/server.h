@@ -47,6 +47,9 @@ int init_main_server_socket(int port);
 void init_users(server_t *);
 void destroy_server(void);
 
+//helper
+void helper(const char *prg_name, int exit_status);
+
 //main function
 void run_server(server_t *);
 
@@ -56,7 +59,7 @@ void parse_cmd(char **, const char *, char **, char **);
 
 // write queue
 void write_q(client_t *client, const char *msg);
-void send_message(server_t *, int);
+void send_message(client_t *client);
 
 // destructors
 void client_destructor(void *data);

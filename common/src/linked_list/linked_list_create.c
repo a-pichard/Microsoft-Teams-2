@@ -13,5 +13,6 @@ ll_t *ll_create(void *data)
     ll_t *list = calloc(1, sizeof(ll_t));
 
     list->data = data;
+    list->next = NULL;
     return list;
 }

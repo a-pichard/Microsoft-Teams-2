@@ -13,7 +13,7 @@ CLIENT = myteams_cli
 
 SERVER = myteams_server
 
-COMMON = common.a
+COMMON = libcommon.a
 
 all : $(CLIENT) $(SERVER)
 	@printf "done"
@@ -25,11 +25,13 @@ $(COMMON):
 
 $(CLIENT): $(COMMON)
 	@printf "client\n"
+	cp $(COMMON) $(CLIENT_DIR)/$(COMMON)
 	@make -s -C $(CLIENT_DIR)
 	@cp $(CLIENT_DIR)/$(CLIENT) $(CLIENT)
 
 $(SERVER) : $(COMMON)
 	@printf "server\n"
+	cp $(COMMON) $(SERVER_DIR)/$(COMMON)
 	@make -s -C $(SERVER_DIR)
 	@cp $(SERVER_DIR)/$(SERVER) $(SERVER)
 
@@ -41,7 +43,8 @@ fclean:
 	@$(RM) $(COMMON)
 	@$(RM) $(CLIENT)
 	@$(RM) $(SERVER)
-
+	@$(RM) $(SERVER_DIR)/$(COMMON)
+	@$(RM) $(CLIENT_DIR)/$(COMMON)
 
 clean:
 	@make -s -C $(COMMON_DIR) clean

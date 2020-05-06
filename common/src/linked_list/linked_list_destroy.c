@@ -11,12 +11,12 @@
 void ll_destroy(ll_t **list, void(*destructor)(void*))
 {
     ll_t **start = list;
-    ll_t *current = *list;
+    ll_t *current = NULL;
 
     while (*list != NULL) {
         current = *list;
         list = &current->next;
-        destructor(current);
+        destructor(current->data);
         free(current);
     }
     *start = NULL;

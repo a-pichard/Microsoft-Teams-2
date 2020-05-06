@@ -5,7 +5,6 @@
 ** main
 */
 
-#include "errors.h"
 #include "server.h"
 #include <stdlib.h>
 #include <signal.h>

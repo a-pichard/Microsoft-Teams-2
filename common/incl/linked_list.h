@@ -22,4 +22,7 @@ void ll_push_front(ll_t **first, void *data);
 void ll_erase(ll_t **list, void *data, void(*destructor)(void*));
 void ll_destroy(ll_t **list, void(*destructor)(void*));
 
+//function to get element
+void *ll_pop_front(ll_t **list);
+
 //TODO create the lib

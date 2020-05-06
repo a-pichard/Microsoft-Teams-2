@@ -7,6 +7,7 @@
 
 #include "server.h"
 #include <stdlib.h>
+#include <unistd.h>
 
 void client_destructor(void *data)
 {
@@ -14,7 +15,7 @@ void client_destructor(void *data)
 
     if (client->req)
         free(client->req);
-    ll_destroy(client->write_q, &write_q_destructor);
+    ll_destroy(&client->write_q, &write_q_destructor);
     close(client->fd);
     free(client);
 }

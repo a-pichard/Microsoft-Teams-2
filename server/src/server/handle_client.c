@@ -29,9 +29,9 @@ static void client_request(server_t *serv, client_t *client, const char *req)
 {
     char *cmd = NULL;
     char *data = NULL;
-    cmd_t funcs[] = {};
+    cmd_t funcs[] = {&help};
     cmd_t func = NULL;
-    const char *command_string[] = {"hel"};
+    const char *command_string[] = {"help"};
 
     parse_cmd(client->req, req, &cmd, &data);
     if (cmd == NULL && data == NULL)
@@ -50,6 +50,6 @@ void handle_client(server_t *server, client_t *client)
     ret = read(client->fd, buffer, BUFFER_READ_SIZE);
     raise_err(ret >= 0, "read() ");
     if (ret == 0)
-        return ll_erase(server->clients, client, &client_destructor);
+        return ll_erase(&server->clients, client, &client_destructor);
     client_request(server, client, buffer);
 }

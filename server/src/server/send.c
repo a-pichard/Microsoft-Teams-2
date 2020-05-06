@@ -10,43 +10,15 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-static linked_list_t *get_new_elem(const char *msg, bool disconnection)
-{
-    linked_list_t *tmp = malloc(sizeof(write_queue_t));
-
-    raise_err(tmp != NULL, "malloc() ");
-    tmp->disconnection = disconnection;
-    tmp->msg = strdup(msg);
-    raise_err(tmp != NULL, "strdup() ");
-    tmp->next = NULL;
-    return (tmp);
-}
-
 void write_q(client_t *client, const char *msg)
 {
-    write_queue_t *tmp;
-
-    if (client->write_q == NULL) {
-        client->write_q = get_new_elem(msg, disconnection);
-    } else {
-        tmp = client->write_q;
-        while (tmp->next != NULL)
-            tmp = tmp->next;
-        tmp->next = get_new_elem(msg, disconnection);
-    }
+    ll_push_back(&client->write_q, strdup(msg));
 }
 
-void send_message(server_t *server, int id)
+void send_message(client_t *client)
 {
-    client_t *client = &server->clients[id];
-    write_queue_t *next;
-    bool disconnection = client->write_q->disconnection;
+    char *msg = ll_pop_front(&client->write_q);
 
-    write(client->fd, client->write_q->msg, strlen(client->write_q->msg));
-    next = client->write_q->next;
-    free(client->write_q->msg);
-    free(client->write_q);
-    client->write_q = next;
-    if (disconnection)
-        disconnect_client(server, id);
+    write(client->fd, msg, strlen(msg));
+    free(msg);
 }

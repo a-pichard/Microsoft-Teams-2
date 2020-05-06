@@ -51,11 +51,16 @@ static int reset_selected_fd(server_t *server, fd_set *rset, fd_set *wset)
 
 static void parse_io(server_t *server, fd_set *rset, fd_set *wset)
 {
+    ll_t *tmp = NULL;
     ll_t *client = NULL;
 
-    for (client = server->clients; client != NULL; client = client->next) {
-        if (FD_ISSET(((client_t *)(client->data))->fd, rset))
+    for (client = server->clients; client != NULL;) {
+        if (FD_ISSET(((client_t *)(client->data))->fd, rset)) {
+            tmp = client->next;
             handle_client(server, client->data);
+            client = tmp;
+        } else
+            client = client->next;
     }
     for (client = server->clients; client != NULL; client = client->next) {
         if (FD_ISSET(((client_t *)(client->data))->fd, wset))

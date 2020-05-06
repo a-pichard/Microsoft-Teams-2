@@ -7,6 +7,6 @@
 
 #include <cmd.h>
 
-void help(server_t *server, client_t *client, const char *data)
+void help(server_t *server UNUSED, client_t *client UNUSED, const char *data UNUSED)
 {
 }

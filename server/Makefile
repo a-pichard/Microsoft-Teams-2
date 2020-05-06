@@ -9,6 +9,7 @@ GREEN	=	\e[1;32m
 WHITE	=	\e[0m
 ORANGE	=	\e[1;33m
 RED	=	\e[1;31m
+PURPLE	=	\e[1;35m
 BLUE	=	\e[1;34m
 
 CC	=	gcc
@@ -38,9 +39,9 @@ $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME):	$(OBJ)
-	@printf "$(RED)linking $(NAME)...$(WHITE)\n"
+	@printf "$(PURPLE)linking $(NAME)...$(WHITE)\n"
 	@$(CC) -o $(NAME) $^ $(LD_FLAGS)
-	@printf "$(RED)finish $(NAME)!$(WHITE)\n"
+	@printf "$(PURPLE)$(NAME) built!$(WHITE)\n\n"
 
 tests_run	:
 	@$(RM) $(COVERAGE_FILE)
@@ -51,12 +52,12 @@ tests_run	:
 clean:
 	@$(RM) $(COVERAGE_FILE)
 	@$(RM) -R $(OBJ_DIR)
-	@printf "$(RED)clean$(WHITE)\n"
+	@printf "$(ORANGE)clean$(WHITE)\n"
 
 fclean: clean
 	@$(RM) $(TEST_NAME)
 	@$(RM) $(NAME)
-	@printf "$(RED)fclean$(WHITE)\n"
+	@printf "$(ORANGE)fclean$(WHITE)\n"
 
 re: fclean all
 

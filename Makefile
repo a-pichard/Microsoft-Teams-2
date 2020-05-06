@@ -1,3 +1,15 @@
+##
+## EPITECH PROJECT, 2020
+## NWP_myteams_2019
+## File description:
+## Makefile
+##
+
+GREEN	=	\e[1;32m
+WHITE	=	\e[0m
+ORANGE	=	\e[1;33m
+RED	=	\e[1;31m
+BLUE	=	\e[1;34m
 
 RM = rm -f
 
@@ -16,22 +28,22 @@ SERVER = myteams_server
 COMMON = libcommon.a
 
 all : $(CLIENT) $(SERVER)
-	@printf "done"
+	@printf "$(GREEN)Project built!$(WHITE)"
 
 $(COMMON):
-	@printf "common\n"
+	@printf "$(RED)MAKING: common\n$(WHITE)"
 	@make -s -C $(COMMON_DIR)
 	@cp $(COMMON_DIR)/$(COMMON) $(COMMON)
 
 $(CLIENT): $(COMMON)
-	@printf "client\n"
-	cp $(COMMON) $(CLIENT_DIR)/$(COMMON)
+	@printf "$(RED)MAKING: client\n$(WHITE)"
+	@cp $(COMMON) $(CLIENT_DIR)/$(COMMON)
 	@make -s -C $(CLIENT_DIR)
 	@cp $(CLIENT_DIR)/$(CLIENT) $(CLIENT)
 
 $(SERVER) : $(COMMON)
-	@printf "server\n"
-	cp $(COMMON) $(SERVER_DIR)/$(COMMON)
+	@printf "$(RED)MAKING: server\n$(WHITE)"
+	@cp $(COMMON) $(SERVER_DIR)/$(COMMON)
 	@make -s -C $(SERVER_DIR)
 	@cp $(SERVER_DIR)/$(SERVER) $(SERVER)
 

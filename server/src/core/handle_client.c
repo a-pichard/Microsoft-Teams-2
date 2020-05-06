@@ -33,7 +33,7 @@ static void client_request(server_t *serv, client_t *client, const char *req)
     cmd_t func = NULL;
     const char *command_string[] = {"help"};
 
-    parse_cmd(client->req, req, &cmd, &data);
+    parse_cmd(&client->req, req, &cmd, &data);
     if (cmd == NULL && data == NULL)
         return;
     if ((func = index_of(command_string, funcs, cmd)) != NULL)

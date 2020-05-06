@@ -10,5 +10,5 @@
 
 void init_users(server_t *server)
 {
-    user_t *users = NULL;
+    server->users = NULL;
 }

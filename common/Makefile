@@ -1,7 +1,15 @@
+##
+## EPITECH PROJECT, 2020
+## NWP_myteams_2019
+## File description:
+## Makefile
+##
+
 GREEN	=	\e[1;32m
 WHITE	=	\e[0m
 ORANGE	=	\e[1;33m
-RED		=	\e[1;35m
+RED	=	\e[1;31m
+PURPLE	=	\e[1;35m
 BLUE	=	\e[1;34m
 
 CC	=	gcc
@@ -24,21 +32,21 @@ OBJ	=	$(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 
 $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
-	@printf "%-50b$(WHITE)->%50b\n$(WHITE)" "$(RED)[$(BLUE)$<$(RED)]" "$(RED)[$(GREEN)$@$(RED)]"
+	@printf "%-70b->%70b\n$(WHITE)" "$(RED)[$(BLUE)$<$(RED)]" "$(RED)[$(GREEN)$@$(RED)]"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME):	$(OBJ)
-	@printf "$(RED)packing $(NAME)...$(WHITE)\n"
+	@printf "$(PURPLE)packing $(NAME)...$(WHITE)\n"
 	@ar rc -o $(NAME) $^
-	@printf "$(RED)finish $(NAME)!$(WHITE)\n"
+	@printf "$(PURPLE)$(NAME) created!$(WHITE)\n\n"
 
 clean:
 	@rm -Rf $(OBJ_DIR)
-	@printf "$(RED)clean$(WHITE)\n"
+	@printf "$(ORANGE)clean$(WHITE)\n"
 
 fclean: clean
 	@rm -f $(NAME)
-	@printf "$(RED)fclean$(WHITE)\n"
+	@printf "$(ORANGE)fclean$(WHITE)\n"
 
 tests_run: fclean $(NAME)
 	@printf "put test"

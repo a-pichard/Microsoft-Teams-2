@@ -23,7 +23,7 @@ static void accept_new_client_connection(server_t *server)
     socklen_t size = sizeof(client_info);
     int client_sock;
     client_t *client = malloc(sizeof(client_t));
-    char *ok_msg = "TODO: user connected\r\n";
+    char *ok_msg = "TODO: user connected";
 
     client_sock = accept(server->server_fd, client_info, &size);
     raise_err(client_sock != -1, "accept() ");

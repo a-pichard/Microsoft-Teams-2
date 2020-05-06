@@ -47,15 +47,19 @@ $(SERVER) : $(COMMON)
 	@make -s -C $(SERVER_DIR)
 	@cp $(SERVER_DIR)/$(SERVER) $(SERVER)
 
-debug:
-	make -s -C $(COMMON_DIR) debug
-	cp $(COMMON_DIR)/$(COMMON) $(COMMON)
-	cp $(COMMON) $(CLIENT_DIR)/$(COMMON)
-	make -s -C $(CLIENT_DIR) debug
-	cp $(CLIENT_DIR)/$(CLIENT) $(CLIENT)
-	cp $(COMMON) $(SERVER_DIR)/$(COMMON)
-	make -s -C $(SERVER_DIR) debug
-	cp $(SERVER_DIR)/$(SERVER) $(SERVER)
+debug: fclean
+	@printf "$(RED)MAKING: common in debug mode (-g)\n$(WHITE)"
+	@make -s -C $(COMMON_DIR) debug
+	@cp $(COMMON_DIR)/$(COMMON) $(COMMON)
+	@cp $(COMMON) $(CLIENT_DIR)/$(COMMON)
+	@printf "$(RED)MAKING: client in debug mode (-g)\n$(WHITE)"
+	@make -s -C $(CLIENT_DIR) debug
+	@cp $(CLIENT_DIR)/$(CLIENT) $(CLIENT)
+	@cp $(COMMON) $(SERVER_DIR)/$(COMMON)
+	@printf "$(RED)MAKING: server in debug mode (-g)\n$(WHITE)"
+	@make -s -C $(SERVER_DIR) debug
+	@cp $(SERVER_DIR)/$(SERVER) $(SERVER)
+	@printf "$(GREEN)Project built in debug mode (-g)!$(WHITE)\n"
 
 fclean:
 	@make -s -C $(COMMON_DIR) fclean

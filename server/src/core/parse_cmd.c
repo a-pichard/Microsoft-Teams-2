@@ -17,24 +17,6 @@ static char *check_strdup(const char *s)
     return (res);
 }
 
-static char *my_strcat(const char *s1, const char *s2)
-{
-    char *res;
-    int len1 = strlen(s1);
-    int len2 = strlen(s2);
-    int i = 0;
-    int j = 0;
-
-    res = malloc(sizeof(char) * (len1 + len2 + 1));
-    raise_err(res != NULL, "malloc() ");
-    for (; i < len1; i++)
-        res[i] = s1[i];
-    for (; j < len2; j++)
-        res[i + j] = s2[j];
-    res[i + j] = '\0';
-    return (res);
-}
-
 static char *get_rqst(char **pbuf, const char *req)
 {
     char *tmp;
@@ -43,7 +25,7 @@ static char *get_rqst(char **pbuf, const char *req)
         if (*pbuf == NULL) {
             return (check_strdup(req));
         } else {
-            tmp = my_strcat(*pbuf, req);
+            tmp = strcat_alloc(*pbuf, req);
             free(*pbuf);
             *pbuf = NULL;
             return (tmp);
@@ -52,7 +34,7 @@ static char *get_rqst(char **pbuf, const char *req)
         if (*pbuf == NULL) {
             *pbuf = check_strdup(req);
         } else {
-            tmp = my_strcat(*pbuf, req);
+            tmp = strcat_alloc(*pbuf, req);
             free(*pbuf);
             *pbuf = tmp;
         }

@@ -9,5 +9,6 @@
 #define COMMON_H_
 
 bool is_str_digit(const char *str);
+char *strcat_alloc(const char *s1, const char *s2);
 
 #endif /* !COMMON_H_ */

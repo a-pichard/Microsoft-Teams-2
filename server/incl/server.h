@@ -17,6 +17,7 @@
 #include <arpa/inet.h>
 #include <sys/select.h>
 #include <linked_list.h>
+#include <common.h>
 
 #define DEFAULT_NAME_LENGTH 32
 #define DEFAULT_DESCRIPTION_LENGTH 255

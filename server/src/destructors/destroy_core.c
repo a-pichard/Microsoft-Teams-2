@@ -17,4 +17,5 @@ void destroy_server(void)
     ll_destroy(&server->users, &user_destructor);
     ll_destroy(&server->clients, &client_destructor);
     close(server->server_fd);
+    dprintf(1, "Server fd: %d closed\n", server->server_fd);
 }

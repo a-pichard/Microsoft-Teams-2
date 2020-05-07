@@ -64,7 +64,7 @@ char **parse_cmd(char **buffer, const char *req);
 
 // write queue
 void write_q(client_t *client, const char *msg);
-void send_message(client_t *client);
+void send_message(server_t *server, client_t *client);
 
 // destructors
 void client_destructor(void *data);

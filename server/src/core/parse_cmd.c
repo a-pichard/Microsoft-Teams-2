@@ -9,9 +9,11 @@ char **parse_cmd(char **pbuf, const char *req)
 
     if (!rqst)
         return (NULL);
-    if (!strtok(rqst, REQ_END))
+    if (!strtok(rqst, REQ_END)) {
+        free(rqst);
         return (NULL);
-    res = str_to_wordtab(rqst, " ");
+    }
+    res = str_to_wordtab(rqst, " ", true);
     free(rqst);
     ASSERT(res != NULL);
     return (res);

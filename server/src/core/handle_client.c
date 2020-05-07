@@ -39,6 +39,7 @@ static void client_request(server_t *serv, client_t *client, const char *req)
         (func)(serv, client, &data[1]);
     destroy_tab(data);
 }
+
 void handle_client(server_t *server, client_t *client)
 {
     char buffer[BUFFER_READ_SIZE] = { 0 };

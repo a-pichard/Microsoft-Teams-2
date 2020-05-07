@@ -6,62 +6,69 @@
 */
 
 #include <string.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdio.h>
 #include "common.h"
 
-static size_t get_array_size(char *s, char *delim)
+static char **init_tab(char *s, char *delim, bool quotes)
 {
+    char delimiters[3] = {delim[0], quotes ? '\"' : '\0', '\0'};
     size_t size = 0;
-    char *r;
+    size_t length = 0;
 
-    r = strtok(s, delim);
-    while (r) {
-        r = strtok(NULL, delim);
+    while (length != strlen(s)) {
+        length = strcspn(s, delimiters);
+        if (s[length] == delim[0]) {
+            s = &s[length];
+            length = strspn(s, delim);
+            s = &s[length];
+        } else if (quotes && s[length] == '\"') {
+            s = &s[length + 1];
+            length = strcspn(s, "\"");
+            s = &s[length + 1];
+        }
         size++;
     }
-    free(s);
-    return (size);
+    return calloc(sizeof(char *), size + 1);
 }
 
-void destroy_tab(char **t)
+static void set_value(char **res, size_t *i, char *s, int length)
 {
-    if (t == NULL)
-        return;
-    for (size_t i = 0; t[i] != NULL; i++)
-        free(t[i]);
-    free(t);
+    if (!!length) {
+        res[(*i)++] = strndup(s, length);
+    }
 }
 
-void print_tab(char **t)
+static void loop_in_string(char **res, char *s, char *delim, bool quotes)
 {
-    if (t == NULL)
-        return;
-    for (size_t i = 0; t[i] != NULL; i++)
-        dprintf(1, "%s\n", t[i]);
+    char delimiters[3] = {delim[0], quotes ? '\"' : '\0', '\0'};
+    size_t length = 0;
+    size_t i = 0;
+
+    while (length != strlen(s)) {
+        length = strcspn(s, delimiters);
+        if (s[length] == delim[0]) {
+            set_value(res, &i, s, length);
+            s = &s[length];
+            length = strspn(s, delim);
+            s = &s[length];
+        } else if (quotes && s[length] == '\"') {
+            set_value(res, &i, s, length);
+            s = &s[length + 1];
+            length = strcspn(s, "\"");
+            set_value(res, &i, s, length);
+            s = &s[length + 1];
+        }
+    }
+    set_value(res, &i, s, length);
 }
 
-char **str_to_wordtab(char *s, char *delim)
+char **str_to_wordtab(char *s, char *delim, bool quotes)
 {
     char **res = NULL;
-    char *sdup = NULL;
-    size_t size = 0;
 
     if (s == NULL)
         return (NULL);
-    sdup = strdup(s);
-    ASSERT(sdup != NULL);
-    size = get_array_size(sdup, delim);
-    res = calloc(sizeof(char *), (size + 1));
-    ASSERT(res != NULL)
-    if (size == 0)
-        return (res);
-    res[0] = strdup(strtok(s, delim));
-    ASSERT(res[0] != NULL);
-    for (size_t i = 1; i < size; i++) {
-        res[i] = strdup(strtok(NULL, delim));
-        ASSERT(res[i] != NULL);
-    }
+    res = init_tab(s, delim, quotes);
+    ASSERT(res != NULL);
+    loop_in_string(res, s, delim, quotes);
     return (res);
 }

@@ -17,7 +17,7 @@ static char *check_strdup(const char *s)
     return (res);
 }
 
-static char *get_rqst(char **pbuf, const char *req)
+static char *bufferizer(char **pbuf, const char *req)
 {
     char *tmp;
 
@@ -42,36 +42,17 @@ static char *get_rqst(char **pbuf, const char *req)
     }
 }
 
-static void final_checks(char *rqst, char **cmd, char **data)
+char **parse_cmd(char **pbuf, const char *req)
 {
-    if (!(*cmd))
-        return;
-    if (!strlen(*cmd) && !(*data)) {
-        free(*cmd);
-        *cmd = NULL;
-    }
-    free(rqst);
-}
-
-void parse_cmd(char **pbuf, const char *req, char **cmd, char **data)
-{
-    char *tmp;
-    char *tmp_end;
-    int sep;
-    int size;
-    char *rqst = get_rqst(pbuf, req);
+    char **res = NULL;
+    char *rqst = bufferizer(pbuf, req);
 
     if (!rqst)
-        return;
-    tmp_end = strstr(rqst, REQ_END);
-    size = tmp_end - rqst;
-    tmp = strchr(rqst, ' ');
-    if (tmp != NULL) {
-        sep = (int)(tmp - rqst);
-        *cmd = strndup(rqst, sep);
-        *data = strndup(&rqst[sep + 1], size - sep - 1);
-    } else {
-        *cmd = strndup(rqst, size);
-    }
-    final_checks(rqst, cmd, data);
+        return (NULL);
+    if (!strtok(rqst, REQ_END))
+        return (NULL);
+    res = str_to_wordtab(rqst, " ");
+    free(rqst);
+    raise_err(res != NULL, "str_to_wordtab() ");
+    return (res);
 }

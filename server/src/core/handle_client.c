@@ -16,10 +16,8 @@ static cmd_t index_of(const char **narr, cmd_t *funcs, char *cmd)
     int i = 0;
 
     while (narr[i] != NULL) {
-        if (!strcasecmp(narr[i], cmd)) {
-            free(cmd);
+        if (!strcasecmp(narr[i], cmd))
             return (funcs[i]);
-        }
         i++;
     }
     return (NULL);
@@ -27,21 +25,18 @@ static cmd_t index_of(const char **narr, cmd_t *funcs, char *cmd)
 
 static void client_request(server_t *serv, client_t *client, const char *req)
 {
-    char *cmd = NULL;
-    char *data = NULL;
-    cmd_t funcs[] = {&help};
+    char **data = NULL;
+    const char *command_string[] = F_NAME;
+    cmd_t funcs[] = F_FUNC;
     cmd_t func = NULL;
-    const char *command_string[] = {"help", NULL};
 
-    parse_cmd(&client->req, req, &cmd, &data);
-    if (cmd == NULL && data == NULL)
-        return;
-    if ((func = index_of(command_string, funcs, cmd)) != NULL)
-        (func)(serv, client, data);
-    else
-        free(cmd);
-    if (data != NULL)
-        free(data);
+    data = parse_cmd(&client->req, req);
+    if (data == NULL || data[0] == NULL)
+        return destroy_tab(data);
+    print_tab(data);
+    if ((func = index_of(command_string, funcs, data[0])) != NULL)
+        (func)(serv, client, &data[1]);
+    destroy_tab(data);
 }
 
 void handle_client(server_t *server, client_t *client)

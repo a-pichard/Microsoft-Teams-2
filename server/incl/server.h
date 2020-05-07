@@ -56,7 +56,7 @@ void run_server(server_t *);
 
 // Server
 void handle_client(server_t *server, client_t *client);
-void parse_cmd(char **, const char *, char **, char **);
+char **parse_cmd(char **buffer, const char *req);
 
 // write queue
 void write_q(client_t *client, const char *msg);

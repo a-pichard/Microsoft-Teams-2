@@ -10,18 +10,20 @@
 
 #include "server.h"
 
-#define F_NAME {"help", \
+#define F_NAME {    \
+    "help", \
     NULL    \
 };
 
-#define F_FUNC {&help,  \
-    NULL   \
+#define F_FUNC {    \
+    &help,  \
+    NULL    \
 }
 
 #define TIMEOUT_IN_SEC 15
 
 // index of functions pointer
-typedef void (*cmd_t)(server_t *server, client_t *client, const char *data);
+typedef void (*cmd_t)(server_t *server, client_t *client, char **data);
 
 // utils
 void auth(client_t *, user_t *, int);
@@ -34,6 +36,6 @@ int open_file(client_t *, char *, int);
 char *get_cmd_line(const char *);
 
 // cmds
-void help(server_t *server, client_t *client, const char *data);
+void help(server_t *server, client_t *client, char **data);
 
 #endif /* !CMD_H_ */

@@ -54,7 +54,7 @@ char **str_to_wordtab(char *s, char *delim)
     ASSERT(sdup != NULL);
     size = get_array_size(sdup, delim);
     res = calloc(sizeof(char *), (size + 1));
-    ASSERT(res != NULL)
+    ASSERT(res != NULL);
     if (size == 0)
         return (res);
     res[0] = strdup(strtok(s, delim));

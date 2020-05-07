@@ -16,11 +16,13 @@ void write_q(client_t *client, const char *msg)
     ll_push_back(&client->write_q, strdup(msg));
 }
 
-void send_message(client_t *client)
+void send_message(server_t *server, client_t *client)
 {
     void *data = ll_pop_front(&client->write_q);
 
     dprintf(client->fd, "%s\r\n", (char *)data);
     LOG("send:%s\n", (char *)data)
+    if (!strcmp((char *)data, "logged out"))
+        return ll_erase(&server->clients, client, &client_destructor);
     write_q_destructor(data);
 }

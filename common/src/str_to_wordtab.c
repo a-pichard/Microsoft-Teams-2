@@ -61,14 +61,15 @@ static void loop_in_string(char **res, char *s, char *delim, bool quotes)
     set_value(res, &i, s, length);
 }
 
-char **str_to_wordtab(char *s, char *delim, bool quotes)
+char **str_to_wordtab(char *s, char delim, bool quotes)
 {
+    char delimiter[2] = {delim, '\0'};
     char **res = NULL;
 
     if (s == NULL)
         return (NULL);
-    res = init_tab(s, delim, quotes);
+    res = init_tab(s, delimiter, quotes);
     ASSERT(res != NULL);
-    loop_in_string(res, s, delim, quotes);
+    loop_in_string(res, s, delimiter, quotes);
     return (res);
 }

@@ -41,7 +41,7 @@ void client_run(client_t *client UNUSED)
 
     while (true) {
         read(0, buff, 512);
-        data = clean(str_to_wordtab(buff, " ", true));
+        data = clean(str_to_wordtab(buff, ' ', true));
         check_cmd(data, command_string);
         destroy_tab(data);
     }

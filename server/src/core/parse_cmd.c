@@ -13,7 +13,7 @@ char **parse_cmd(char **pbuf, const char *req)
         free(rqst);
         return (NULL);
     }
-    res = str_to_wordtab(rqst, " ", true);
+    res = str_to_wordtab(rqst, ' ', true);
     free(rqst);
     ASSERT(res != NULL);
     return (res);

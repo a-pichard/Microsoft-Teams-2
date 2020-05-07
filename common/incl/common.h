@@ -29,7 +29,7 @@ bool is_str_digit(const char *str);
 char *strcat_alloc(const char *s1, const char *s2);
 
 // tab
-char **str_to_wordtab(char *s, char *delim, bool quotes);
+char **str_to_wordtab(char *s, char delim, bool quotes);
 void destroy_tab(char **t);
 void print_tab(char **t);
 

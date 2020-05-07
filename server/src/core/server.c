@@ -26,7 +26,7 @@ static void accept_new_client_connection(server_t *server)
     char *ok_msg = "TODO: user connected";
 
     client_sock = accept(server->server_fd, client_info, &size);
-    raise_err(client_sock != -1, "accept() ");
+    ASSERT(client_sock != -1);
     init_new_client(client, client_sock);
     ll_push_back(&server->clients, (void *)client);
     write_q(client, ok_msg);
@@ -76,7 +76,7 @@ void run_server(server_t *server)
     while (1) {
         max_fd = reset_selected_fd(server, &rset, &wset);
         ret = select(max_fd, &rset, &wset, NULL, NULL);
-        raise_err(ret != -1, "select() ");
+        ASSERT(ret != -1);
         if (FD_ISSET(server->server_fd, &rset)) {
             accept_new_client_connection(server);
             FD_CLR(server->server_fd, &rset);

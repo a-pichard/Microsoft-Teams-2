@@ -9,9 +9,6 @@
 #define SERVER_H_
 
 #define MAX_CLIENTS_QUEUE 5
-#define BUFFER_READ_SIZE 4096
-#define REQ_END "\r\n"
-#define UNUSED __attribute__((unused))
 
 #include <stdbool.h>
 #include <arpa/inet.h>
@@ -22,6 +19,13 @@
 #define DEFAULT_NAME_LENGTH 32
 #define DEFAULT_DESCRIPTION_LENGTH 255
 #define DEFAULT_BODY_LENGTH 512
+
+#ifdef DEBUG
+#define LOG(...) fprintf(stdout, "LOG:");  \
+fprintf(stdout, __VA_ARGS__);
+#else
+#define LOG(...)
+#endif
 
 typedef struct {
     char name[DEFAULT_NAME_LENGTH];
@@ -66,8 +70,5 @@ void send_message(client_t *client);
 void client_destructor(void *data);
 void write_q_destructor(void *data);
 void user_destructor(void *data);
-
-// error
-void raise_err(bool valid, const char *msg);
 
 #endif /* !SERVER_H_ */

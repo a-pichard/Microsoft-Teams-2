@@ -25,10 +25,10 @@ int init_main_server_socket(int port)
     struct sockaddr_in sin = get_default_sin(port);
     int ret;
 
-    raise_err(fd != -1, "socket() ");
+    ASSERT(fd != -1);
     ret = bind(fd, (struct sockaddr *)(&sin), sizeof(sin));
-    raise_err(ret != -1, "bind() ");
+    ASSERT(ret != -1);
     ret = listen(fd, MAX_CLIENTS_QUEUE);
-    raise_err(ret != -1, "listen() ");
+    ASSERT(ret != -1);
     return (fd);
 }

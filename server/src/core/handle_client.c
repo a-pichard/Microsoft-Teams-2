@@ -10,6 +10,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 
 static cmd_t index_of(const char **narr, cmd_t *funcs, char *cmd)
 {
@@ -38,14 +39,16 @@ static void client_request(server_t *serv, client_t *client, const char *req)
         (func)(serv, client, &data[1]);
     destroy_tab(data);
 }
-
 void handle_client(server_t *server, client_t *client)
 {
     char buffer[BUFFER_READ_SIZE] = { 0 };
     int ret = 0;
 
     ret = read(client->fd, buffer, BUFFER_READ_SIZE);
-    raise_err(ret >= 0, "read() ");
+    if (ret < 0) {
+        ASSERT(errno == ECONNRESET);
+        ret = 0;
+    }
     if (ret == 0)
         return ll_erase(&server->clients, client, &client_destructor);
     client_request(server, client, buffer);

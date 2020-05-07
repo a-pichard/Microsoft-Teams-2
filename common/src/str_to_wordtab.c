@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
+#include "common.h"
 
 static size_t get_array_size(char *s, char *delim)
 {
@@ -50,18 +51,17 @@ char **str_to_wordtab(char *s, char *delim)
     if (s == NULL)
         return (NULL);
     sdup = strdup(s);
-    if (sdup == NULL)
-        return (NULL);
+    ASSERT(sdup != NULL);
     size = get_array_size(sdup, delim);
-    if ((res = calloc(sizeof(char *), (size + 1))) == NULL)
-        return (NULL);
+    res = calloc(sizeof(char *), (size + 1));
+    ASSERT(res != NULL)
     if (size == 0)
         return (res);
-    if ((res[0] = strdup(strtok(s, delim))) == NULL)
-        return (NULL);
+    res[0] = strdup(strtok(s, delim));
+    ASSERT(res[0] != NULL);
     for (size_t i = 1; i < size; i++) {
-        if ((res[i] = strdup(strtok(NULL, delim))) == NULL)
-            return (NULL);
+        res[i] = strdup(strtok(NULL, delim));
+        ASSERT(res[i] != NULL);
     }
     return (res);
 }

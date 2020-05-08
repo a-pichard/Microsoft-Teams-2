@@ -6,3 +6,5 @@ myteams_server
 **/output.txt
 myteams.zip
 myteams
+**.gcno
+**.gcda

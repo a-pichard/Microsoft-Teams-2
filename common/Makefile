@@ -50,7 +50,7 @@ fclean: clean
 	@rm -f $(NAME) $(TEST_NAME)
 	@printf "$(ORANGE)fclean$(WHITE)\n"
 
-tests_run:
+tests_run: fclean
 	@$(CC) $(SRC_TESTS) -o $(TEST_NAME) -lcriterion --coverage $(CFLAGS)
 	@printf "$(BLUE)Compile sources and tests : $(GREEN)success$(WHITE)\n"
 	@printf "$(BLUE)Launching tests...$(WHITE)\n"

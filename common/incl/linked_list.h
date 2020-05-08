@@ -25,4 +25,7 @@ void ll_destroy(ll_t **list, void(*destructor)(void*));
 //function to get element
 void *ll_pop_front(ll_t **list);
 
+//function to apply a function to each element
+void ll_apply(ll_t **list, void(*fn)(void *));
+
 //TODO create the lib

@@ -15,10 +15,12 @@ BLUE	=	\e[1;34m
 CC	=	gcc
 ROOT	=	.
 NAME	=	libcommon.a
+TEST_NAME	=	unit_test
 RM	=	rm -f
 INCL_DIR	=	$(ROOT)/incl
 OBJ_DIR	=	$(ROOT)/obj
 SRC_DIR	=	$(ROOT)/src
+TESTS_DIR	=	$(ROOT)/tests
 CFLAGS	=	-Wall -Wextra -I$(INCL_DIR)
 MAIN	=	main.c
 SRC_TESTS	=	$(shell find $(SRC_DIR) $(TESTS_DIR) -type f -name '*.c' -not -path $(SRC_DIR)/$(MAIN) 2> /dev/null)
@@ -41,15 +43,19 @@ $(NAME):	$(OBJ)
 	@printf "$(PURPLE)$(NAME) created!$(WHITE)\n\n"
 
 clean:
-	@rm -Rf $(OBJ_DIR)
+	@rm -Rf $(OBJ_DIR) *.gcno *.gcda
 	@printf "$(ORANGE)clean$(WHITE)\n"
 
 fclean: clean
-	@rm -f $(NAME)
+	@rm -f $(NAME) $(TEST_NAME)
 	@printf "$(ORANGE)fclean$(WHITE)\n"
 
-tests_run: fclean $(NAME)
-	@printf "put test"
+tests_run:
+	@$(CC) $(SRC_TESTS) -o $(TEST_NAME) -lcriterion --coverage $(CFLAGS)
+	@printf "$(BLUE)Compile sources and tests : $(GREEN)success$(WHITE)\n"
+	@printf "$(BLUE)Launching tests...$(WHITE)\n"
+	@./unit_test
+	@gcovr --branches --exclude tests
 
 re:	fclean	all
 

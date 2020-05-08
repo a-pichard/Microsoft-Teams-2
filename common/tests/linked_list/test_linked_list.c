@@ -56,9 +56,41 @@ Test(Test_linked_list, linked_list_erase)
 
     ll_push_front(&l, data);
     ll_push_front(&l, data2);
-    ll_erase(&l, l->next, &destructor);
+    ll_erase(&l, l->next->data, &destructor);
     cr_assert_eq(l->data, data2);
     cr_assert_eq(l->next, NULL);
+    free(data2);
+}
+
+Test(Test_linked_list, linked_list_destroy)
+{
+    ll_t *l = NULL;
+    char *data = strdup("toto");
+    char *data2 = strdup("toto2");
+
+    ll_push_front(&l, data);
+    ll_push_front(&l, data2);
+    ll_destroy(&l, &destructor);
+    cr_assert_eq(l, NULL);
+}
+
+Test(Test_linked_list, linked_list_pop_front)
+{
+    ll_t *l = NULL;
+    char *data = strdup("toto");
+    char *data2 = strdup("toto2");
+    char *ret = NULL;
+
+    ll_push_front(&l, data);
+    ll_push_front(&l, data2);
+    ret = ll_pop_front(&l);
+    cr_assert_eq(l->data, data);
+    cr_assert_eq(l->next, NULL);
+    cr_assert_eq(ret, data2);
+    ret = ll_pop_front(&l);
+    cr_assert_eq(l, NULL);
+    ret = ll_pop_front(&l);
+    cr_assert_eq(l, NULL);
     free(data);
     free(data2);
 }

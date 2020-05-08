@@ -51,7 +51,8 @@ static void client_request(server_t *serv, client_t *client, const char *req)
             write_q(client, "300 \"not logged in\"");
         else
             write_q(client, "300 \"user already logged\"");
-    }
+    } else
+        write_q(client, "500 \"TODO: cmd not found\"");
     destroy_tab(data);
 }
 

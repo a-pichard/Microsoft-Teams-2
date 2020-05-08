@@ -17,7 +17,7 @@ void destroy_tab(char **t)
     free(t);
 }
 
-void print_tab(char **t)
+void print_tab(char const * const *t)
 {
     if (t == NULL)
         return;
@@ -25,7 +25,7 @@ void print_tab(char **t)
         dprintf(1, "%s\n", t[i]);
 }
 
-size_t get_tab_len(char **t)
+size_t get_tab_len(char const * const *t)
 {
     size_t i = 0;
 

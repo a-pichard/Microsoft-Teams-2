@@ -7,7 +7,7 @@
 
 #include <cmd.h>
 
-void help(server_t *server UNUSED, client_t *client UNUSED, char **data UNUSED)
+void help(server_t *server UNUSED, client_t *client UNUSED, char const * const *data UNUSED)
 {
     write_q(client, "bonjour tu veux du shit");
 }

@@ -31,8 +31,8 @@ char *strcat_alloc(const char *s1, const char *s2);
 // tab
 char **str_to_wordtab(char *s, char delim, bool quotes);
 void destroy_tab(char **t);
-void print_tab(char **t);
-size_t get_tab_len(char **t);
+void print_tab(char const * const *t);
+size_t get_tab_len(char const * const *t);
 
 char *bufferizer(char **pbuf, const char *req);
 

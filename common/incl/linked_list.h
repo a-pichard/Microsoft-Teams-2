@@ -5,6 +5,8 @@
 ** linked_list
 */
 
+#ifndef _LINKED_LIST_H
+#define _LINKED_LIST_H
 
 typedef struct linked_list_s {
     void *data;
@@ -28,4 +30,4 @@ void *ll_pop_front(ll_t **list);
 //function to apply a function to each element
 void ll_apply(ll_t **list, void(*fn)(void *));
 
-//TODO create the lib
+#endif

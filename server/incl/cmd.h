@@ -27,7 +27,7 @@
 #define TIMEOUT_IN_SEC 15
 
 // index of functions pointer
-typedef void (*cmd_t)(server_t *server, client_t *client, char **data);
+typedef void (*cmd_t)(server_t *server, client_t *client, char const * const * data);
 
 // utils
 void auth(client_t *, user_t *, int);
@@ -40,8 +40,8 @@ int open_file(client_t *, char *, int);
 char *get_cmd_line(const char *);
 
 // cmds
-void login(server_t *server, client_t *client, char **data);
-void logout(server_t *server, client_t *client, char **data);
-void help(server_t *server, client_t *client, char **data);
+void login(server_t *server, client_t *client, char const * const *data);
+void logout(server_t *server, client_t *client, char const * const *data);
+void help(server_t *server, client_t *client, char const * const *data);
 
 #endif /* !CMD_H_ */

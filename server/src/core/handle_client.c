@@ -12,7 +12,7 @@
 #include <string.h>
 #include <errno.h>
 
-static cmd_t index_of(char *cmd)
+static cmd_t index_of(char const *cmd)
 {
     const char *command_string[] = F_NAME;
     cmd_t funcs[] = F_FUNC;
@@ -43,10 +43,10 @@ static void client_request(server_t *serv, client_t *client, const char *req)
     data = parse_cmd(&client->req, req);
     if (data == NULL || data[0] == NULL)
         return destroy_tab(data);
-    print_tab(data);
-    if ((func = index_of(data[0])) != NULL) {
+    print_tab((char const * const *) data);
+    if ((func = index_of((char const *)data[0])) != NULL) {
         if (authorized(client, func))
-            (func)(serv, client, &data[1]);
+            (func)(serv, client, (char const * const *)(data + 1));
         else if (func != &login)
             write_q(client, "300 \"not logged in\"");
         else

@@ -7,7 +7,7 @@
 
 #include "cmd.h"
 
-void logout(server_t *server UNUSED, client_t *client, char **data UNUSED)
+void logout(server_t *server UNUSED, client_t *client, char const * const *data UNUSED)
 {
     write_q(client, "200 \"logged out\"");
 }

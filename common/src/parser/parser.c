@@ -24,6 +24,9 @@ parser_result_t *parse_and(const char **token, parser_t *parser)
     int i = 0;
 
     for (; parser->parser[i]; i++) {
+        if (*current == NULL) {
+            break;
+        }
         parser_result_t *result = parse(current, parser->parser[i]);
         if (result == NULL) {
             break;
@@ -48,7 +51,9 @@ parser_result_t* parse(const char **token, parser_t *p)
     void *r = NULL;
 
     if (p->type == VALUE) {
-        r = p->parser_function(token[0]);                
+        if (*token == NULL)
+            return NULL;
+        r = p->parser_function(*token);                
         if (r == NULL) {
             return NULL;
         } else {

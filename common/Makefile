@@ -51,7 +51,7 @@ fclean: clean
 	@printf "$(ORANGE)fclean$(WHITE)\n"
 
 tests_run: fclean
-	@$(CC) $(SRC_TESTS) -o $(TEST_NAME) -lcriterion --coverage $(CFLAGS)
+	@$(CC) $(SRC_TESTS) -o $(TEST_NAME) -lcriterion --coverage -luuid $(CFLAGS)
 	@printf "$(BLUE)Compile sources and tests : $(GREEN)success$(WHITE)\n"
 	@printf "$(BLUE)Launching tests...$(WHITE)\n"
 	@./unit_test

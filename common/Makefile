@@ -55,7 +55,7 @@ tests_run: fclean
 	@printf "$(BLUE)Compile sources and tests : $(GREEN)success$(WHITE)\n"
 	@printf "$(BLUE)Launching tests...$(WHITE)\n"
 	@./unit_test
-	@gcovr --branches --exclude tests
+	@gcovr --exclude tests
 
 re:	fclean	all
 

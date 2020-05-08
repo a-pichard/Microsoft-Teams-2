@@ -22,7 +22,7 @@ void send_message(server_t *server, client_t *client)
 
     dprintf(client->fd, "%s\r\n", (char *)data);
     LOG("send:%s\n", (char *)data)
-    if (!strcmp((char *)data, "logged out"))
+    if (!strcmp((char *)data, "200 logged out"))
         return ll_erase(&server->clients, client, &client_destructor);
     write_q_destructor(data);
 }

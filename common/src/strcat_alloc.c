@@ -5,6 +5,7 @@
 ** strcat_alloc
 */
 
+#include "common.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -17,8 +18,7 @@ char *strcat_alloc(const char *s1, const char *s2)
     int j = 0;
 
     res = malloc(sizeof(char) * (len1 + len2 + 1));
-    if (res == NULL)
-        return (NULL);
+    ASSERT(res != NULL);
     for (; i < len1; i++)
         res[i] = s1[i];
     for (; j < len2; j++)

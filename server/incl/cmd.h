@@ -13,12 +13,14 @@
 #define F_NAME {    \
     "login",    \
     "logout",   \
+    "help", \
     NULL    \
 };
 
 #define F_FUNC {    \
     &login, \
     &logout,    \
+    &help,  \
     NULL    \
 }
 
@@ -40,5 +42,6 @@ char *get_cmd_line(const char *);
 // cmds
 void login(server_t *server, client_t *client, char **data);
 void logout(server_t *server, client_t *client, char **data);
+void help(server_t *server, client_t *client, char **data);
 
 #endif /* !CMD_H_ */

@@ -9,5 +9,5 @@
 
 void login(server_t *server UNUSED, client_t *client, char **data UNUSED)
 {
-    write_q(client, "200 login success");
+    write_q(client, "200 \"login success\"");
 }

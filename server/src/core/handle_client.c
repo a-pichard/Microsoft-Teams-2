@@ -12,31 +12,46 @@
 #include <string.h>
 #include <errno.h>
 
-static cmd_t index_of(const char **narr, cmd_t *funcs, char *cmd)
+static cmd_t index_of(char *cmd)
 {
+    const char *command_string[] = F_NAME;
+    cmd_t funcs[] = F_FUNC;
     int i = 0;
 
-    while (narr[i] != NULL) {
-        if (!strcasecmp(narr[i], cmd))
+    while (command_string[i] != NULL) {
+        if (!strcasecmp(command_string[i], cmd))
             return (funcs[i]);
         i++;
     }
     return (NULL);
 }
 
+static bool authorized(client_t *client, cmd_t cmd)
+{
+    if (cmd == &help)
+        return (true);
+    if (cmd == &login)
+        return (client->username == NULL);
+    return (client->username != NULL);
+}
+
 static void client_request(server_t *serv, client_t *client, const char *req)
 {
     char **data = NULL;
-    const char *command_string[] = F_NAME;
-    cmd_t funcs[] = F_FUNC;
     cmd_t func = NULL;
 
     data = parse_cmd(&client->req, req);
     if (data == NULL || data[0] == NULL)
         return destroy_tab(data);
     print_tab(data);
-    if ((func = index_of(command_string, funcs, data[0])) != NULL)
-        (func)(serv, client, &data[1]);
+    if ((func = index_of(data[0])) != NULL) {
+        if (authorized(client, func))
+            (func)(serv, client, &data[1]);
+        else if (func != &login)
+            write_q(client, "300 \"not logged in\"");
+        else
+            write_q(client, "300 \"user already logged\"");
+    }
     destroy_tab(data);
 }
 

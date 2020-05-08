@@ -33,6 +33,7 @@ typedef struct {
 
 typedef struct {
     int fd;
+    char *username;
     char *req;
     ll_t *write_q;
 } client_t;

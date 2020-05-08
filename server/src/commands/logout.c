@@ -9,5 +9,5 @@
 
 void logout(server_t *server UNUSED, client_t *client, char **data UNUSED)
 {
-    write_q(client, "200 logged out");
+    write_q(client, "200 \"logged out\"");
 }

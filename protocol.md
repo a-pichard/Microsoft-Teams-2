@@ -40,7 +40,7 @@ helper = string
 ### login
 ```
 request = 'login' sp name end
-response = 200 sp '"logged in"' end
+response = 200 sp '"logged in"' end | 300 sp '"user already logged"' end
 ```
 
 ### logout

@@ -33,7 +33,7 @@ Test(Test_tab, tab_len)
 {
     char *to_parse = strdup("wesh la zone \"ca dit quoi lo\"");
     char **res = str_to_wordtab(to_parse, ' ', true);
-    int len = get_tab_len(res);
+    int len = get_tab_len((char const * const *)res);
 
     cr_assert_eq(len, 4);
     len = get_tab_len(NULL);
@@ -56,7 +56,7 @@ Test(Test_tab, print_tab, .init=cr_redirect_stdout)
     char *to_parse = strdup("wesh la zone \"ca dit quoi lo\"");
     char **res = str_to_wordtab(to_parse, ' ', true);
 
-    print_tab(res);
+    print_tab((char const * const *)res);
     print_tab(NULL);
     cr_assert_stdout_eq_str("wesh\nla\nzone\nca dit quoi lo\n");
 }

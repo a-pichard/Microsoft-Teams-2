@@ -13,8 +13,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Install build-essential
-      run: sudo apt-get install build-essential
+    - name: Install uuid-dev
+      run: sudo apt-get install uuid-dev
     - name: build
       run: make
     - name: make tests

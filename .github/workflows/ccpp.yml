@@ -1,4 +1,4 @@
-name: C/C++ CI
+name: Docker Image CI
 
 on:
   push:
@@ -7,14 +7,14 @@ on:
     branches: [ master ]
 
 jobs:
+
   build:
 
     runs-on: ubuntu-latest
+    container: epitechcontent/epitest-docker
 
     steps:
     - uses: actions/checkout@v2
-    - name: Install uuid-dev
-      run: sudo apt-get install uuid-dev
     - name: build
       run: make
     - name: make tests

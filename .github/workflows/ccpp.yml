@@ -13,6 +13,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Install build-essential
+      run: sudo apt-get install build-essential
     - name: build
       run: make
     - name: make tests

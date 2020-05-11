@@ -15,6 +15,7 @@
 #include <sys/select.h>
 #include <linked_list.h>
 #include <common.h>
+#include "data.h"
 
 #define DEFAULT_NAME_LENGTH 32
 #define DEFAULT_DESCRIPTION_LENGTH 255
@@ -68,8 +69,12 @@ void write_q(client_t *client, const char *msg);
 void send_message(server_t *server, client_t *client);
 
 // destructors
+void classic_destructor(void *data);
 void client_destructor(void *data);
 void write_q_destructor(void *data);
-void user_destructor(void *data);
+void thread_destructor(void *data);
+void channel_destructor(void *data);
+void dm_destructor(void *data);
+void msg_destructor(void *data);
 
 #endif /* !SERVER_H_ */

@@ -31,8 +31,8 @@ static bool authorized(client_t *client, cmd_t cmd)
     if (cmd == &help)
         return (true);
     if (cmd == &login)
-        return (client->username == NULL);
-    return (client->username != NULL);
+        return (client->user == NULL);
+    return (client->user != NULL);
 }
 
 static void client_request(server_t *serv, client_t *client, const char *req)

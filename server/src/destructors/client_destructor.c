@@ -13,8 +13,8 @@ void client_destructor(void *data)
 {
     client_t *client = (client_t *)data;
 
-    if (client->username)
-        free(client->username);
+    if (client->user)
+        free(client->user);
     if (client->req)
         free(client->req);
     ll_destroy(&client->write_q, &write_q_destructor);

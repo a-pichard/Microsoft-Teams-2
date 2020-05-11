@@ -34,9 +34,9 @@ typedef struct {
 
 typedef struct {
     int fd;
-    char *username;
     char *req;
     ll_t *write_q;
+    user_t *user;
 } client_t;
 
 typedef struct {

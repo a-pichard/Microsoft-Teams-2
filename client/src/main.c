@@ -9,7 +9,6 @@
 #include <string.h>
 #include <client.h>
 #include <stdlib.h>
-#include "common.h"
 #include <unistd.h>
 
 client_t *init_client(const char *ip, const char *port_str)

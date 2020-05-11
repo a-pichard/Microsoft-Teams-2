@@ -13,7 +13,7 @@ void thread_destructor(void *data)
     thread_t *thread = (thread_t *)data;
 
     if (thread) {
-        ll_destroy(&thread->comments, &classic_destructor);
+        ll_destroy(&thread->comments, &free);
         free(thread);
     }
 }

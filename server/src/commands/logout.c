@@ -6,8 +6,22 @@
 */
 
 #include "cmd.h"
+#include "logging_server.h"
 
 void logout(server_t *server UNUSED, client_t *client, char const * const *data UNUSED)
 {
-    write_q(client, "200 \"logged out\"");
+    char uuid_str[37];
+
+    if (*data != NULL) {
+        write_q(client, "500 \"Bad argument\"");
+    } else {
+        if (client->user == NULL) {
+            write_q(client, "300 \"not logged in\"");
+        } else {
+            uuid_unparse(client->user->uuid, uuid_str);
+            server_event_user_logged_out(uuid_str);
+            client->user = NULL;
+            write_q(client, "200 \"logged out\"");
+        }
+    }
 }

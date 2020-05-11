@@ -43,7 +43,6 @@ static void client_request(server_t *serv, client_t *client, const char *req)
     data = parse_cmd(&client->req, req);
     if (data == NULL || data[0] == NULL)
         return destroy_tab(data);
-    print_tab((char const * const *) data);
     if ((func = index_of((char const *)data[0])) != NULL) {
         if (authorized(client, func))
             (func)(serv, client, (char const * const *)(data + 1));

@@ -9,3 +9,4 @@ myteams
 **.gcno
 **.gcda
 **/unit_test
+**.so

@@ -29,6 +29,7 @@ fprintf(stdout, __VA_ARGS__);
 #endif
 
 typedef struct {
+    uuid_t uuid;
     char name[DEFAULT_NAME_LENGTH];
 } user_t;
 
@@ -53,7 +54,6 @@ void input_error_handling(int, char **);
 void init_server(server_t *, int port);
 server_t *server_address(server_t *server);
 int init_main_server_socket(int port);
-void init_users(server_t *);
 void destroy_server(void);
 
 //helper
@@ -66,12 +66,17 @@ void run_server(server_t *);
 void handle_client(server_t *server, client_t *client);
 char **parse_cmd(char **buffer, const char *req);
 
+//User
+user_t *user_create(const char *name);
+user_t *get_user_by_name(server_t *server, const char *username);
+user_t *server_add_user_with_name(server_t *server, const char *username);
+
+
 // write queue
 void write_q(client_t *client, const char *msg);
 void send_message(server_t *server, client_t *client);
 
 // destructors
-void classic_destructor(void *data);
 void client_destructor(void *data);
 void write_q_destructor(void *data);
 void thread_destructor(void *data);

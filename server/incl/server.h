@@ -44,6 +44,8 @@ typedef struct {
     int port;
     ll_t *users;
     ll_t *clients;
+    ll_t *teams;
+    ll_t *dms;
 } server_t;
 
 // Init
@@ -74,6 +76,7 @@ void client_destructor(void *data);
 void write_q_destructor(void *data);
 void thread_destructor(void *data);
 void channel_destructor(void *data);
+void team_destructor(void *data);
 void dm_destructor(void *data);
 void msg_destructor(void *data);
 

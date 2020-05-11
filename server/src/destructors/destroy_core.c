@@ -16,5 +16,6 @@ void destroy_server(void)
 
     ll_destroy(&server->users, &classic_destructor);
     ll_destroy(&server->clients, &client_destructor);
+    ll_destroy(&server->teams, &team_destructor);
     close(server->server_fd);
 }

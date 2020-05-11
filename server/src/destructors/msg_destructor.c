@@ -13,7 +13,8 @@ void msg_destructor(void *data)
     msg_t *msg = (msg_t *)data;
 
     if (msg) {
-        free(msg->msg);
+        if (msg->msg)
+            free(msg->msg);
         free(msg);
     }
 }

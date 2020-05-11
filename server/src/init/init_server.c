@@ -27,4 +27,6 @@ void init_server(server_t *server, int port)
     server->port = port;
     init_users(server);
     server->clients = NULL;
+    server->teams = NULL;
+    server->dms = NULL;
 }

@@ -2,11 +2,11 @@
 ** EPITECH PROJECT, 2020
 ** Visual Studio Live Share (Workspace)
 ** File description:
-** cmd
+** command
 */
 
-#ifndef CMD_H_
-#define CMD_H_
+#ifndef COMMAND_H_
+#define COMMAND_H_
 
 #include "client.h"
 
@@ -33,4 +33,4 @@
     NULL    \
 }
 
-#endif /* !CMD_H_ */
+#endif /* !COMMAND_H_ */

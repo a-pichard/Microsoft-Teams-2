@@ -34,6 +34,8 @@ typedef struct {
 
 typedef struct {
     char body[MAX_BODY_LENGTH];
+    long time;
+    uuid_t u_creator;
     uuid_t uuid;
 } comment_t;
 
@@ -42,7 +44,9 @@ typedef struct {
     char title[MAX_NAME_LENGTH];
     char body[MAX_BODY_LENGTH];
     ll_t *comments;
+    long time;
     uuid_t uuid;
+    uuid_t u_creator;
 } thread_t;
 
 typedef struct {

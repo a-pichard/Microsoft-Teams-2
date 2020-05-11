@@ -8,6 +8,8 @@
 #ifndef _LINKED_LIST_H
 #define _LINKED_LIST_H
 
+#include <stdlib.h>
+
 typedef struct linked_list_s {
     void *data;
     struct linked_list_s *next;
@@ -29,5 +31,15 @@ void *ll_pop_front(ll_t **list);
 
 //function to apply a function to each element
 void ll_apply(ll_t **list, void(*fn)(void *));
+
+//len
+size_t ll_len(ll_t **list);
+
+#define ll_foreach(list, type, element, code) do {    \
+    for (ll_t *current_foreach = list; current_foreach != NULL; current_foreach = current_foreach->next) {    \
+        type *element = (type*)(current_foreach->data); \
+        code;   \
+    }   \
+} while(0);
 
 #endif

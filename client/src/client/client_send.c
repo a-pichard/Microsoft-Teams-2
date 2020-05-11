@@ -10,5 +10,6 @@
 
 void client_send(client_t *client, const char *msg)
 {
+    // ll_push_back(client->to_send, strdup(msg));
     dprintf(client->fd, "%s\r\n", msg);
 }

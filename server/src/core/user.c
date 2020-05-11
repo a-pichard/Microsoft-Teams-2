@@ -9,6 +9,7 @@
 #include <uuid/uuid.h>
 #include <string.h>
 #include <logging_server.h>
+#include <string.h>
 
 user_t *user_create(const char *name)
 {
@@ -20,5 +21,6 @@ user_t *user_create(const char *name)
     uuid_generate(user->uuid);
     uuid_unparse(user->uuid, uuid_str);
     server_event_user_created(uuid_str ,name);
+    user->status = 0;
     return user;
 }

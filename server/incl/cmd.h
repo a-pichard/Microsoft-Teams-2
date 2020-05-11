@@ -11,16 +11,20 @@
 #include "server.h"
 
 #define F_NAME {    \
-    "login",    \
-    "logout",   \
-    "help", \
+    "/help", \
+    "/login",    \
+    "/logout",   \
+    "/users",    \
+    "/user", \
     NULL    \
 };
 
 #define F_FUNC {    \
+    &help,  \
     &login, \
     &logout,    \
-    &help,  \
+    &users, \
+    &user,  \
     NULL    \
 }
 
@@ -40,8 +44,11 @@ int open_file(client_t *, char *, int);
 char *get_cmd_line(const char *);
 
 // cmds
+void help(server_t *server, client_t *client, char const * const *data);
 void login(server_t *server, client_t *client, char const * const *data);
 void logout(server_t *server, client_t *client, char const * const *data);
-void help(server_t *server, client_t *client, char const * const *data);
+void users(server_t *server, client_t *client, char const * const *data);
+void user(server_t *server, client_t *client, char const * const *data);
+
 
 #endif /* !CMD_H_ */

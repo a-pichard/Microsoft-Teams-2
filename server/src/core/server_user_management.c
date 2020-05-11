@@ -10,12 +10,21 @@
 
 user_t *get_user_by_name(server_t *server, const char *username)
 {
-    for (ll_t *current = server->users; current != NULL;
-        current = current->next) {
-        if (!strcmp(username, ((user_t*)(current->data))->name)) {
-            return current->data;
+    ll_foreach(server->users, user_t, user,
+        if (!strcmp(username, user->name)) {
+            return user;
         }
-    }
+    );
+    return NULL;
+}
+
+user_t *get_user_by_uuid(server_t *server, uuid_t uuid)
+{
+    ll_foreach(server->users, user_t, user,
+        if (!uuid_compare(user->uuid, uuid)) {
+            return user;
+        }
+    );
     return NULL;
 }
 
@@ -26,3 +35,4 @@ user_t *server_add_user_with_name(server_t *server, const char *username)
     ll_push_back(&server->users, user);
     return user;
 }
+

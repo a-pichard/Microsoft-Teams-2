@@ -32,4 +32,5 @@ void login(server_t *server, client_t *client, char const * const *data)
         server_event_user_logged_in(uuid_str);
         write_q(client, "200 \"login success\"");
     }
+    parser_result_clean(&string_parser, r);
 }

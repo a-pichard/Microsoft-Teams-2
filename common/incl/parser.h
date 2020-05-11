@@ -2,14 +2,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct parser_result_s {
-    char const * const *remainer;
-    void *data;
-} parser_result_t;
 
 typedef void* (*parser_fn)(const char *string);
 typedef void (*destructor_fn)(void *element);
 
+typedef struct parser_result_s {
+    char const * const *remainer;
+    void *data;
+} parser_result_t;
 typedef enum {
     VALUE,
     AND,
@@ -33,6 +33,9 @@ parser_result_t *parse_tab(char const * const * token, parser_t *parser);
 
 //create 
 parser_result_t *create_result(void *data, char const * const * token);
+
+//clean
+void parser_result_clean(parser_t *p, parser_result_t *r);
 
 //value parser
 void *parse_int_function(const char *token);

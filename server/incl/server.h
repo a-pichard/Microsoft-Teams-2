@@ -31,6 +31,7 @@ fprintf(stdout, __VA_ARGS__);
 typedef struct {
     uuid_t uuid;
     char name[DEFAULT_NAME_LENGTH];
+    int status;
 } user_t;
 
 typedef struct {
@@ -68,9 +69,10 @@ char **parse_cmd(char **buffer, const char *req);
 
 //User
 user_t *user_create(const char *name);
+char *user_serialize(user_t *user);
 user_t *get_user_by_name(server_t *server, const char *username);
+user_t *get_user_by_uuid(server_t *server, uuid_t uuid);
 user_t *server_add_user_with_name(server_t *server, const char *username);
-
 
 // write queue
 void write_q(client_t *client, const char *msg);

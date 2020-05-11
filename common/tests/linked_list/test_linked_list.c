@@ -118,3 +118,15 @@ Test(Test_linked_list, linked_list_apply)
     ret = ll_pop_front(&l);
     cr_assert_eq(*(int*)(ret), 11);
 }
+
+
+Test(Test_linked_list, linked_list_len)
+{
+    ll_t *l = NULL;
+
+    cr_assert_eq(0, ll_len(&l));
+    ll_push_back(&l, NULL);
+    cr_assert_eq(1, ll_len(&l));
+    ll_push_back(&l, NULL);
+    cr_assert_eq(2, ll_len(&l));
+}

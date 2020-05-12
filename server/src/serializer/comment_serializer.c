@@ -28,7 +28,7 @@ char *comment_serializer(comment_t *comment)
     char time[10];
 
     ASSERT(str != NULL);
-    sprintf(time, "%l", comment->time);
+    sprintf(time, "%ld", comment->time);
     strcpy(str, "\"");
     concat_uuids(str, comment);
     strcat(str, time);

@@ -11,7 +11,7 @@
 static char **init_tab(char *s, char *delim, bool quotes)
 {
     char delimiters[3] = {delim[0], quotes ? '\"' : '\0', '\0'};
-    size_t size = 0;
+    size_t size = 1;
     size_t length = 0;
 
     while (length != strlen(s)) {
@@ -34,6 +34,7 @@ static void set_value(char **res, size_t *i, char *s, int length)
 {
     if (!!length) {
         res[(*i)++] = strndup(s, length);
+        res[(*i)] = NULL;
     }
 }
 
@@ -52,9 +53,9 @@ static void loop_in_string(char **res, char *s, char *delim, bool quotes)
             s = &s[length];
         } else if (quotes && s[length] == '\"') {
             set_value(res, &i, s, length);
-            s = &s[length + 1];
-            length = strcspn(s, "\"");
-            set_value(res, &i, s, length);
+            s = &s[length];
+            length = strcspn(s + 1, "\"") + 1;
+            set_value(res, &i, s, length + 1);
             s = &s[length + 1];
         }
     }

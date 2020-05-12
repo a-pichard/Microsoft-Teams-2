@@ -28,7 +28,7 @@ char *thread_serializer(thread_t *thread)
     char time[10];
 
     ASSERT(str != NULL);
-    sprintf(time, "%l", thread->time);
+    sprintf(time, "%ld", thread->time);
     strcpy(str, "\"");
     concat_uuids(str, thread);
     strcat(str, time);

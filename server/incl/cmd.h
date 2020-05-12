@@ -11,11 +11,11 @@
 #include "server.h"
 
 #define F_NAME {    \
-    "/help", \
-    "/login",    \
-    "/logout",   \
-    "/users",    \
-    "/user", \
+    "help", \
+    "login",    \
+    "logout",   \
+    "users",    \
+    "user", \
     NULL    \
 };
 

@@ -10,3 +10,4 @@ myteams
 **.gcda
 **/unit_test
 **.so
+run.sh

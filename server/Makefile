@@ -43,11 +43,11 @@ $(NAME):	$(OBJ)
 	@$(CC) -o $(NAME) $^ $(LD_FLAGS)
 	@printf "$(PURPLE)$(NAME) built!$(WHITE)\n\n"
 
-tests_run	:
+tests_run	: $(NAME)
 	@$(RM) $(COVERAGE_FILE)
 	@printf "$(RED)testing...$(WHITE)"
-	$(CC) -o $(TEST_NAME) $(SRC_TESTS) -g -lcriterion $(LD_FLAGS) $(CFLAGS) -ftest-coverage -fprofile-arcs
-	./${TEST_NAME}
+	python tests/test.py
+	# ./${TEST_NAME}
 
 clean:
 	@$(RM) $(COVERAGE_FILE)

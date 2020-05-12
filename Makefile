@@ -63,6 +63,7 @@ debug: fclean
 
 tests_run:
 	@make -s -C $(COMMON_DIR) tests_run
+	@make -s -C $(SERVER_DIR) tests_run
 
 fclean:
 	@make -s -C $(COMMON_DIR) fclean

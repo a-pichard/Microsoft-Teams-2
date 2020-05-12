@@ -17,7 +17,7 @@ Test(Test_tab, str_to_wordtab_success)
     cr_assert_str_eq(res[0], "wesh");
     cr_assert_str_eq(res[1], "la");
     cr_assert_str_eq(res[2], "zone");
-    cr_assert_str_eq(res[3], "ca dit quoi lo");
+    cr_assert_str_eq(res[3], "\"ca dit quoi lo\"");
     cr_assert_eq(res[4], NULL);
     free(to_parse);
 }
@@ -58,5 +58,5 @@ Test(Test_tab, print_tab, .init=cr_redirect_stdout)
 
     print_tab((char const * const *)res);
     print_tab(NULL);
-    cr_assert_stdout_eq_str("wesh\nla\nzone\nca dit quoi lo\n");
+    cr_assert_stdout_eq_str("wesh\nla\nzone\n\"ca dit quoi lo\"\n");
 }

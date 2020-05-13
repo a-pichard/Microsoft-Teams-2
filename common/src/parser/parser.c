@@ -19,7 +19,7 @@ parser_result_t *create_result(void *data, char const * const * token)
     return r;
 }
 
-static parser_result_t *parse_value(char const * const *token, parser_t *p)
+static parser_result_t *parse_value(char const * const *token, const parser_t *p)
 {
     void *r = NULL;
 
@@ -33,7 +33,7 @@ static parser_result_t *parse_value(char const * const *token, parser_t *p)
     }
 }
 
-static parser_result_t *parse_surounded(char const *const *token, parser_t *p)
+static parser_result_t *parse_surounded(char const *const *token, const parser_t *p)
 {
     char *data[] = {NULL, NULL};
     char *str = NULL;
@@ -53,7 +53,7 @@ static parser_result_t *parse_surounded(char const *const *token, parser_t *p)
     return p_r;
 }
 
-static parser_result_t *parse_sep(char const *const *token, parser_t *p)
+static parser_result_t *parse_sep(char const *const *token, const parser_t *p)
 {
     parser_result_t *p_r;
     const char * const *tab =
@@ -64,7 +64,7 @@ static parser_result_t *parse_sep(char const *const *token, parser_t *p)
     return p_r;
 }
 
-parser_result_t *parse(char const * const * token, parser_t *p)
+parser_result_t *parse(char const * const * token, const parser_t *p)
 {
     if (*token == NULL)
         return NULL;

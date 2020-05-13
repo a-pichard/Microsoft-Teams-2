@@ -7,7 +7,7 @@
 
 #include "parser.h"
 
-parser_result_t *parse_tab(char const * const * token, parser_t *parser)
+parser_result_t *parse_tab(char const * const * token, const parser_t *parser)
 {
     ll_t *result_list = NULL;
     char const * const * current = token+1;
@@ -27,5 +27,5 @@ parser_result_t *parse_tab(char const * const * token, parser_t *parser)
         ll_destroy(&result_list, parser->parser->destructor);
         return NULL;
     }
-    return create_result(result_list, current);
+    return create_result(result_list, current+1);
 }

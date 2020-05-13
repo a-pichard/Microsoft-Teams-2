@@ -17,18 +17,21 @@ char **load_user(server_t *server, const char * const *data)
     parser_t sep = SEP_PARSER(' ', &user_parser);
     parser_t suroud_parser = SUROUNDE_PARSER('"', &sep);
     TAB_PARSER(users_parser, &suroud_parser);
-    char *remain = NULL;
+    const char * const *remain = NULL;
     parser_result_t *r = parse(data, &users_parser);
 
     if (r != NULL) {
         ll_foreach(r->data, ll_t, l,
-            user_t *t = user_reload(l->next->data, l->data, l->next->next->data);
+            user_t *t = user_reload(
+                (const char *)l->next->data,
+                (unsigned char *)l->data,
+                *(int*)(l->next->next->data));
             ll_push_back(&server->users, t);
         );
     }
     remain = r->remainer;
     parser_result_clean(&users_parser, r);
-    return remain;
+    return (char **)remain;
 }
 
 void load_server_from_file(server_t *server, const char *file_name)
@@ -46,15 +49,13 @@ void load_server_from_file(server_t *server, const char *file_name)
     buffer = malloc(sizeof(char)*(size+1));
     int r = fread(buffer, 1, size, file);
     buffer[r] = '\0';
-    printf("buffer={%s}\n", buffer);
     data = str_to_wordtab(buffer, ' ', true);
     for (int i = 0; data[i]; i++) {
         if (!strcmp(data[i], "]\n")) {
             data[i][1] = '\0';
         }
     }
-    print_tab(data);
-    load_user(server, data+1);
+    load_user(server, (const char * const *)(data+1));
     destroy_tab(data);
     free(buffer);
     fclose(file);

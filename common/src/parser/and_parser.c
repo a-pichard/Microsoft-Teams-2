@@ -7,7 +7,7 @@
 
 #include "parser.h"
 
-static void parse_and_cancel(parser_t *parser, ll_t **list, int done)
+static void parse_and_cancel(const parser_t *parser, ll_t **list, int done)
 {
     for (int j = 0; j < done; j++) {
         void *elem = ll_pop_front(list);
@@ -15,7 +15,7 @@ static void parse_and_cancel(parser_t *parser, ll_t **list, int done)
     }
 }
 
-parser_result_t *parse_and(char const * const *token, parser_t *parser)
+parser_result_t *parse_and(char const * const *token, const parser_t *parser)
 {
     ll_t *result_list = NULL;
     char const * const *current = token;

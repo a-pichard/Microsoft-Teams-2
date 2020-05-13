@@ -31,23 +31,23 @@ typedef struct parser_s {
     parser_type_t type;
     union {
         parser_fn parser_function;
-        struct parser_s **parsers;
-        struct parser_s *parser;
+        const struct parser_s **parsers;
+        const struct parser_s *parser;
     };
     destructor_fn destructor;
     char sep;
 } parser_t;
 
 //general parse function
-parser_result_t *parse_and(char const * const *token, parser_t *parser);
-parser_result_t *parse(char const * const * token, parser_t *p);
-parser_result_t *parse_tab(char const * const * token, parser_t *parser);
+parser_result_t *parse_and(char const * const *token, const parser_t *parser);
+parser_result_t *parse_tab(char const * const * token, const parser_t *parser);
+parser_result_t *parse(char const * const * token, const parser_t *p);
 
 //create
 parser_result_t *create_result(void *data, char const * const * token);
 
 //clean
-void parser_result_clean(parser_t *p, parser_result_t *r);
+void parser_result_clean(const parser_t *p, parser_result_t *r);
 
 //value parser
 void *parse_int_function(const char *token);
@@ -55,14 +55,14 @@ void *parse_uuid_function(const char *token);
 void *parse_string_function(const char *token);
 
 //use full macro
-static const parser_t UUID_PARSER = {.type=VALUE,   \
-    {.parser_function=parse_uuid_function}, .destructor=free};
-static const parser_t INT_PARSER = {.type=VALUE,    \
-    {.parser_function=parse_int_function}, .destructor=free};
-static const parser_t STRING_PARSER = {.type=VALUE, \
-    {.parser_function=parse_string_function}, .destructor=free};
+static const parser_t UUID_PARSER = {.type = VALUE,   \
+    {.parser_function = parse_uuid_function}, .destructor = free};
+static const parser_t INT_PARSER = {.type = VALUE,    \
+    {.parser_function = parse_int_function}, .destructor = free};
+static const parser_t STRING_PARSER = {.type = VALUE, \
+    {.parser_function = parse_string_function}, .destructor=free};
 
-#define AND_PARSER(name, ...) parser_t *name##_parser_tab[] =   \
+#define AND_PARSER(name, ...) const parser_t *name##_parser_tab[] =   \
     {__VA_ARGS__, NULL};  \
 parser_t name = {.type=AND, {.parsers=name##_parser_tab}};
 

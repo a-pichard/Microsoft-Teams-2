@@ -10,7 +10,7 @@
 
 Test(Test_parser, parser_paser_tab_ok)
 {
-    const char *token[] = {"10", "42", NULL};
+    const char *token[] = {"[", "10", "42", "]", NULL};
     parser_t int_parser = INT_PARSER;
 
     TAB_PARSER(p, &int_parser);
@@ -25,7 +25,7 @@ Test(Test_parser, parser_paser_tab_ok)
 
 Test(Test_parser, parser_paser_tab_fail1)
 {
-    const char *token[] = {"a", "42", NULL};
+    const char *token[] = {"[", "a", "42", "]", NULL};
     parser_t int_parser = INT_PARSER;
 
     TAB_PARSER(p, &int_parser);
@@ -36,7 +36,7 @@ Test(Test_parser, parser_paser_tab_fail1)
 
 Test(Test_parser, parser_paser_tab_fail2)
 {
-    const char *token[] = {"42", "a", NULL};
+    const char *token[] = {"[", "42", "a", "]", NULL};
     parser_t int_parser = INT_PARSER;
 
     TAB_PARSER(p, &int_parser);

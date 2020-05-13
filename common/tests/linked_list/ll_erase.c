@@ -8,7 +8,7 @@
 #include <linked_list.h>
 #include <criterion/criterion.h>
 
-void destructor(void *data)
+static void destructor(void *data)
 {
     if (data)
         free(data);

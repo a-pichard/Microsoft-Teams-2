@@ -55,8 +55,9 @@ Test(Test_tab, print_tab, .init = cr_redirect_stdout)
 {
     char *to_parse = strdup("wesh la zone \"ca dit quoi lo\"");
     char **res = str_to_wordtab(to_parse, ' ', true);
+    char *p_res = "[0][wesh]\n[1][la]\n[2][zone]\n[3][\"ca dit quoi lo\"]\n";
 
     print_tab((char const * const *)res);
     print_tab(NULL);
-    cr_assert_stdout_eq_str("wesh\nla\nzone\n\"ca dit quoi lo\"\n");
+    cr_assert_stdout_eq_str(p_res);
 }

@@ -23,12 +23,11 @@ static void success_response(client_t *client)
 
 void login(server_t *server, client_t *client, char const * const *data)
 {
-    parser_t string_parser = STRING_PARSER;
     parser_result_t *r;
     user_t *user = NULL;
     char uuid_str[37];
 
-    r = parse(data, &string_parser);
+    r = parse(data, &STRING_PARSER);
     if (r == NULL || *r->remainer != NULL || strlen((const char *)(r->data)) > DEFAULT_NAME_LENGTH) {
         write_q(client, "500 \"Bad argument\"");
     } else {
@@ -45,5 +44,5 @@ void login(server_t *server, client_t *client, char const * const *data)
         server_event_user_logged_in(uuid_str);
         success_response(client);
     }
-    parser_result_clean(&string_parser, r);
+    parser_result_clean(&STRING_PARSER, r);
 }

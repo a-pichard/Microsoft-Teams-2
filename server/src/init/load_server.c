@@ -11,22 +11,24 @@
 #include "common.h"
 #include "parser.h"
 
-void load_user(server_t *server, const char * const *data)
+char **load_user(server_t *server, const char * const *data)
 {
-    parser_t string_parser = STRING_PARSER;
-    parser_t uuid_parser = UUID_PARSER;
-    parser_t int_parser = INT_PARSER;
-    AND_PARSER(user_parser, &uuid_parser, &string_parser, &int_parser);
-    TAB_PARSER(users_parser, &user_parser);
-    parser_t sep = SEP_PARSER(' ', &users_parser);
+    AND_PARSER(user_parser, &UUID_PARSER, &STRING_PARSER, &INT_PARSER);
+    parser_t sep = SEP_PARSER(' ', &user_parser);
     parser_t suroud_parser = SUROUNDE_PARSER('"', &sep);
-    parser_result_t *r = parse(data, &suroud_parser);
+    TAB_PARSER(users_parser, &suroud_parser);
+    char *remain = NULL;
+    parser_result_t *r = parse(data, &users_parser);
 
-    if (r == NULL) {
-        printf("merde\n");
-    } else {
-        printf("yes\n");
+    if (r != NULL) {
+        ll_foreach(r->data, ll_t, l,
+            user_t *t = user_reload(l->next->data, l->data, l->next->next->data);
+            ll_push_back(&server->users, t);
+        );
     }
+    remain = r->remainer;
+    parser_result_clean(&users_parser, r);
+    return remain;
 }
 
 void load_server_from_file(server_t *server, const char *file_name)
@@ -35,16 +37,9 @@ void load_server_from_file(server_t *server, const char *file_name)
     long size;
     char *buffer;
     char **data = NULL;
-    // char *data[] = {"\"users\"",
-    //     "[",
-    //     "\"e58e7786-fad5-45cb-9410-ceaff8aff871 toto 0\"",
-    //     "\"1aa5aab3-ce9a-42f7-87db-4628f20ecbb0 armand 0\"",
-    //     "]", 
-    //     NULL};
 
     if (file == NULL)
         return;
-    // load_user(server, data+1);
     fseek(file, 0, SEEK_END);
     size = ftell(file);
     fseek(file, 0, SEEK_SET);
@@ -53,7 +48,14 @@ void load_server_from_file(server_t *server, const char *file_name)
     buffer[r] = '\0';
     printf("buffer={%s}\n", buffer);
     data = str_to_wordtab(buffer, ' ', true);
+    for (int i = 0; data[i]; i++) {
+        if (!strcmp(data[i], "]\n")) {
+            data[i][1] = '\0';
+        }
+    }
     print_tab(data);
+    load_user(server, data+1);
     destroy_tab(data);
-    // free(buffer);
+    free(buffer);
+    fclose(file);
 }

@@ -70,6 +70,7 @@ void load_server_from_file(server_t *server, const char *file_name);
 
 //User
 user_t *user_create(const char *name);
+user_t *user_reload(const char *name, uuid_t uuid, int status);
 char *user_serialize(const user_t *user);
 user_t *get_user_by_name(server_t *server, const char *username);
 user_t *get_user_by_uuid(server_t *server, uuid_t uuid);

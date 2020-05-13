@@ -9,8 +9,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-char *channel_serializer(channel_t *channel)
+char *channel_serializer(const void *data)
 {
+    channel_t *channel = (channel_t *)data;
     size_t len = strlen(channel->name) + strlen(channel->description) + 37;
     char *str = malloc(sizeof(char) * (len + 5));
     char str_uuid[37];

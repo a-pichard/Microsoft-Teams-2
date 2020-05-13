@@ -12,7 +12,7 @@
 static char *get_responce_user(user_t *user)
 {
     char *str = malloc(sizeof(char) * (strlen(user->name) + 37 + 10));
-    char *temp = user_serialize(user);
+    char *temp = user_serializer(user);
 
     strcpy(str, "200 ");
     strcat(str, temp);

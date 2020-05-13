@@ -10,7 +10,7 @@
 
 static char *get_string_all_user(server_t *server)
 {
-    char *temp_str = ll_serialize(&server->users, user_serialize);
+    char *temp_str = ll_serialize(&server->users, &user_serializer);
     char *str = strcat_alloc("200 ", temp_str);
 
     free(temp_str);

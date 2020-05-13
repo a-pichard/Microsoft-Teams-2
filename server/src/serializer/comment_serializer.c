@@ -21,8 +21,9 @@ static void concat_uuids(char *str, comment_t *comment)
     strcat(str, " ");
 }
 
-char *comment_serializer(comment_t *comment)
+char *comment_serializer(const void *data)
 {
+    comment_t *comment = (comment_t *)data;
     size_t len = strlen(comment->body) + 37 + 37 + 10;
     char *str = malloc(sizeof(char) * (len + 6));
     char time[10];

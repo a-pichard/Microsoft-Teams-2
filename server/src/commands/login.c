@@ -12,7 +12,7 @@
 
 static void success_response(client_t *client)
 {
-    char *serialized_usr = user_serialize(client->user);
+    char *serialized_usr = user_serializer(client->user);
     char *response = strcat_alloc("200 ", serialized_usr);
 
     ASSERT(response != NULL);

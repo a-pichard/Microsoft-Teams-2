@@ -21,8 +21,9 @@ static void concat_uuids(char *str, thread_t *thread)
     strcat(str, " ");
 }
 
-char *thread_serializer(thread_t *thread)
+char *thread_serializer(const void *data)
 {
+    thread_t *thread = (thread_t *)data;
     size_t len = strlen(thread->title) + strlen(thread->body) + 37 + 37 + 10;
     char *str = malloc(sizeof(char) * (len + 7));
     char time[10];

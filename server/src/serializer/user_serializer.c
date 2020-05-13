@@ -9,8 +9,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-char *user_serialize(const user_t *user)
+char *user_serializer(const void *data)
 {
+    user_t *user = (user_t *)data;
     char *str = malloc(sizeof(char) * (strlen(user->name) + 37 + 6));
     char str_uuid[37];
 

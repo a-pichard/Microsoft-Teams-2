@@ -9,8 +9,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-char *team_serializer(const team_t *team)
+char *team_serializer(const void *data)
 {
+    team_t *team = (team_t *)data;
     size_t len = strlen(team->name) + strlen(team->description) + 37;
     char *str = malloc(sizeof(char) * (len + 5));
     char str_uuid[37];

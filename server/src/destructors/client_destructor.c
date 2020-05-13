@@ -15,6 +15,8 @@ void client_destructor(void *data)
 
     if (client->req)
         free(client->req);
+    if (client->user != NULL)
+        client->user->status--;
     ll_destroy(&client->write_q, &write_q_destructor);
     close(client->fd);
     free(client);

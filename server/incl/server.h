@@ -66,13 +66,17 @@ void run_server(server_t *);
 // Server
 void handle_client(server_t *server, client_t *client);
 char **parse_cmd(char **buffer, const char *req);
+void load_server_from_file(server_t *server, const char *file_name);
 
 //User
 user_t *user_create(const char *name);
-char *user_serialize(user_t *user);
+char *user_serialize(const user_t *user);
 user_t *get_user_by_name(server_t *server, const char *username);
 user_t *get_user_by_uuid(server_t *server, uuid_t uuid);
 user_t *server_add_user_with_name(server_t *server, const char *username);
+
+//Team
+char *team_serializer(const team_t *team);
 
 // write queue
 void write_q(client_t *client, const char *msg);

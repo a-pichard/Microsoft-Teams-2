@@ -22,7 +22,7 @@ void print_tab(char const * const *t)
     if (t == NULL)
         return;
     for (size_t i = 0; t[i] != NULL; i++)
-        dprintf(1, "%s\n", t[i]);
+        dprintf(1, "[%ud][%s]\n", i, t[i]);
 }
 
 size_t get_tab_len(char const * const *t)

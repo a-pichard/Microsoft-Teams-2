@@ -10,10 +10,12 @@
 parser_result_t *parse_tab(char const * const * token, parser_t *parser)
 {
     ll_t *result_list = NULL;
-    char const * const * current = token;
+    char const * const * current = token+1;
     parser_result_t *result = NULL;
 
-    while (*current != NULL) {
+    if (strcmp(*token, "["))
+        return NULL;
+    while (*current != NULL && strcmp("]", *current)) {
         result = parse(current, parser->parser);
         if (result == NULL)
             break;
@@ -21,7 +23,7 @@ parser_result_t *parse_tab(char const * const * token, parser_t *parser)
         current = result->remainer;
         free(result);
     }
-    if (*current != NULL) {
+    if (*current == NULL || strcmp("]", *current)) {
         ll_destroy(&result_list, parser->parser->destructor);
         return NULL;
     }

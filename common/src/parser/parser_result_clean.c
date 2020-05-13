@@ -32,6 +32,8 @@ static void parser_clean(parser_t *p, void *r) {
         and_parser_destructor(p, r);
     } else if (p->type == TAB) {
         tab_parser_destructor(p, r);
+    } else if (p->type == SUROUNDED || p->type == SEP) {
+        tab_parser_destructor(p->parser, r);
     }
 }
 

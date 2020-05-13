@@ -27,6 +27,7 @@
 // utils
 bool is_str_digit(const char *str);
 char *strcat_alloc(const char *s1, const char *s2);
+char *strcat_alloc3(const char *s1, const char *s2, const char *s3);
 
 // tab
 char **str_to_wordtab(char *s, char delim, bool quotes);

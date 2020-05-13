@@ -11,23 +11,25 @@
 static char **init_tab(char *s, char *delim, bool quotes)
 {
     char delimiters[3] = {delim[0], quotes ? '\"' : '\0', '\0'};
-    size_t size = 1;
+    size_t size = 0;
     size_t length = 0;
 
     while (length != strlen(s)) {
         length = strcspn(s, delimiters);
         if (s[length] == delim[0]) {
+            size += (length != 0) ? 1 : 0; 
             s = &s[length];
             length = strspn(s, delim);
             s = &s[length];
         } else if (quotes && s[length] == '\"') {
-            s = &s[length + 1];
-            length = strcspn(s, "\"");
+            size += (length != 0) ? 1 : 0; 
+            s = &s[length];
+            length = strcspn(s + 1, "\"") + 1;
+            size += (length != 0) ? 1 : 0; 
             s = &s[length + 1];
         }
-        size++;
     }
-    return calloc(sizeof(char *), size + 1);
+    return calloc(sizeof(char *), size + 2);
 }
 
 static void set_value(char **res, size_t *i, char *s, int length)

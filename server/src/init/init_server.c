@@ -22,6 +22,7 @@ server_t *server_address(server_t *server)
 
 void init_server(server_t *server, int port)
 {
+    load_server_from_file(server, "server.txt");
     server_address(server);
     server->server_fd = init_main_server_socket(port);
     server->port = port;

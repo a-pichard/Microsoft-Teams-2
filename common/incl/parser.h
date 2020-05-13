@@ -14,6 +14,8 @@ typedef enum {
     VALUE,
     AND,
     TAB,
+    SUROUNDED,
+    SEP,
 } parser_type_t;
 
 typedef struct parser_s {
@@ -24,6 +26,7 @@ typedef struct parser_s {
         struct parser_s *parser;
     };
     destructor_fn destructor;
+    char sep;
 } parser_t;
 
 //general parse function
@@ -51,3 +54,6 @@ void *parse_string_function(const char *token);
 parser_t name = {.type=AND, {.parsers=name##_parser_tab}};
 
 #define TAB_PARSER(name, element_parser) parser_t name = {.type=TAB, {.parser=element_parser}, NULL}
+
+#define SEP_PARSER(separateur, p) {.type=SEP, .parser=p, .sep=separateur}
+#define SUROUNDE_PARSER(separateur, p) {.type=SUROUNDED, .parser=p, .sep=separateur}

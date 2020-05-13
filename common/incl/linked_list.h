@@ -15,6 +15,8 @@ typedef struct linked_list_s {
     struct linked_list_s *next;
 } ll_t;
 
+typedef char *(*serialize_fn)(const void *);
+
 // create a list node
 ll_t *ll_create(void *data);
 
@@ -31,6 +33,7 @@ void *ll_pop_front(ll_t **list);
 
 //function to apply a function to each element
 void ll_apply(ll_t **list, void(*fn)(void *));
+char *ll_serialize(ll_t **list, serialize_fn);
 
 //len
 size_t ll_len(ll_t **list);

@@ -10,18 +10,10 @@
 
 static char *get_string_all_user(server_t *server)
 {
-    size_t len = ll_len(&server->users);
-    char *str = malloc(sizeof(char)*(len*(DEFAULT_NAME_LENGTH + 20)) + 20);
-    char *temp_str;
+    char *temp_str = ll_serialize(&server->users, user_serialize);
+    char *str = strcat_alloc("200 ", temp_str);
 
-    strcpy(str, "200 [ ");
-    ll_foreach(server->users, user_t, user,
-        temp_str = user_serialize(user);
-        strcat(str, temp_str);
-        strcat(str, " ");
-        free(temp_str);
-    );
-    strcat(str, "]");
+    free(temp_str);
     return str;
 }
 

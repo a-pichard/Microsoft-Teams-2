@@ -50,12 +50,12 @@ class MyTeamsTest(unittest.TestCase):
 
 class TestLogin(MyTeamsTest):
     def test(self):
-        self.send_assert_code("login toto zea", 500)
-        self.send_assert_code("login toto", 200)
-        self.send_assert_code("login tata", 300)
-        self.send_assert_code("logout aze", 500)
-        self.send_assert_code("logout", 200)
-        self.send_assert_code("logout", 300)
+        self.send_assert_code("/login toto zea", 500)
+        self.send_assert_code("/login toto", 200)
+        self.send_assert_code("/login tata", 300)
+        self.send_assert_code("/logout aze", 500)
+        self.send_assert_code("/logout", 200)
+        self.send_assert_code("/logout", 300)
         
 
 if __name__ == "__main__":

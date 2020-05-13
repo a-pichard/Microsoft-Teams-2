@@ -13,14 +13,14 @@ static void parser_clean(parser_t *p, void *r);
 static void and_parser_destructor(parser_t *p, void *r) {
     int i = 0;
 
-    ll_foreach((ll_t*)(r), void, v,
+    ll_foreach((ll_t *)(r), void, v,
         parser_clean(p->parsers[i], v);
         i++;
     );
 }
 
 static void tab_parser_destructor(parser_t *p, void *r) {
-    ll_foreach((ll_t*)(r), void, v,
+    ll_foreach((ll_t *)(r), void, v,
         parser_clean(p->parser, v);
     );
 }

@@ -22,7 +22,7 @@ Test(Test_parser, parser_uuid_ok)
     parser_result_t *r = parse(token, &p);
 
     cr_assert_neq(r, NULL);
-    cr_assert_eq(uuid_compare((unsigned char*)(r->data), uuid), 0);
+    cr_assert_eq(uuid_compare((unsigned char *)(r->data), uuid), 0);
     cr_assert_eq(*r->remainer, NULL);
 }
 

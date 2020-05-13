@@ -31,7 +31,7 @@ user_t *get_user_by_uuid(server_t *server, uuid_t uuid)
 user_t *server_add_user_with_name(server_t *server, const char *username)
 {
     user_t *user = user_create(username);
-    
+
     ll_push_back(&server->users, user);
     return user;
 }

@@ -31,7 +31,11 @@
 #define TIMEOUT_IN_SEC 15
 
 // index of functions pointer
-typedef void (*cmd_t)(server_t *server, client_t *client, char const * const * data);
+typedef void (*cmd_t)(
+    server_t *server,
+    client_t *client,
+    char const * const * data
+);
 
 // utils
 void auth(client_t *, user_t *, int);

@@ -1,3 +1,10 @@
+/*
+** EPITECH PROJECT, 2020
+** NWP_myteams_2019
+** File description:
+** parse_cmd
+*/
+
 
 #include "server.h"
 #include <string.h>

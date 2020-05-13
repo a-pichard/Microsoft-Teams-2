@@ -2,11 +2,11 @@
 ** EPITECH PROJECT, 2020
 ** NWP_myteams_2019
 ** File description:
-** data2
+** data
 */
 
-#ifndef DATA2_H_
-#define DATA2_H_
+#ifndef DATA_H_
+#define DATA_H_
 
 #include <uuid/uuid.h>
 #include "common.h"
@@ -64,4 +64,4 @@ typedef struct {
     ll_t *users_uuid;
 } team_t;
 
-#endif /* !DATA2_H_ */
+#endif /* !DATA_H_ */

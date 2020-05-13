@@ -19,7 +19,8 @@ static void success_response(client_t *client)
     free(response);
 }
 
-void logout(server_t *server UNUSED, client_t *client, char const * const *data UNUSED)
+void logout(server_t *server UNUSED, client_t *client,
+    char const * const *data UNUSED)
 {
     char uuid_str[37];
 

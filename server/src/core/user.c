@@ -20,7 +20,7 @@ user_t *user_create(const char *name)
     strcpy(user->name, name);
     uuid_generate(user->uuid);
     uuid_unparse(user->uuid, uuid_str);
-    server_event_user_created(uuid_str ,name);
+    server_event_user_created(uuid_str, name);
     user->status = 0;
     return user;
 }

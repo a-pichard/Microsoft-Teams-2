@@ -18,8 +18,8 @@ Test(Test_parser, parser_paser_tab_ok)
     parser_result_t *r = parse(token, &p);
     cr_assert_neq(r, NULL);
     ll_t *r_list = r->data;
-    cr_assert_eq(*(int*)(ll_pop_front(&r_list)), 10);
-    cr_assert_eq(*(int*)(ll_pop_front(&r_list)), 42);
+    cr_assert_eq(*(int *)(ll_pop_front(&r_list)), 10);
+    cr_assert_eq(*(int *)(ll_pop_front(&r_list)), 42);
     cr_assert_eq(*r->remainer, NULL);
 }
 

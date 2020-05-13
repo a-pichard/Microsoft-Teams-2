@@ -16,7 +16,7 @@ char *client_recieve(client_t *client)
     int ret = 0;
 
     ret = read(client->fd, buffer, BUFFER_READ_SIZE);
-    
+
     ASSERT(ret >= 0);
     return bufferizer(&client->req, buffer);
 }

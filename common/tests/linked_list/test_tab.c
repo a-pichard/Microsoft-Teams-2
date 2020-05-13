@@ -51,7 +51,7 @@ Test(Test_tab, destroy_tab)
     cr_assert_str_eq("no crash", "no crash");
 }
 
-Test(Test_tab, print_tab, .init=cr_redirect_stdout)
+Test(Test_tab, print_tab, .init = cr_redirect_stdout)
 {
     char *to_parse = strdup("wesh la zone \"ca dit quoi lo\"");
     char **res = str_to_wordtab(to_parse, ' ', true);

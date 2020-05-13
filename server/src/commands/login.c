@@ -29,7 +29,8 @@ void login(server_t *server, client_t *client, char const * const *data)
     char uuid_str[37];
 
     r = parse(data, &string_parser);
-    if (r == NULL || *r->remainer != NULL || strlen((const char *)(r->data)) > DEFAULT_NAME_LENGTH) {
+    if (r == NULL || *r->remainer != NULL ||
+        strlen((const char *)(r->data)) > DEFAULT_NAME_LENGTH) {
         write_q(client, "500 \"Bad argument\"");
     } else {
         if (client->user != NULL) {

@@ -25,7 +25,7 @@ static parser_result_t *parse_value(char const * const *token, parser_t *p)
 
     if (*token == NULL)
         return NULL;
-    r = p->parser_function(*token);                
+    r = p->parser_function(*token);
     if (r == NULL) {
         return NULL;
     } else {
@@ -59,7 +59,8 @@ static parser_result_t *parse_sep(char const *const *token, parser_t *p)
 {
     parser_result_t *p_r;
     void *r;
-    const char * const *tab = (const char * const *)str_to_wordtab((char*)(*token), p->sep, true);
+    const char * const *tab =
+        (const char * const *)str_to_wordtab((char *)(*token), p->sep, true);
 
     p_r = parse(tab, p->parser);
     destroy_tab((char **)tab);
@@ -68,7 +69,7 @@ static parser_result_t *parse_sep(char const *const *token, parser_t *p)
     return r;
 }
 
-parser_result_t* parse(char const * const * token, parser_t *p)
+parser_result_t *parse(char const * const * token, parser_t *p)
 {
     if (*token == NULL)
         return NULL;

@@ -17,15 +17,15 @@ static char **init_tab(char *s, char *delim, bool quotes)
     while ((length = strcspn(s, delimiters)) != strlen(s)) {
         length = strcspn(s, delimiters);
         if (s[length] == delim[0]) {
-            size += (length != 0) ? 1 : 0; 
+            size += (length != 0) ? 1 : 0;
             s = &s[length];
             length = strspn(s, delim);
             s = &s[length];
         } else if (quotes && s[length] == '\"') {
-            size += (length != 0) ? 1 : 0; 
+            size += (length != 0) ? 1 : 0;
             s = &s[length];
             length = strcspn(s + 1, "\"") + 1;
-            size += (length != 0) ? 1 : 0; 
+            size += (length != 0) ? 1 : 0;
             s = &s[length + 1];
         }
     }

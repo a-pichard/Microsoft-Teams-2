@@ -8,7 +8,7 @@
 #include <linked_list.h>
 #include <stdlib.h>
 
-void ll_erase(ll_t **list, void *data, void(*destructor)(void*))
+void ll_erase(ll_t **list, void *data, void(*destructor)(void *))
 {
     ll_t **current = list;
     ll_t *tmp = NULL;

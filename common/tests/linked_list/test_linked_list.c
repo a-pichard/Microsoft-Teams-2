@@ -97,7 +97,7 @@ Test(Test_linked_list, linked_list_pop_front)
 
 void add_1(void *a)
 {
-    int *v = (int*)(a);
+    int *v = (int *)(a);
     *v = *v + 1;
 }
 
@@ -114,9 +114,9 @@ Test(Test_linked_list, linked_list_apply)
     ll_push_front(&l, b);
     ll_apply(&l, add_1);
     ret = ll_pop_front(&l);
-    cr_assert_eq(*(int*)(ret), 43);
+    cr_assert_eq(*(int *)(ret), 43);
     ret = ll_pop_front(&l);
-    cr_assert_eq(*(int*)(ret), 11);
+    cr_assert_eq(*(int *)(ret), 11);
 }
 
 

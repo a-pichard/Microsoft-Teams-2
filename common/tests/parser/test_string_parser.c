@@ -16,6 +16,6 @@ Test(Test_parser, parser_string_ok)
     parser_result_t *r = parse(token, &p);
 
     cr_assert_neq(r, NULL);
-    cr_assert_str_eq((char*)(r->data), "10");
+    cr_assert_str_eq((char *)(r->data), "10");
     cr_assert_eq(*r->remainer, str);
 }

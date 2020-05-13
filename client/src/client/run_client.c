@@ -13,7 +13,6 @@
 #include "command.h"
 #include <sys/select.h>
 
-
 void *check_cmd(char **data, const char **command_string)
 {
     int i;

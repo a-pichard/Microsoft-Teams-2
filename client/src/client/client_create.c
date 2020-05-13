@@ -21,7 +21,8 @@ static int connect_to_server(const char *ip, int port)
     server_addr.sin_addr.s_addr = inet_addr(ip);
     fd = socket(AF_INET, SOCK_STREAM, 0);
     ASSERT(fd != -1);
-    ASSERT(connect(fd, (struct sockaddr *)&server_addr, sizeof(struct sockaddr_in)) != -1);
+    ASSERT(connect(fd, (struct sockaddr *)&server_addr,
+        sizeof(struct sockaddr_in)) != -1);
     return fd;
 }
 

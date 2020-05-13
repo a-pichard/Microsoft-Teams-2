@@ -25,8 +25,8 @@ void ll_push_back(ll_t **first, void *data);
 void ll_push_front(ll_t **first, void *data);
 
 //function to remove element
-void ll_erase(ll_t **list, void *data, void(*destructor)(void*));
-void ll_destroy(ll_t **list, void(*destructor)(void*));
+void ll_erase(ll_t **list, void *data, void(*destructor)(void *));
+void ll_destroy(ll_t **list, void(*destructor)(void *));
 
 //function to get element
 void *ll_pop_front(ll_t **list);
@@ -39,10 +39,11 @@ char *ll_serialize(ll_t **list, serialize_fn);
 size_t ll_len(ll_t **list);
 
 #define ll_foreach(list, type, element, code) do {    \
-    for (ll_t *current_foreach = list; current_foreach != NULL; current_foreach = current_foreach->next) {    \
+    for (ll_t *current_foreach = list; current_foreach != NULL; \
+        current_foreach = current_foreach->next) {    \
         type *element = (type*)(current_foreach->data); \
         code;   \
     }   \
-} while(0);
+} while (0);
 
 #endif

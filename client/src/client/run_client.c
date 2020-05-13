@@ -7,20 +7,20 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <client.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include "command.h"
 #include <sys/select.h>
 
 
-void *check_cmd(char **data, const char **command_string)
+cmd_t check_cmd(char **data, const char **command_string)
 {
     int i;
+    void *funcs[] = F_FUNC;
 
     for (i = 0; command_string[i]; i++)
         if (strcmp(command_string[i], data[0]) == 0)
-            return (data);
+            return (funcs[i]);
     return NULL;
 }
 
@@ -35,27 +35,40 @@ char **clean(char **data)
     return (data);
 }
 
-void read_command(client_t *client)
+cmd_t read_command(client_t *client)
 {
     char buff[512] = { 0 };
     char **data;
     const char *command_string[] = F_NAME;
+    cmd_t func;
 
     read(0, buff, 512);
     data = clean(str_to_wordtab(buff, ' ', true));
-    if ((check_cmd(data, command_string)))
+    if ((func = check_cmd(data, command_string)))
         client_send(client, buff);
     destroy_tab(data);
+    return func;
 }
 
-void handle_reception(client_t *client)
+void handle_reception(client_t *client, cmd_t func)
 {
     char *recept;
 
     recept = client_recieve(client);
-    printf("[%s]\n", recept);
+    if (func) {
+        (func)(client, (char const *)recept);
+        func = NULL;
+    }
+    //TODO EVENT
+    // else {
+
+    // }
     while ((recept = bufferizer(&client->req, "")) != NULL) {
-        printf("[%s]\n", recept);
+        printf("recept = [%s]\n", recept);
+        if (func) {
+            (*func)(client, (char const *)recept);
+            func = NULL;
+        }
         free(recept);
     }
 }
@@ -63,6 +76,7 @@ void handle_reception(client_t *client)
 void client_run(client_t *client UNUSED)
 {
     fd_set rset;
+    cmd_t func = NULL;
     // fd_set wset;
 
     while (true) {
@@ -73,9 +87,10 @@ void client_run(client_t *client UNUSED)
         // FD_SET(client->fd, &wset);
         select(client->fd+1, &rset, NULL, NULL, NULL);
         if (FD_ISSET(0, &rset)) {
-            read_command(client);
+            func = read_command(client);
         } else if (FD_ISSET(client->fd, &rset)) {
-            handle_reception(client);
+            handle_reception(client, func);
+            func = NULL;
         }
     }
 }

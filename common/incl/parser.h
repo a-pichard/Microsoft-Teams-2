@@ -55,12 +55,12 @@ void *parse_uuid_function(const char *token);
 void *parse_string_function(const char *token);
 
 //use full macro
-#define UUID_PARSER {.type = VALUE, \
-    {.parser_function = parse_uuid_function}, .destructor = free}
-#define INT_PARSER {.type = VALUE,  \
-    {.parser_function = parse_int_function}, .destructor = free}
-#define STRING_PARSER {.type = VALUE,   \
-    {.parser_function = parse_string_function}, .destructor = free}
+static const parser_t UUID_PARSER = {.type=VALUE,   \
+    {.parser_function=parse_uuid_function}, .destructor=free};
+static const parser_t INT_PARSER = {.type=VALUE,    \
+    {.parser_function=parse_int_function}, .destructor=free};
+static const parser_t STRING_PARSER = {.type=VALUE, \
+    {.parser_function=parse_string_function}, .destructor=free};
 
 #define AND_PARSER(name, ...) parser_t *name##_parser_tab[] =   \
     {__VA_ARGS__, NULL};  \

@@ -26,7 +26,6 @@ void init_server(server_t *server, int port)
     server_address(server);
     server->server_fd = init_main_server_socket(port);
     server->port = port;
-    server->users = NULL;
     server->clients = NULL;
     server->teams = NULL;
     server->dms = NULL;

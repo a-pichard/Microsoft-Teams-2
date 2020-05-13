@@ -17,12 +17,14 @@ static void and_parser_destructor(parser_t *p, void *r) {
         parser_clean(p->parsers[i], v);
         i++;
     );
+    ll_destroy((ll_t **)&r, NULL);
 }
 
 static void tab_parser_destructor(parser_t *p, void *r) {
     ll_foreach((ll_t *)(r), void, v,
         parser_clean(p->parser, v);
     );
+    ll_destroy((ll_t **)&r, NULL);
 }
 
 static void parser_clean(parser_t *p, void *r) {
@@ -33,7 +35,7 @@ static void parser_clean(parser_t *p, void *r) {
     } else if (p->type == TAB) {
         tab_parser_destructor(p, r);
     } else if (p->type == SUROUNDED || p->type == SEP) {
-        tab_parser_destructor(p->parser, r);
+        parser_clean(p->parser, r);
     }
 }
 

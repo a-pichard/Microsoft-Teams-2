@@ -17,7 +17,8 @@ void ll_destroy(ll_t **list, void(*destructor)(void *))
     while (it != NULL) {
         current = it;
         it = current->next;
-        destructor(current->data);
+        if (destructor)
+            destructor(current->data);
         free(current);
     }
     *start = NULL;

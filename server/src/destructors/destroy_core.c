@@ -19,9 +19,9 @@ void server_write(const char *users, const char *teams)
     int file = open("server.txt", O_CREAT | O_TRUNC | O_WRONLY, 0644);
 
     ASSERT(file != -1);
-    write(file, "\"users\": ", 9);
+    write(file, "\"users\" ", 8);
     write(file, users, strlen(users));
-    write(file, "\n\"teams\": ", 10);
+    write(file, "\n\"teams\" ", 9);
     write(file, teams, strlen(teams));
     close(file);
 }

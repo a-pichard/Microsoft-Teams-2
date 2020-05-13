@@ -37,36 +37,31 @@ static parser_result_t *parse_surounded(char const *const *token, parser_t *p)
 {
     char *data[] = {NULL, NULL};
     char *str = NULL;
-    void *r = NULL;
     parser_result_t *p_r;
 
     if (strlen(*token) < 2) {
         return NULL;
     }
-    if (*token[0] != p->sep || *token[strlen(*token)-1] != p->sep)
+    if ((*token)[0] != p->sep || (*token)[strlen(*token)-1] != p->sep)
         return NULL;
-    str = strdup(*token);
+    str = strdup(*token+1);
     str[strlen(str)-1] = '\0';
     data[0] = str;
-    p_r = parse((char const * const *)data, p);
-    r = p_r->data;
-    free(p_r);
+    p_r = parse((char const * const *)data, p->parser);
+    p_r->remainer = token + 1;
     free(str);
-    return r;
+    return p_r;
 }
 
 static parser_result_t *parse_sep(char const *const *token, parser_t *p)
 {
     parser_result_t *p_r;
-    void *r;
     const char * const *tab =
         (const char * const *)str_to_wordtab((char *)(*token), p->sep, true);
 
     p_r = parse(tab, p->parser);
     destroy_tab((char **)tab);
-    r = p_r->data;
-    free(p_r);
-    return r;
+    return p_r;
 }
 
 parser_result_t *parse(char const * const * token, parser_t *p)

@@ -22,12 +22,11 @@ static char *get_responce_user(user_t *user)
 
 void user(server_t *server, client_t *client, char const * const *data)
 {
-    parser_t string_parser = UUID_PARSER;
     parser_result_t *r;
     user_t *user = NULL;
     char *result;
 
-    r = parse(data, &string_parser);
+    r = parse(data, &UUID_PARSER);
     if (r == NULL) {
         write_q(client, "500 \"Bad argument\"");
         return;
@@ -41,5 +40,5 @@ void user(server_t *server, client_t *client, char const * const *data)
             free(result);
         }
     }
-    parser_result_clean(&string_parser, r);
+    parser_result_clean(&UUID_PARSER, r);
 }

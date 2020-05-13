@@ -24,3 +24,14 @@ user_t *user_create(const char *name)
     user->status = 0;
     return user;
 }
+
+user_t *user_reload(const char *name, uuid_t uuid, int status)
+{
+    user_t *user = malloc(sizeof(user_t));
+
+    strcpy(user->name, name);
+    uuid_copy(user->uuid, uuid);
+    user->status = status;
+    //todo call log
+    return user;
+}

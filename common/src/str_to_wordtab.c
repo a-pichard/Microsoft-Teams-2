@@ -14,7 +14,7 @@ static char **init_tab(char *s, char *delim, bool quotes)
     size_t size = 0;
     size_t length = 0;
 
-    while (length != strlen(s)) {
+    while ((length = strcspn(s, delimiters)) != strlen(s)) {
         length = strcspn(s, delimiters);
         if (s[length] == delim[0]) {
             size += (length != 0) ? 1 : 0; 
@@ -46,8 +46,7 @@ static void loop_in_string(char **res, char *s, char *delim, bool quotes)
     size_t length = 0;
     size_t i = 0;
 
-    while (length != strlen(s)) {
-        length = strcspn(s, delimiters);
+    while ((length = strcspn(s, delimiters)) != strlen(s)) {
         if (s[length] == delim[0]) {
             set_value(res, &i, s, length);
             s = &s[length];

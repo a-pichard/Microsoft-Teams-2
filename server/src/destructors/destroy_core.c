@@ -33,7 +33,7 @@ void destroy_server(void)
     char *str_teams = NULL;
 
     ll_destroy(&server->clients, &client_destructor);
-    str_users = ll_serialize(&server->users, (serialize_fn)user_serialize);
+    str_users = ll_serialize(&server->users, (serialize_fn)user_serializer);
     ll_destroy(&server->users, &free);
     str_teams = ll_serialize(&server->teams, (serialize_fn)team_serializer);
     ll_destroy(&server->teams, &team_destructor);

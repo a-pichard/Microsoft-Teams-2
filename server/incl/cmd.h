@@ -18,6 +18,7 @@
     "/user",    \
     "/send",    \
     "/messages",    \
+    "/use", \
     NULL    \
 };
 
@@ -29,6 +30,7 @@
     &user,  \
     &my_send,  \
     &messages,  \
+    &use,   \
     NULL    \
 }
 
@@ -59,6 +61,7 @@ void users(server_t *server, client_t *client, char const * const *data);
 void user(server_t *server, client_t *client, char const * const *data);
 void my_send(server_t *server, client_t *client, char const * const *data);
 void messages(server_t *server, client_t *client, char const * const *data);
+void use(server_t *server, client_t *client, char const * const *data);
 
 
 #endif /* !CMD_H_ */

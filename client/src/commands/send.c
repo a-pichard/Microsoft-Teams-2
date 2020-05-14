@@ -11,6 +11,6 @@
 void send(client_t *client, char const * recept)
 {
     //if error
-    //client_error_unknown_user(user_id);   
-    printf("send\n"); 
+    //client_error_unknown_user(user_id);
+    printf("send\n");
 }

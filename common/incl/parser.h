@@ -60,17 +60,18 @@ static const parser_t UUID_PARSER = {.type = VALUE,   \
 static const parser_t INT_PARSER = {.type = VALUE,    \
     {.parser_function = parse_int_function}, .destructor = free};
 static const parser_t STRING_PARSER = {.type = VALUE, \
-    {.parser_function = parse_string_function}, .destructor=free};
+    {.parser_function = parse_string_function}, .destructor = free};
 
 #define AND_PARSER(name, ...) const parser_t *name##_parser_tab[] =   \
     {__VA_ARGS__, NULL};  \
-parser_t name = {.type=AND, {.parsers=name##_parser_tab}};
+parser_t name = {.type = AND, {.parsers = name##_parser_tab}};
 
-#define TAB_PARSER(name, element_parser) parser_t name = {.type=TAB,    \
-    {.parser=element_parser}, NULL}
+#define TAB_PARSER(name, element_parser) parser_t name = {.type = TAB,    \
+    {.parser = element_parser}, NULL}
 
-#define SEP_PARSER(separateur, p) {.type=SEP, .parser=p, .sep=separateur}
-#define SUROUNDE_PARSER(separateur, p) {.type=SUROUNDED, .parser=p, \
-    .sep=separateur}
+#define SEP_PARSER(separateur, p)   \
+    {.type = SEP, .parser = p, .sep = separateur}
+#define SUROUNDE_PARSER(separateur, p) {.type = SUROUNDED, .parser = p, \
+    .sep = separateur}
 
 #endif

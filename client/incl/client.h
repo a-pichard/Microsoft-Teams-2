@@ -20,7 +20,6 @@ typedef struct client_s
 } client_t;
 
 typedef void (*cmd_t)(client_t *client, char const * recept);
- 
 
 void helper(const char *prg, int exit_status);
 

@@ -34,7 +34,16 @@ typedef struct {
     int status;
 } user_t;
 
+typedef enum use_state {
+    NONE,
+    TEAM,
+    CHANNEL,
+    THREAD,
+} use_state_t;
+
 typedef struct {
+    use_state_t state;
+    uuid_t use_uuid;
     int fd;
     char *req;
     ll_t *write_q;
@@ -56,6 +65,9 @@ void init_server(server_t *, int port);
 server_t *server_address(server_t *server);
 int init_main_server_socket(int port);
 void destroy_server(void);
+void load_server_from_file(server_t *server, const char *file_name);
+const char * const *load_message(server_t *server, const char * const *data);
+const char * const *load_user(server_t *server, const char * const *data);
 
 //helper
 void helper(const char *prg_name, int exit_status);
@@ -66,7 +78,6 @@ void run_server(server_t *);
 // Server
 void handle_client(server_t *server, client_t *client);
 char **parse_cmd(char **buffer, const char *req);
-void load_server_from_file(server_t *server, const char *file_name);
 
 //User
 user_t *user_create(const char *name);
@@ -76,6 +87,17 @@ char *user_serializer(const void *user);
 user_t *get_user_by_name(server_t *server, const char *username);
 user_t *get_user_by_uuid(server_t *server, uuid_t uuid);
 user_t *server_add_user_with_name(server_t *server, const char *username);
+
+//teams
+team_t *get_teams_by_uuid(server_t *server, uuid_t uuid);
+
+//channel
+channel_t *get_channel_by_uuid(server_t *server, uuid_t uuid);
+
+
+//thread
+thread_t *get_thread_by_uuid(server_t *server, uuid_t uuid);
+
 
 // write queue
 void write_q(client_t *client, const char *msg);

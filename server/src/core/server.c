@@ -16,6 +16,7 @@ static void init_new_client(client_t *client, int client_sock)
     client->req = NULL;
     client->write_q = NULL;
     client->user = NULL;
+    client->state = NONE;
 }
 
 static void accept_new_client_connection(server_t *server)

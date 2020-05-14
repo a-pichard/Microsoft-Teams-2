@@ -41,6 +41,7 @@ void destroy_server(void)
     str_teams = ll_serialize(&server->teams, (serialize_fn)team_serializer);
     ll_destroy(&server->teams, &team_destructor);
     str_dms = ll_serialize(&server->dms, dm_serializer);
+    ll_destroy(&server->dms, &dm_destructor);
     server_write(str_users, str_teams, str_dms);
     free(str_users);
     free(str_teams);

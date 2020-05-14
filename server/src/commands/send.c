@@ -22,6 +22,7 @@ void my_send(server_t *server, client_t *client, char const * const *data)
         d = r->data;
         server_add_private_message(server, msg_create(client->user->uuid,
             (unsigned char *)(d->data), (char *)(d->next->data)));
+        write_q(client, "200");
     }
     parser_result_clean(&p, r);
 }

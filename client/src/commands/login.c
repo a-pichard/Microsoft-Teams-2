@@ -18,7 +18,7 @@ void login(client_t *client, char const * recept)
     parser_t sep_p = SEP_PARSER(' ', &user_p);
     parser_t suround = SUROUNDE_PARSER('"', &sep_p);
     parser_result_t *r_status = parse(data, &INT_PARSER);
-    
+
     if (r_status == NULL) {
         return; // invalid args
     }

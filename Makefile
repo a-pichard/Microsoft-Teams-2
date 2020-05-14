@@ -61,7 +61,7 @@ debug: fclean
 	@cp $(SERVER_DIR)/$(SERVER) $(SERVER)
 	@printf "$(GREEN)Project built in debug mode (-g)!$(WHITE)\n"
 
-tests_run:
+tests_run: $(CLIENT) $(SERVER)
 	@make -s -C $(COMMON_DIR) tests_run
 	@make -s -C $(SERVER_DIR) tests_run
 

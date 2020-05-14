@@ -20,8 +20,8 @@ void my_send(server_t *server, client_t *client, char const * const *data)
     } else {
         //todo check that uuid exit
         d = r->data;
-        server_add_private_message(server, client->user->uuid,
-            (unsigned char *)(d->data), (char *)(d->next->data));
+        server_add_private_message(server, msg_create(client->user->uuid,
+            (unsigned char *)(d->data), (char *)(d->next->data)));
     }
     parser_result_clean(&p, r);
 }

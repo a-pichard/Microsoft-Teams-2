@@ -7,22 +7,30 @@
 
 #include "server.h"
 
-void server_add_private_message(
-    server_t *server, uuid_t from, uuid_t to, const char *content)
+void server_add_private_message(server_t *server, msg_t *message)
 {
-    msg_t *message = msg_create(from, to, content);
     dm_t *dms = NULL;
 
     ll_foreach(server->dms, dm_t, dm,
-        if ((!uuid_compare(dm->user1, from) && !uuid_compare(dm->user2, to)) ||
-             (!uuid_compare(dm->user1, to) && !uuid_compare(dm->user2, from))) {
+        if ((!uuid_compare(dm->user1, message->from) && !uuid_compare(dm->user2, message->to)) ||
+            (!uuid_compare(dm->user1, message->to) && !uuid_compare(dm->user2, message->from))) {
             ll_push_back(&dm->msgs, message);
             return;
         }
     );
-    dms = dm_create(from, to);
+    dms = dm_create(message->from, message->to);
     ll_push_back(&dms->msgs, message);
     ll_push_back(&server->dms, dms);
-    //todo create new dm and add mesage
+}
+
+dm_t *get_dms(server_t *server, uuid_t user1, uuid_t user2)
+{
+    ll_foreach(server->dms, dm_t, dm,
+        if ((!uuid_compare(dm->user1, user1) && !uuid_compare(dm->user2, user2)) ||
+            (!uuid_compare(dm->user1, user2) && !uuid_compare(dm->user2, user1))) {
+            return dm;
+        }
+    );
+    return NULL;
 }
 

@@ -19,6 +19,7 @@
 // direct messages
 
 typedef struct {
+    time_t time;
     uuid_t from;
     uuid_t to;
     char *msg;
@@ -72,6 +73,7 @@ dm_t *dm_create(uuid_t user1, uuid_t user2);
 // Msg
 char *msg_serializer(const void *data);
 msg_t *msg_create(uuid_t from, uuid_t to, const char *content);
+msg_t *message_reload(uuid_t from, uuid_t to, time_t time, const char *content);
 void msg_destructor(void *data);
 
 // Team

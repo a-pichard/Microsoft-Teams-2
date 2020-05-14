@@ -11,12 +11,13 @@
 #include "server.h"
 
 #define F_NAME {    \
-    "/help", \
-    "/login",    \
-    "/logout",   \
-    "/users",    \
-    "/user", \
-    "/send", \
+    "/help",    \
+    "/login",   \
+    "/logout",  \
+    "/users",   \
+    "/user",    \
+    "/send",    \
+    "/messages",    \
     NULL    \
 };
 
@@ -27,6 +28,7 @@
     &users, \
     &user,  \
     &my_send,  \
+    &messages,  \
     NULL    \
 }
 
@@ -56,6 +58,7 @@ void logout(server_t *server, client_t *client, char const * const *data);
 void users(server_t *server, client_t *client, char const * const *data);
 void user(server_t *server, client_t *client, char const * const *data);
 void my_send(server_t *server, client_t *client, char const * const *data);
+void messages(server_t *server, client_t *client, char const * const *data);
 
 
 #endif /* !CMD_H_ */

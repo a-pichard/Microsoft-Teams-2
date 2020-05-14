@@ -85,9 +85,7 @@ void send_message(server_t *server, client_t *client);
 void client_destructor(void *data);
 void write_q_destructor(void *data);
 
-void server_add_private_message(
-    server_t *server,
-    uuid_t from, uuid_t to,
-    const char *content);
+void server_add_private_message(server_t *server, msg_t *message);
+dm_t *get_dms(server_t *server, uuid_t user1, uuid_t user2);
 
 #endif /* !SERVER_H_ */

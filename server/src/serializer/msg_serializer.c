@@ -18,7 +18,7 @@ char *msg_serializer(const void *data)
     char str_uuid2[37];
     char int_str[20] = { 0 };
 
-    sprintf(int_str, "%d", msg->time);
+    sprintf(int_str, "%ld", msg->time);
     uuid_unparse(msg->from, str_uuid1);
     uuid_unparse(msg->to, str_uuid2);
     strcpy(str, str_uuid1);

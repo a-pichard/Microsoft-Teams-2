@@ -1,9 +1,4 @@
-##
-## EPITECH PROJECT, 2020
-## NWP_myteams_2019
-## File description:
-## test
-##
+#!/usr/bin/env python3.7
 
 import subprocess
 import socket

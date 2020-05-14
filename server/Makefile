@@ -46,7 +46,7 @@ $(NAME):	$(OBJ)
 tests_run	: $(NAME)
 	@$(RM) $(COVERAGE_FILE)
 	@printf "$(RED)testing...$(WHITE)"
-	python tests/test.py
+	tests/test.py
 	# ./${TEST_NAME}
 
 clean:

@@ -28,6 +28,8 @@ static void tab_parser_destructor(const parser_t *p, void *r) {
 }
 
 static void parser_clean(const parser_t *p, void *r) {
+    if (r == NULL)
+        return;
     if (p->type == VALUE) {
         p->destructor(r);
     } else if (p->type == AND) {

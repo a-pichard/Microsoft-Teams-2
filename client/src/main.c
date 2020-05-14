@@ -7,21 +7,16 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <client.h>
-#include <stdlib.h>
-#include <unistd.h>
+#include "client.h"
+#include <signal.h>
 
-client_t *init_client(const char *ip, const char *port_str)
+static void sig_handler(int sig UNUSED)
 {
-    client_t *client = NULL;
-    char *end;
-    int port = -1;
-
-    port = strtol(port_str, &end, 10);
-    if (*end != '\0')
-        return NULL;
-    client = client_create(ip, port);
-    return client;
+    client_t *client = client_save(NULL);
+    if (client) {
+        client_destroy(client);
+    }
+    exit(0);
 }
 
 int main(int ac, const char * const * av)
@@ -32,7 +27,9 @@ int main(int ac, const char * const * av)
         helper(av[0], 0);
     } else if (ac == 3) {
         client = init_client(av[1], av[2]);
-        printf("You'r welcome bamboula\n");
+        if (client == NULL)
+            helper(av[0], 84);
+        signal(SIGINT, &sig_handler);
         client_run(client);
         client_destroy(client);
     } else {

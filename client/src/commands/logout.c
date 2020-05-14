@@ -41,5 +41,6 @@ void logout(client_t *client, char const * recept)
         dprintf(1, "%s\n", *(r_status->remainer));
     else
         get_user_infos(r_status->remainer);
+    destroy_tab(data);
     parser_result_clean(&INT_PARSER, r_status);
 }

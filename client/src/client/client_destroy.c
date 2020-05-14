@@ -15,5 +15,6 @@ void client_destroy(client_t *client)
         close(client->fd);
     if (client->req != NULL)
         free(client->req);
+    ll_destroy(&client->to_send, &free);
     free(client);
 }

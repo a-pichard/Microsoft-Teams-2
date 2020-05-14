@@ -23,15 +23,39 @@ static int connect_to_server(const char *ip, int port)
     ASSERT(fd != -1);
     ASSERT(connect(fd, (struct sockaddr *)&server_addr,
         sizeof(struct sockaddr_in)) != -1);
-    return fd;
+    return (fd);
 }
 
-client_t *client_create(const char *ip, int port)
+static client_t *client_create(client_t *client, const char *ip, int port)
 {
-    client_t *client = malloc(sizeof(client_t));
-
-    ASSERT(client != NULL);
     client->fd = connect_to_server(ip, port);
     ASSERT(client->fd != -1);
-    return client;
+    client->req = NULL;
+    client->to_send = NULL;
+}
+
+client_t *client_save(client_t *client)
+{
+    static client_t *save = NULL;
+
+    if (client == NULL)
+        return (save);
+    save = client;
+    return (save);
+}
+
+client_t *init_client(const char *ip, const char *port_str)
+{
+    client_t *client = NULL;
+    char *end;
+    int port = -1;
+
+    port = strtol(port_str, &end, 10);
+    if (*end != '\0')
+        return NULL;
+    client = malloc(sizeof(client_t));
+    ASSERT(client != NULL);
+    client_create(client, ip, port);
+    client_save(client);
+    return (client);
 }

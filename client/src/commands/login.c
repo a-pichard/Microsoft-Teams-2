@@ -32,7 +32,7 @@ static void get_user_infos(char const * const *remainer)
 void login(client_t *client, char const * recept)
 {
     char **data = str_to_wordtab(recept, ' ', true);
-    
+
     parser_result_t *r_status = parse(data, &INT_PARSER);
 
     if (r_status == NULL)

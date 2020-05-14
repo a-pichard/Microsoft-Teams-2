@@ -23,14 +23,15 @@ void read_from_server(client_t *client, cmd_t func)
     char *recept;
 
     recept = client_recieve(client);
-    if (func) {
-        (func)(client, (char const *)recept);
-        func = NULL;
-    }
-    if (recept)
+    if (recept) {
+        if (func) {
+            (func)(client, (char const *)recept);
+            func = NULL;
+        } else {
+            /* event, il faudrait mettre un code spécial pour les events genre
+            600, qu'on sache ici si on reçoit une réponse ou un évent, ça sera
+            plus propre que de vérifier si si une `func` est set ou pas */
+        }
         free(recept);
-    //TODO EVENT
-    // else {
-
-    // }
+    }
 }

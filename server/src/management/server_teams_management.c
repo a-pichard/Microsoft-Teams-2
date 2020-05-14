@@ -6,6 +6,7 @@
 */
 
 #include "server.h"
+#include <string.h>
 
 team_t *get_teams_by_uuid(server_t *server, uuid_t uuid)
 {
@@ -15,4 +16,20 @@ team_t *get_teams_by_uuid(server_t *server, uuid_t uuid)
         }
     );
     return NULL;
+}
+
+team_t *get_teams_by_name(server_t *server, char *name)
+{
+    ll_foreach(server->teams, team_t, teams,
+        if (!strcmp(teams->name, name)) {
+            return teams;
+        }
+    );
+    return NULL;
+}
+
+void server_add_team(server_t *server, team_t *team)
+{
+    //todo notify
+    ll_push_back(&server->teams, team);
 }

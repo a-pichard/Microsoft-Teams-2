@@ -90,6 +90,8 @@ user_t *server_add_user_with_name(server_t *server, const char *username);
 
 //teams
 team_t *get_teams_by_uuid(server_t *server, uuid_t uuid);
+team_t *get_teams_by_name(server_t *server, char *name);
+void server_add_team(server_t *server, team_t *team);
 
 //channel
 channel_t *get_channel_by_uuid(server_t *server, uuid_t uuid);

@@ -79,11 +79,14 @@ void msg_destructor(void *data);
 // Team
 char *team_serializer(const void *team);
 void team_destructor(void *data);
+team_t *team_create(const char *name, const char *description);
 
 // Thread
 void thread_destructor(void *data);
 
 // Channel
+channel_t *channel_create(const char *name, const char *description);
 void channel_destructor(void *data);
+
 
 #endif /* !DATA_H_ */

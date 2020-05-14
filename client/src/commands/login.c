@@ -26,16 +26,15 @@ void login(client_t *client, char const * recept)
     if (*(int *)(r_status->data) != 200) {
         //error
     } else {
-        parser_result_t *r = parse(&suround, r_status->remainer);
-        ll_t *user = r->data;
-        uuid_unparse(user->data, uuid_str);
-
-        printf("uuid=%s\n", uuid_str);
-        printf("name=%s\n", user->next->data);
-        printf("user status=%d\n", *(int *)(user->next->next->data));
-
-        client_event_loggedin(uuid_str, user->next->data);
-
+        print_tab(r_status->remainer);
+        parser_result_t *r = parse(r_status->remainer, &suround);
+        if (r) {
+            ll_t *user = r->data;
+            uuid_unparse(user->data, uuid_str);
+            client_event_loggedin(uuid_str, user->next->data);
+        } else {
+            //error
+        }
     }
-    // parser_result_clean(&p, r);
+    parser_result_clean(&p, r);
 }

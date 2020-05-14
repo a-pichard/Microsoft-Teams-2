@@ -77,9 +77,6 @@ user_t *get_user_by_name(server_t *server, const char *username);
 user_t *get_user_by_uuid(server_t *server, uuid_t uuid);
 user_t *server_add_user_with_name(server_t *server, const char *username);
 
-//Team
-char *team_serializer(const void *team);
-
 // write queue
 void write_q(client_t *client, const char *msg);
 void send_message(server_t *server, client_t *client);
@@ -87,10 +84,10 @@ void send_message(server_t *server, client_t *client);
 // destructors
 void client_destructor(void *data);
 void write_q_destructor(void *data);
-void thread_destructor(void *data);
-void channel_destructor(void *data);
-void team_destructor(void *data);
-void dm_destructor(void *data);
-void msg_destructor(void *data);
+
+void server_add_private_message(
+    server_t *server,
+    uuid_t from, uuid_t to,
+    const char *content);
 
 #endif /* !SERVER_H_ */

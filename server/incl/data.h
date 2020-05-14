@@ -64,4 +64,24 @@ typedef struct {
     ll_t *users_uuid;
 } team_t;
 
+// Dm
+void dm_destructor(void *data);
+char *dm_serializer(const void *data);
+dm_t *dm_create(uuid_t user1, uuid_t user2);
+
+// Msg
+char *msg_serializer(const void *data);
+msg_t *msg_create(uuid_t from, uuid_t to, const char *content);
+void msg_destructor(void *data);
+
+// Team
+char *team_serializer(const void *team);
+void team_destructor(void *data);
+
+// Thread
+void thread_destructor(void *data);
+
+// Channel
+void channel_destructor(void *data);
+
 #endif /* !DATA_H_ */

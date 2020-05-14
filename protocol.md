@@ -40,123 +40,124 @@ helper = string
 ### login
 ```
 request = 'login' sp name end
-response = 200 sp '"logged in"' end | 300 sp '"user already logged"' end
+response = 200 sp user end | 300 sp '"user already logged"' end
 ```
 
 ### logout
 ```
 request = 'logout' end
-response = 200 sp '"logged out"' end | 300 sp '"not logged in"' end
+response = 200 sp user end | 300 end
 ```
 
 ### users
 ```
 request = 'users' end
-response = 200 sp user* end | 300 sp '"not logged in"' end
+response = 200 sp user* end | 300 end
 ```
 
 ### user
 ```
 request = 'user' end
-response = 200 sp user end | 300 sp '"not logged in"' end | 404 sp '"user not found"' end
+response = 200 sp user end | 300 end | 404 end
 ```
 
 ### send
 ```
 request = 'send' user_uuid message_body
-response = 200 end | 300 sp '"not logged in"' end | 404 sp '"user not found"' end 
+response = 200 end | 300 end | 404 sp user_uuid sp end 
 ```
 
 ### messages
 ```
 request = 'messages' user_uuid
-response = 200 (user_uuid time message_body)* end | 300 sp '"not logged in"' end | 404 sp '"user not found"' end
+response = 200 (user_uuid time message_body)* end | 300 end | 404 sp user_uuid sp end
 ```
 
 ### subscribe
 ```
 request = 'subscribe' team_uuid
-response = 200 end | 300 sp '"not logged in"' end | 404 sp '"team not found"' end
+response = 200 sp user_uuid sp team_uuid end | 300  end | 404 end
 ```
 
 ### subscribed
 ```
 request = 'subscribed' [team_uuid]
-response = 200 (team_uuid name description)* end | 200 (team_uuid name description) end | 300 sp '"not logged in"' end | 404 sp '"team not found"' end
+response = 200 (team_uuid name description)* end | 200 (team_uuid name description) end | 300 end | 404 sp  end
 ```
 
 ### unsubscribe
 ```
 request = 'unsubscribe' team_uuid
-response = 200 end | 300 sp '"not logged in"' end | 404 sp '"team not found"' end
+response = 200 (user_uuid team_uuid) end | 300 end | 404 end
 ```
 
 ### use 
 ```
 request = 'use' [team_uuid | (team_uuid channel_uuid) | (team_uuid channel_uuid thread_uuid)]
-response = 200 end |  300 sp '"not logged in"' end | 404 sp '"not found"' end
+response = 200 end |  300 end | 404 end
 ```
 
 ### create
 - Not define
 ```
 request = 'create' (name description) :  create a new team
+response = 200 context (team_uuid name description) | 300 end | 404 end
 ```
 - team 
 ```
 request = 'create' (name description) : create a new channel
+response = 200 context (channel_uuid name description) | 300 end | 404 end
 ```
 - channel
 ```
-request = 'create' (name message-body) :  create a new thread
+request = 'create' (name message_body) :  create a new thread
+response = 200 context (thread_uuid user_uuid time name thread_body) | 300 end | 404 end
 ```
 - thread
 ```
 request = 'create' (message_body) : create a new reply
-```
-```
-response = 200 end |  300 sp '"not logged in"' end | 501 sp '"already exist"' end
+response = 200 context (thread_uuid user_uuid time message_body) | 300 end | 404 end
 ```
 
 ### list
 request = 'list' 
 - Not define
 ```
-response = 200 sp (team_uuid name description)* end | 300 sp '"not logged in"' end
+response = 200 context (team_uuid name description)* end | 300 end
 ```
 - team 
 ```
-response = 200 sp (channel_uuid name description)* end | 300 sp '"not logged in"' end
+response = 200 context (channel_uuid name description)* end | 300 end
 ```
 - channel
 ```
-response = 200 sp (thread_uuid user_uuid time name message_body)* end | 300 sp '"not logged in"' end
+response = 200 context (thread_uuid user_uuid time name thread_body)* end | 300 end
 
 ```
 - thread
 ```
-response = 200 sp (thread_uuid user_uuid time message_body)* end | 300 sp 
+response = 200 context (thread_uuid user_uuid time message_body)* end | 300 sp 
 ```
 
 ### info
 request = 'info' 
 - Not define
 ```
-response = 200 sp (user_uuid user_name user_status)* end | 300 sp '"not logged in"' end
+response = 200 context user end | 300 end
 ```
 - team
 ```
-response = 200 sp (team_uuid name description)s end | 300 sp '"not logged in"' end
+response = 200 context (team_uuid name description) end | 300 end
 ```
 
 - channel
 ```
-response = 200 sp (channel_uuid name description) end | 300 sp '"not logged in"' end
+response = 200 context (channel_uuid name description) end | 300 end
 ```
 
 - thread
 ```
-response = 200 sp (thread_uuid user_uuid time name message_body) end | 300 sp '"not logged in"' end
+response = 200 sp (thread_uuid user_uuid time name message_body) end | 300 end
 ```
 
 ### code
@@ -166,8 +167,16 @@ response = 200 sp (thread_uuid user_uuid time name message_body) end | 300 sp '"
 5xx = error
 ```
 
-
 ## event
+
+### login
+```
+response = "event" "login" user
+```
+### logout
+```
+response = "event" "logout" user
+```
 
 ### message
 - private message
@@ -187,11 +196,11 @@ response = "event" "create" "team" (team_uuid name description)
 
 - channel
 ```
-response = "event" "channel" (channel_uuid channel name channel_description)
+response = "event" "create" "channel" (channel_uuid channel name channel_description)
 ```
 
 - thread
 ```
-response = "event" "thread" (tread_uuid user_uuid time name message_body)
+response = "event" "create" "thread" (tread_uuid user_uuid time name message_body)
 ```
 

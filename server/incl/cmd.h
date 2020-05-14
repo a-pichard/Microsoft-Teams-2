@@ -16,6 +16,7 @@
     "/logout",   \
     "/users",    \
     "/user", \
+    "/send", \
     NULL    \
 };
 
@@ -25,6 +26,7 @@
     &logout,    \
     &users, \
     &user,  \
+    &my_send,  \
     NULL    \
 }
 
@@ -53,6 +55,7 @@ void login(server_t *server, client_t *client, char const * const *data);
 void logout(server_t *server, client_t *client, char const * const *data);
 void users(server_t *server, client_t *client, char const * const *data);
 void user(server_t *server, client_t *client, char const * const *data);
+void my_send(server_t *server, client_t *client, char const * const *data);
 
 
 #endif /* !CMD_H_ */

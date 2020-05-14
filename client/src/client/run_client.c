@@ -26,7 +26,6 @@ cmd_t check_cmd(char **data, const char **command_string)
 char **clean(char **data)
 {
     int i = 0;
-
     for (; data[i]; i++);
     if (i == 0)
         return NULL;

@@ -49,6 +49,7 @@ void load_server_from_file(server_t *server, const char *file_name)
     buffer = malloc(sizeof(char)*(size+1));
     int r = fread(buffer, 1, size, file);
     buffer[r] = '\0';
+    dprintf(1, "%s\n", buffer);
     data = str_to_wordtab(buffer, ' ', true);
     for (int i = 0; data[i]; i++) {
         if (!strcmp(data[i], "]\n")) {

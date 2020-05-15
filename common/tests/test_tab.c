@@ -17,7 +17,7 @@ Test(Test_tab, str_to_wordtab_success)
     cr_assert_str_eq(res[0], "wesh");
     cr_assert_str_eq(res[1], "la");
     cr_assert_str_eq(res[2], "zone");
-    cr_assert_str_eq(res[3], "\"ca dit quoi lo\"");
+    cr_assert_str_eq(res[3], "ca dit quoi lo");
     cr_assert_eq(res[4], NULL);
     free(to_parse);
 }
@@ -55,7 +55,7 @@ Test(Test_tab, print_tab, .init = cr_redirect_stdout)
 {
     char *to_parse = strdup("wesh la zone \"ca dit quoi lo\"");
     char **res = str_to_wordtab(to_parse, ' ', true);
-    char *p_res = "[0][wesh]\n[1][la]\n[2][zone]\n[3][\"ca dit quoi lo\"]\n";
+    char *p_res = "[0][wesh]\n[1][la]\n[2][zone]\n[3][ca dit quoi lo]\n";
 
     print_tab((char const * const *)res);
     print_tab(NULL);

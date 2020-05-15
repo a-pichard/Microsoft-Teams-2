@@ -101,42 +101,42 @@ response = 200 end |  300 end | 404 end
 - Not define
 ```
 request = 'create' (name description) :  create a new team
-response = 200 context (team_uuid name description) | 300 end | 404 end
+response = 200 (team_uuid name description) | 300 end | 404 end
 ```
 - team 
 ```
 request = 'create' (name description) : create a new channel
-response = 200 context (channel_uuid name description) | 300 end | 404 end
+response = 201 (channel_uuid name description) | 300 end | 404 end
 ```
 - channel
 ```
 request = 'create' (name message_body) :  create a new thread
-response = 200 context (thread_uuid user_uuid time name thread_body) | 300 end | 404 end
+response = 202 (thread_uuid user_uuid time name thread_body) | 300 end | 404 end
 ```
 - thread
 ```
 request = 'create' (message_body) : create a new reply
-response = 200 context (thread_uuid user_uuid time message_body) | 300 end | 404 end
+response = 203 (thread_uuid user_uuid time message_body) | 300 end | 404 end
 ```
 
 ### list
 request = 'list' 
 - Not define
 ```
-response = 200 context (team_uuid name description)* end | 300 end
+response = 200 (team_uuid name description)* end | 300 end
 ```
 - team 
 ```
-response = 200 context (channel_uuid name description)* end | 300 end
+response = 201 (channel_uuid name description)* end | 300 end
 ```
 - channel
 ```
-response = 200 context (thread_uuid user_uuid time name thread_body)* end | 300 end
+response = 202 (thread_uuid user_uuid time name thread_body)* end | 300 end
 
 ```
 - thread
 ```
-response = 200 context (thread_uuid user_uuid time message_body)* end | 300 sp 
+response = 203 (thread_uuid user_uuid time message_body)* end | 300 sp 
 ```
 
 ### info
@@ -147,17 +147,17 @@ response = 200 context user end | 300 end
 ```
 - team
 ```
-response = 200 context (team_uuid name description) end | 300 end
+response = 201 (team_uuid name description) end | 300 end
 ```
 
 - channel
 ```
-response = 200 context (channel_uuid name description) end | 300 end
+response = 202 (channel_uuid name description) end | 300 end
 ```
 
 - thread
 ```
-response = 200 sp (thread_uuid user_uuid time name message_body) end | 300 end
+response = 203 (thread_uuid user_uuid time name message_body) end | 300 end
 ```
 
 ### code

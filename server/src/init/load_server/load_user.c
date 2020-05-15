@@ -12,9 +12,7 @@
 const char * const *load_user(server_t *server, const char * const *data)
 {
     AND_PARSER(user_parser, &UUID_PARSER, &STRING_PARSER, &INT_PARSER);
-    parser_t sep = SEP_PARSER(' ', &user_parser);
-    parser_t suroud_parser = SUROUNDE_PARSER('"', &sep);
-    TAB_PARSER(users_parser, &suroud_parser);
+    TAB_PARSER(users_parser, &user_parser);
     const char * const *remain = NULL;
     parser_result_t *r = parse(data, &users_parser);
 

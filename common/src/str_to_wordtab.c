@@ -54,9 +54,9 @@ static void loop_in_string(char **res, char *s, char *delim, bool quotes)
             s = &s[length];
         } else if (quotes && s[length] == '\"') {
             set_value(res, &i, s, length);
-            s = &s[length];
-            length = strcspn(s + 1, "\"") + 1;
-            set_value(res, &i, s, length + 1);
+            s = &s[length + 1];
+            length = strcspn(s, "\"");
+            set_value(res, &i, s, length);
             s = &s[length + 1];
         }
     }

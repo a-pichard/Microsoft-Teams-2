@@ -31,7 +31,6 @@ void client_send(client_t *client, const char *msg);
 void read_from_server(client_t *client, cmd_t func);
 cmd_t read_from_human(client_t *client);
 
-char **clean(char **data);
 cmd_t check_cmd(char **data, const char **command_string);
 void client_run(client_t *client);
 

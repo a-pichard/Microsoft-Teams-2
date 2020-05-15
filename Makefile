@@ -47,7 +47,7 @@ $(SERVER) : $(COMMON)
 	@make -s -C $(SERVER_DIR)
 	@cp $(SERVER_DIR)/$(SERVER) $(SERVER)
 
-debug: fclean
+debug:
 	@printf "$(RED)MAKING: common in debug mode (-g)\n$(WHITE)"
 	@make -s -C $(COMMON_DIR) debug
 	@cp $(COMMON_DIR)/$(COMMON) $(COMMON)

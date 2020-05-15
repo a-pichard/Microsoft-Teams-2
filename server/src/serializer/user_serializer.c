@@ -16,16 +16,14 @@ char *user_serializer(const void *data)
     char str_uuid[37];
 
     uuid_unparse(user->uuid, str_uuid);
-    strcpy(str, "\"");
-    strcat(str, str_uuid);
-    strcat(str, " ");
+    strcpy(str, str_uuid);
+    strcat(str, " \"");
     strcat(str, user->name);
-    strcat(str, " ");
+    strcat(str, "\" ");
     if (user->status == 0) {
         strcat(str, "0");
     } else {
         strcat(str, "1");
     }
-    strcat(str, "\"");
     return str;
 }

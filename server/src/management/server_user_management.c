@@ -35,4 +35,3 @@ user_t *server_add_user_with_name(server_t *server, const char *username)
     ll_push_back(&server->users, user);
     return user;
 }
-

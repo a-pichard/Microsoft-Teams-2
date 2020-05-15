@@ -25,18 +25,20 @@ static void loop_in_dms(server_t *server, parser_result_t *r)
 
 const char * const *load_message(server_t *server, const char * const *data)
 {
-    parser_t suroud_parser = SUROUNDE_PARSER('"', &STRING_PARSER);
     const char * const *remain = NULL;
     parser_result_t *r = NULL;
 
+    print_tab(data);
     AND_PARSER(message, &UUID_PARSER, &UUID_PARSER,
-        &INT_PARSER, &suroud_parser);
+        &INT_PARSER, &STRING_PARSER);
     TAB_PARSER(messages_parser, &message);
     AND_PARSER(dm, &UUID_PARSER, &UUID_PARSER, &messages_parser);
     TAB_PARSER(p, &dm);
     r = parse(data, &p);
-    if (r == NULL)
+    if (r == NULL) {
+        printf("r = NULL\n");
         return NULL;
+    }
     loop_in_dms(server, r);
     remain = r->remainer;
     parser_result_clean(&p, r);

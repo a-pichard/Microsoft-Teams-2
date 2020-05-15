@@ -7,6 +7,14 @@
 
 #include "client.h"
 #include <unistd.h>
+#include <string.h>
+
+static char *clean(char *data)
+{
+    if (data)
+        data[strlen(data) - 2] = 0;
+    return (data);
+}
 
 static char *client_recieve(client_t *client)
 {
@@ -15,6 +23,11 @@ static char *client_recieve(client_t *client)
 
     ret = read(client->fd, buffer, BUFFER_READ_SIZE);
     ASSERT(ret >= 0);
+    if (ret == 0) {
+        close(client->fd);
+        dprintf(1, "The client has been disconnected from the server\n");
+        exit(0);
+    }
     return (bufferizer(&client->req, buffer));
 }
 
@@ -22,7 +35,7 @@ void read_from_server(client_t *client, cmd_t func)
 {
     char *recept;
 
-    recept = client_recieve(client);
+    recept = clean(client_recieve(client));
     if (recept) {
         if (func) {
             (func)(client, (char const *)recept);

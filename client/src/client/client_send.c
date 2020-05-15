@@ -7,6 +7,7 @@
 
 #include "client.h"
 #include <stdio.h>
+#include <string.h>
 
 void client_send(client_t *client, const char *msg)
 {

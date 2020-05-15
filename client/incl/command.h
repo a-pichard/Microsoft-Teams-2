@@ -11,6 +11,7 @@
 #include "client.h"
 
 #define F_NAME {    \
+    "/help",    \
     "/create",  \
     "/info",    \
     "/list",    \
@@ -28,6 +29,7 @@
 };
 
 #define F_FUNC {    \
+    &help,  \
     &create, \
     &info,  \
     &list,  \
@@ -44,6 +46,7 @@
     NULL    \
 }
 
+void help(client_t *client, char const * recept);
 void create(client_t *client, char const * recept);
 void info(client_t *client, char const * recept);
 void list(client_t *client, char const * recept);

@@ -43,7 +43,7 @@ typedef enum use_state {
 
 typedef struct {
     use_state_t state;
-    uuid_t use_uuid;
+    void *use_ptr;
     int fd;
     char *req;
     ll_t *write_q;
@@ -89,16 +89,30 @@ user_t *get_user_by_uuid(server_t *server, uuid_t uuid);
 user_t *server_add_user_with_name(server_t *server, const char *username);
 
 //teams
-team_t *get_teams_by_uuid(server_t *server, uuid_t uuid);
-team_t *get_teams_by_name(server_t *server, char *name);
+team_t *server_get_teams_by_uuid(server_t *server, uuid_t uuid);
+team_t *server_get_teams_by_name(server_t *server, char *name);
 void server_add_team(server_t *server, team_t *team);
 
+
+channel_t *team_get_channel_by_uuid(team_t *team, uuid_t uuid);
+channel_t *team_get_channel_by_name(team_t *team, const char *name);
+void team_add_channel(team_t *team, channel_t *channel);
+
 //channel
-channel_t *get_channel_by_uuid(server_t *server, uuid_t uuid);
+channel_t *channel_create(const char *name, const char *description);
+thread_t *channel_get_thread_by_uuid(channel_t *channel, uuid_t uuid);
+thread_t *channel_get_thread_by_name(channel_t *channel, const char *name);
+
+void channel_add_thread(channel_t *channel, thread_t *thread);
 
 
 //thread
-thread_t *get_thread_by_uuid(server_t *server, uuid_t uuid);
+thread_t *thread_create(user_t *creator, const char *name, const char *body);
+void thread_add_comment(thread_t *thread, comment_t *comment);
+
+
+//comment
+comment_t *comment_create(user_t *creator, const char *body);
 
 
 // write queue

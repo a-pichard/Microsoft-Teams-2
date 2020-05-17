@@ -8,8 +8,10 @@
 #include "server.h"
 #include <string.h>
 
-team_t *get_teams_by_uuid(server_t *server, uuid_t uuid)
+team_t *server_get_teams_by_uuid(server_t *server, uuid_t uuid)
 {
+    if (server == NULL)
+        return NULL;
     ll_foreach(server->teams, team_t, teams,
         if (!uuid_compare(teams->uuid, uuid)) {
             return teams;
@@ -18,8 +20,10 @@ team_t *get_teams_by_uuid(server_t *server, uuid_t uuid)
     return NULL;
 }
 
-team_t *get_teams_by_name(server_t *server, char *name)
+team_t *server_get_teams_by_name(server_t *server, char *name)
 {
+    if (server == NULL)
+        return NULL;
     ll_foreach(server->teams, team_t, teams,
         if (!strcmp(teams->name, name)) {
             return teams;
@@ -30,6 +34,5 @@ team_t *get_teams_by_name(server_t *server, char *name)
 
 void server_add_team(server_t *server, team_t *team)
 {
-    //todo notify
     ll_push_back(&server->teams, team);
 }

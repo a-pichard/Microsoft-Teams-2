@@ -8,42 +8,87 @@
 #include "server.h"
 #include "parser.h"
 
-static bool set_uuid(server_t *server, client_t *client, uuid_t uuid)
+static void use_team(server_t *server, client_t *client,
+    char const * const *data)
 {
-    team_t *teams = get_teams_by_uuid(server, uuid);
-    channel_t *channel = get_channel_by_uuid(server, uuid);
-    thread_t *thread = get_thread_by_uuid(server, uuid);
+    parser_result_t *r = parse(data, &UUID_PARSER);
+    team_t *team = NULL;
 
-    if (thread != NULL || teams != NULL || channel != NULL) {
-        uuid_copy(client->use_uuid, uuid);
-        if (teams != NULL)
-            client->state = TEAM;
-        if (channel != NULL)
-            client->state = CHANNEL;
-        if (thread != NULL)
-            client->state = THREAD;
-        return false;
-    } else {
-        return true;
-    }
+    if (r == NULL)
+        return write_q(client, "300");
+    team = server_get_teams_by_uuid(server, (unsigned char *)r->data);
+    if (team == NULL)
+        return write_q(client, "404");
+    client->use_ptr = team;
+    client->state = TEAM;
+}
+
+static void use_channel(server_t *server, client_t *client,
+    char const * const *data)
+{
+    AND_PARSER(p, &UUID_PARSER, &UUID_PARSER);
+    parser_result_t *r = parse(data, &p);
+    ll_t *list = NULL;
+    team_t *team = NULL;
+    channel_t *channel = NULL;
+
+    if (r == NULL)
+        return write_q(client, "300");
+    list = r->data;
+    team = server_get_teams_by_uuid(server, (unsigned char *)list->data);
+    channel = team_get_channel_by_uuid(team,
+        (unsigned char *)list->next->data);
+    if (channel == NULL)
+        return write_q(client, "404");
+    client->use_ptr = channel;
+    client->state = CHANNEL;
+    return write_q(client, "200");
+}
+
+static void use_thread(server_t *server, client_t *client,
+    char const * const *data)
+{
+    AND_PARSER(p, &UUID_PARSER, &UUID_PARSER, &UUID_PARSER);
+    parser_result_t *r = parse(data, &p);
+    ll_t *list = NULL;
+    team_t *team = NULL;
+    channel_t *channel = NULL;
+    thread_t *thread = NULL;
+
+    if (r == NULL)
+        return write_q(client, "300");
+    list = r->data;
+    team = server_get_teams_by_uuid(server, (unsigned char *)list->data);
+    channel = team_get_channel_by_uuid(team,
+        (unsigned char *)list->next->data);
+    thread = channel_get_thread_by_uuid(channel,
+        (unsigned char *)list->next->next->data);
+    if (thread == NULL)
+        return write_q(client, "404");
+    client->use_ptr = thread;
+    client->state = THREAD;
+    return write_q(client, "200");
 }
 
 void use(server_t *server, client_t *client, char const * const *data)
 {
-    parser_result_t *r;
-
+    size_t len = get_tab_len(data);
+    
     if (*data == NULL) {
         client->state = NONE;
+        client->use_ptr = NULL;
         write_q(client, "200");
         return;
     }
-    r = parse(data, &UUID_PARSER);
-    if (r == NULL || r->remainer != NULL) {
+    if (len < 1 || len > 3) {
         write_q(client, "300");
+        return;
+    }
+    if (len == 1) {
+        use_team(server, client, data);
+    } else if (len == 2) {
+        use_channel(server, client, data);
     } else {
-        if (set_uuid(server, client, (unsigned char *)(r->data)))
-            write_q(client, "300");
-        else
-            write_q(client, "200");
+        use_thread(server, client, data);
     }
 }

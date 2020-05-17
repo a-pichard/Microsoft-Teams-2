@@ -42,7 +42,6 @@ static void client_request(server_t *serv, client_t *client, const char *req)
 
     LOG("request:[%s]\n", req);
     data = parse_cmd(&client->req, req);
-    print_tab(data);
     if (data == NULL || data[0] == NULL)
         return destroy_tab(data);
     if ((func = index_of((char const *)data[0])) != NULL) {

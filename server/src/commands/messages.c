@@ -12,7 +12,6 @@
 static int test_user_exit(server_t *server, client_t *client, uuid_t uuid)
 {
     user_t *user = get_user_by_uuid(server, uuid);
-    char str_uuid[37];
     char res[50] = "404 ";
 
     if (user != NULL) {

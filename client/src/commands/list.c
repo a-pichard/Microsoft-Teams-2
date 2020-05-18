@@ -16,5 +16,5 @@ void list(client_t *client, char const * recept)
     //client_team_print_channels(channel_id, channel_name, channel_description);
     //client_channel_print_threads(thread_id, user_id, thread_timestamp, thread_title, thread_body);
     //client_thread_print_replies(thread_id, user_id, reply_timestamp, reply_body);
-    printf("list\n");
+    printf("list = [%s]\n", recept);
 }

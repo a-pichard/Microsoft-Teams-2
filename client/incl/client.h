@@ -10,6 +10,7 @@
 
 #include "common.h"
 #include "linked_list.h"
+#include "uuid/uuid.h"
 
 typedef struct client_s
 {

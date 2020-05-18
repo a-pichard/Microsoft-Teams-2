@@ -26,7 +26,7 @@ static int connect_to_server(const char *ip, int port)
     return (fd);
 }
 
-static client_t *client_create(client_t *client, const char *ip, int port)
+static void client_create(client_t *client, const char *ip, int port)
 {
     client->fd = connect_to_server(ip, port);
     ASSERT(client->fd != -1);

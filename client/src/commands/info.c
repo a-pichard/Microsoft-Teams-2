@@ -15,5 +15,5 @@ void info(client_t *client, char const * recept)
     //client_print_team(team_id, team_name, team_description);
     //client_print_channel(channel_id, channel_name, channel_description);
     //client_print_channel(channel_id, channel_name, channel_description);
-    printf("info\n");
+    printf("info = [%s]\n", recept);
 }

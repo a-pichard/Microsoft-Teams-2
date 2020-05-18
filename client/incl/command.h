@@ -10,6 +10,10 @@
 
 #include "client.h"
 
+#define DEFAULT_NAME_LENGTH 32
+#define DEFAULT_DESCRIPTION_LENGTH 255
+#define DEFAULT_BODY_LENGTH 512
+
 #define F_NAME {    \
     "/help",    \
     "/create",  \

@@ -27,10 +27,10 @@ static void get_user_infos(char const * const *remainer)
     parser_result_clean(&user_p, r);
 }
 
-void login(client_t *client, char const * recept)
+void login(client_t *client UNUSED, char const * recept)
 {
-    char **data = str_to_wordtab(recept, ' ', true);
-    parser_result_t *r_status = parse(data, &INT_PARSER);
+    char **data = str_to_wordtab((char *)recept, ' ', true);
+    parser_result_t *r_status = parse((const char * const *)data, &INT_PARSER);
 
     if (r_status == NULL)
         dprintf(1, "Bad reponse.\n");

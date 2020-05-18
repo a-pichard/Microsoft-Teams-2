@@ -14,9 +14,7 @@ static void get_user_infos(char const * const *remainer)
 {
     char uuid_str[37];
     AND_PARSER(user_p, &UUID_PARSER, &STRING_PARSER, &INT_PARSER);
-    parser_t sep_p = SEP_PARSER(' ', &user_p);
-    parser_t suround = SUROUNDE_PARSER('"', &sep_p);
-    parser_result_t *r = parse(remainer, &suround);
+    parser_result_t *r = parse(remainer, &user_p);
     ll_t *user;
 
     if (r) {
@@ -27,14 +25,14 @@ static void get_user_infos(char const * const *remainer)
     } else {
         dprintf(1, "Bad reponse.\n");
     }
-    parser_result_clean(&suround, r);
+    parser_result_clean(&user_p, r);
 }
 
-void user(client_t *client, char const * recept)
+void user(client_t *client UNUSED, char const * recept)
 {
-    char **data = str_to_wordtab(recept, ' ', true);
+    char **data = str_to_wordtab((char *)recept, ' ', true);
 
-    parser_result_t *r_status = parse(data, &INT_PARSER);
+    parser_result_t *r_status = parse((const char * const *)data, &INT_PARSER);
 
     if (r_status == NULL)
         dprintf(1, "Bad reponse.\n");

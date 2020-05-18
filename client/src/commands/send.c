@@ -10,17 +10,17 @@
 #include "common.h"
 #include "parser.h"
 
-static void get_user_infos(char const * const *data)
+static void get_user_infos(char **data)
 {
     char uuid_str[37];
     
-    uuid_unparse(data[1], uuid_str);
+    uuid_unparse((void *)data[1], uuid_str);
     client_error_unknown_user(uuid_str);
 }
 
-void send(client_t *client, char const * recept)
+void send(client_t *client UNUSED, char const * recept)
 {
-    char **data = str_to_wordtab(recept, ' ', true);
+    char **data = str_to_wordtab((char *)recept, ' ', true);
 
     if (atoi(*data) == 404)
         get_user_infos(data);

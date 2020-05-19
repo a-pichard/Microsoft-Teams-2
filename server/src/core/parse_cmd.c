@@ -12,7 +12,7 @@
 char **parse_cmd(char **pbuf, const char *req)
 {
     char **res = NULL;
-    char *rqst = bufferizer(pbuf, req);
+    char *rqst = bufferizer(pbuf, req, REQ_END);
 
     if (!rqst)
         return (NULL);

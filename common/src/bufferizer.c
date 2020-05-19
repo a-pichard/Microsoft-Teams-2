@@ -17,11 +17,11 @@ static char *check_strdup(const char *s)
     return (res);
 }
 
-char *bufferizer(char **pbuf, const char *req)
+char *bufferizer(char **pbuf, const char *req, const char *end)
 {
     char *tmp;
 
-    if (strstr(req, REQ_END) != NULL) {
+    if (strstr(req, end) != NULL) {
         if (*pbuf == NULL) {
             return (check_strdup(req));
         } else {

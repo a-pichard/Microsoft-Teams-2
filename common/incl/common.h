@@ -35,6 +35,6 @@ void destroy_tab(char **t);
 void print_tab(char const * const *t);
 size_t get_tab_len(char const * const *t);
 
-char *bufferizer(char **pbuf, const char *req);
+char *bufferizer(char **pbuf, const char *req, const char *end);
 
 #endif /* !COMMON_H_ */

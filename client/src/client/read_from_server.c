@@ -28,7 +28,7 @@ static char *client_recieve(client_t *client)
         dprintf(1, "The client has been disconnected from the server\n");
         exit(0);
     }
-    return (bufferizer(&client->req, buffer));
+    return (bufferizer(&client->req, buffer, REQ_END));
 }
 
 void read_from_server(client_t *client, cmd_t func)

@@ -9,9 +9,10 @@
 #include <string.h>
 #include "logging_server.h"
 
-team_t *team_create(const char *name, const char *description)
+team_t *team_create(user_t *user, const char *name, const char *description)
 {
     char str[37];
+    char str2[37];
     team_t *team = malloc(sizeof(team_t));
 
     team->channels = NULL;
@@ -20,7 +21,8 @@ team_t *team_create(const char *name, const char *description)
     uuid_generate(team->uuid);
     uuid_unparse(team->uuid, str);
     team->users_uuid = NULL;
-    server_event_team_created(str, name, description);
+    uuid_unparse(user->uuid, str2);
+    server_event_team_created(str, name, str2);
     return team;
 }
 

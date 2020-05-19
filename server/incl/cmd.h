@@ -20,6 +20,7 @@
     "/messages",    \
     "/use", \
     "/create",  \
+    "/list",    \
     NULL    \
 };
 
@@ -33,6 +34,7 @@
     &messages,  \
     &use,   \
     &create,    \
+    &list,  \
     NULL    \
 }
 
@@ -65,6 +67,7 @@ void my_send(server_t *server, client_t *client, char const * const *data);
 void messages(server_t *server, client_t *client, char const * const *data);
 void use(server_t *server, client_t *client, char const * const *data);
 void create(server_t *server, client_t *client, char const * const *data);
+void list(server_t *server, client_t *client, char const * const *data);
 
 
 #endif /* !CMD_H_ */

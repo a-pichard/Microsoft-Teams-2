@@ -11,23 +11,23 @@
 void create_team(server_t *server, client_t *client,
     char const * const *data)
 {
-    parser_t sur = SUROUNDE_PARSER('"', &STRING_PARSER);
-    AND_PARSER(p, &sur, &sur);
+    AND_PARSER(p, &STRING_PARSER, &STRING_PARSER);
     parser_result_t *r = parse(data, &p);
     team_t *teams;
     ll_t *d;
 
     if (r == NULL) {
         write_q(client, "300");
-        return;
-    }
-    d = r->data;
-    teams = server_get_teams_by_name(server, d->data);
-    if (teams != NULL) {
-        write_q(client, "300");
     } else {
-        server_add_team(server, team_create(d->data, d->next->data));
-        write_q(client, "200 context"); // todo send the team simple serialisation
+        d = r->data;
+        teams = server_get_teams_by_name(server, d->data);
+        if (teams != NULL) {
+            write_q(client, "300");
+        } else {
+            teams = team_create(client->user, d->data, d->next->data);
+            server_add_team(server, teams);
+            write_q_responce_objet(client, 200, teams, team_serializer);
+        }
     }
     parser_result_clean(&p, r);
 }
@@ -35,8 +35,7 @@ void create_team(server_t *server, client_t *client,
 void create_channel(UNUSED server_t *server, client_t *client,
     char const * const *data)
 {
-    parser_t sur = SUROUNDE_PARSER('"', &STRING_PARSER);
-    AND_PARSER(p, &sur, &sur);
+    AND_PARSER(p, &STRING_PARSER, &STRING_PARSER);
     parser_result_t *r = parse(data, &p);
     channel_t *channel;
     ll_t *d;
@@ -60,8 +59,7 @@ void create_channel(UNUSED server_t *server, client_t *client,
 void create_thread(UNUSED server_t *server, client_t *client,
     char const * const *data)
 {
-    parser_t sur = SUROUNDE_PARSER('"', &STRING_PARSER);
-    AND_PARSER(p, &sur, &sur);
+    AND_PARSER(p, &STRING_PARSER, &STRING_PARSER);
     parser_result_t *r = parse(data, &p);
     thread_t *thread;
     ll_t *d;
@@ -85,8 +83,7 @@ void create_thread(UNUSED server_t *server, client_t *client,
 void create_reply(UNUSED server_t *server, client_t *client,
     char const * const *data)
 {
-    parser_t p = SUROUNDE_PARSER('"', &STRING_PARSER);
-    parser_result_t *r = parse(data, &p);
+    parser_result_t *r = parse(data, &STRING_PARSER);
 
     if (r == NULL) {
         write_q(client, "300");
@@ -95,12 +92,11 @@ void create_reply(UNUSED server_t *server, client_t *client,
     thread_add_comment(client->use_ptr, comment_create(client->user,
         r->data));
     write_q(client, "203 context"); // todo send the thread simple serialisation
-    parser_result_clean(&p, r);
+    parser_result_clean(&STRING_PARSER, r);
 }
 
 void create(server_t *server, client_t *client, char const * const *data)
 {
-    return;
     if (client->state == NONE) {
         create_team(server, client, data);
     } else if (client->state == TEAM) {

@@ -21,6 +21,8 @@ static void use_team(server_t *server, client_t *client,
         return write_q(client, "404");
     client->use_ptr = team;
     client->state = TEAM;
+    parser_result_clean(&UUID_PARSER, r);
+    return write_q(client, "200");
 }
 
 static void use_channel(server_t *server, client_t *client,
@@ -42,6 +44,7 @@ static void use_channel(server_t *server, client_t *client,
         return write_q(client, "404");
     client->use_ptr = channel;
     client->state = CHANNEL;
+    parser_result_clean(&p, r);
     return write_q(client, "200");
 }
 
@@ -52,21 +55,21 @@ static void use_thread(server_t *server, client_t *client,
     parser_result_t *r = parse(data, &p);
     ll_t *list = NULL;
     team_t *team = NULL;
-    channel_t *channel = NULL;
+    channel_t *chan = NULL;
     thread_t *thread = NULL;
 
     if (r == NULL)
         return write_q(client, "300");
     list = r->data;
     team = server_get_teams_by_uuid(server, (unsigned char *)list->data);
-    channel = team_get_channel_by_uuid(team,
-        (unsigned char *)list->next->data);
-    thread = channel_get_thread_by_uuid(channel,
+    chan = team_get_channel_by_uuid(team, (unsigned char *)list->next->data);
+    thread = channel_get_thread_by_uuid(chan,
         (unsigned char *)list->next->next->data);
     if (thread == NULL)
         return write_q(client, "404");
     client->use_ptr = thread;
     client->state = THREAD;
+    parser_result_clean(&p, r);
     return write_q(client, "200");
 }
 

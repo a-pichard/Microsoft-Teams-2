@@ -92,7 +92,7 @@ user_t *server_add_user_with_name(server_t *server, const char *username);
 team_t *server_get_teams_by_uuid(server_t *server, uuid_t uuid);
 team_t *server_get_teams_by_name(server_t *server, char *name);
 void server_add_team(server_t *server, team_t *team);
-
+team_t *team_create(user_t *user, const char *name, const char *description);
 
 channel_t *team_get_channel_by_uuid(team_t *team, uuid_t uuid);
 channel_t *team_get_channel_by_name(team_t *team, const char *name);
@@ -117,6 +117,11 @@ comment_t *comment_create(user_t *creator, const char *body);
 
 // write queue
 void write_q(client_t *client, const char *msg);
+void write_q_responce(client_t *client, int code, const char *msg);
+void write_q_responce_objet(client_t *client, int code, void *objet,
+    serialize_fn serilizer);
+void write_q_responce_objet_list(client_t *client, int code, ll_t *objets,
+    serialize_fn serilizer);
 void send_message(server_t *server, client_t *client);
 
 // destructors

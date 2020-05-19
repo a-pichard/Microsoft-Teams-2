@@ -13,7 +13,7 @@ void team_destructor(void *data)
     team_t *team = (team_t *)data;
 
     if (team) {
-        ll_destroy(&team->channels, &thread_destructor);
+        ll_destroy(&team->channels, &channel_destructor);
         free(team);
     }
 }

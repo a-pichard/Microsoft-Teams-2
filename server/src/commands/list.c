@@ -15,7 +15,7 @@ static void list_none(server_t *server, client_t *client)
 static void list_team(client_t *client)
 {
     team_t *team = client->use_ptr;
-    
+
     write_q_responce_objet_list(client, 201, team->channels,
         channel_serializer);
 }

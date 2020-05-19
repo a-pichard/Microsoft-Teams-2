@@ -8,17 +8,6 @@
 #include "cmd.h"
 #include "logging_server.h"
 
-static void success_response(client_t *client)
-{
-    char *serialized_usr = user_serializer(client->user);
-    char *response = strcat_alloc("200 ", serialized_usr);
-
-    ASSERT(response != NULL);
-    free(serialized_usr);
-    write_q(client, response);
-    free(response);
-}
-
 void logout(server_t *server UNUSED, client_t *client,
     char const * const *data UNUSED)
 {
@@ -32,7 +21,8 @@ void logout(server_t *server UNUSED, client_t *client,
         } else {
             uuid_unparse(client->user->uuid, uuid_str);
             server_event_user_logged_out(uuid_str);
-            success_response(client);
+            write_q_responce_objet(client, 200, client->user,
+                user_serializer);
             client->user->status--;
             client->user = NULL;
         }

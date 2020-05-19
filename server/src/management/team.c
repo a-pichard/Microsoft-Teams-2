@@ -29,7 +29,7 @@ team_t *team_create(user_t *user, const char *name, const char *description)
 channel_t *team_get_channel_by_uuid(team_t *team, uuid_t uuid)
 {
     if (team == NULL)
-        return NULL; 
+        return NULL;
     ll_foreach(team->channels, channel_t, channel,
         if (!uuid_compare(channel->uuid, uuid)) {
             return channel;

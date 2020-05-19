@@ -76,7 +76,7 @@ static void use_thread(server_t *server, client_t *client,
 void use(server_t *server, client_t *client, char const * const *data)
 {
     size_t len = get_tab_len(data);
-    
+
     if (*data == NULL) {
         client->state = NONE;
         client->use_ptr = NULL;

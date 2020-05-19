@@ -49,5 +49,5 @@ thread_t *channel_get_thread_by_name(channel_t *channel, const char *name)
 
 void channel_add_thread(channel_t *channel, thread_t *thread)
 {
-    ll_push_back(&channel->threads, thread);    
+    ll_push_back(&channel->threads, thread);
 }

@@ -17,7 +17,7 @@ void my_send(server_t *server, client_t *client, char const * const *data)
     char str[42] = "404 ";
 
     if (r == NULL) {
-        write_q(client, "300"); // TODO
+        write_q(client, "300");
     } else {
         d = r->data;
         user = get_user_by_uuid(server, d->data);

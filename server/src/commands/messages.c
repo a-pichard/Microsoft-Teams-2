@@ -23,18 +23,6 @@ static int test_user_exit(server_t *server, client_t *client, uuid_t uuid)
     }
 }
 
-static void send_dm(client_t *client, dm_t *dm)
-{
-    char *result;
-    char *temp;
-
-    temp = ll_serialize(&dm->msgs, &msg_serializer);
-    result = strcat_alloc("200 ", temp);
-    free(temp);
-    write_q(client, result);
-    free(result);
-}
-
 void messages(server_t *server, client_t *client, char const * const *data)
 {
     parser_result_t *r = parse(data, &UUID_PARSER);
@@ -50,7 +38,8 @@ void messages(server_t *server, client_t *client, char const * const *data)
         if (dm == NULL) {
             write_q(client, "200 [ ]");
         } else {
-            send_dm(client, dm);
+            write_q_responce_objet_list(client, 200, dm->msgs,
+                msg_serializer);
         }
     }
     parser_result_clean(&UUID_PARSER, r);

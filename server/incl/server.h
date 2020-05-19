@@ -113,7 +113,7 @@ void thread_add_comment(thread_t *thread, comment_t *comment);
 
 //comment
 comment_t *comment_create(user_t *creator, const char *body);
-
+char *comment_serializer(const void *data);
 
 // write queue
 void write_q(client_t *client, const char *msg);

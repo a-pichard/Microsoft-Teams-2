@@ -14,7 +14,7 @@ static void concat_uuids(char *str, comment_t *comment)
     char str_uuid[37];
 
     uuid_unparse(comment->uuid, str_uuid);
-    strcat(str, str_uuid);
+    strcpy(str, str_uuid);
     strcat(str, " ");
     uuid_unparse(comment->u_creator, str_uuid);
     strcat(str, str_uuid);
@@ -30,11 +30,10 @@ char *comment_serializer(const void *data)
 
     ASSERT(str != NULL);
     sprintf(time, "%ld", comment->time);
-    strcpy(str, "\"");
     concat_uuids(str, comment);
     strcat(str, time);
-    strcat(str, " ");
+    strcpy(str, " \"");
     strcat(str, comment->body);
-    strcat(str, "\"");
+    strcpy(str, "\"");
     return str;
 }

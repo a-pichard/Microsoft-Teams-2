@@ -10,32 +10,18 @@
 #include "common.h"
 #include <logging_server.h>
 
-static void success_response(client_t *client)
-{
-    char *serialized_usr = user_serializer(client->user);
-    char *response = strcat_alloc("200 ", serialized_usr);
-
-    ASSERT(response != NULL);
-    free(serialized_usr);
-    write_q(client, response);
-    free(response);
-}
-
 void login(server_t *server, client_t *client, char const * const *data)
 {
-    parser_result_t *r;
     user_t *user = NULL;
     char uuid_str[37];
+    parser_result_t *r = parse(data, &STRING_PARSER);
 
-    r = parse(data, &STRING_PARSER);
     if (r == NULL || *r->remainer != NULL ||
         strlen((const char *)(r->data)) > DEFAULT_NAME_LENGTH) {
         write_q(client, "500 \"Bad argument\"");
     } else {
-        if (client->user != NULL) {
-            write_q(client, "300 \"user already slogged\"");
-            return;
-        }
+        if (client->user != NULL)
+            return write_q(client, "300 \"user already slogged\"");
         user = get_user_by_name(server, r->data);
         if (user == NULL)
             user = server_add_user_with_name(server, r->data);
@@ -43,7 +29,7 @@ void login(server_t *server, client_t *client, char const * const *data)
         client->user->status++;
         uuid_unparse(user->uuid, uuid_str);
         server_event_user_logged_in(uuid_str);
-        success_response(client);
+        write_q_responce_objet(client, 200, client->user, user_serializer);
     }
     parser_result_clean(&STRING_PARSER, r);
 }

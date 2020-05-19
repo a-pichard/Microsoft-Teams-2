@@ -17,7 +17,7 @@ void write_q(client_t *client, const char *msg)
 }
 
 void write_q_responce(client_t *client, int code, const char *msg)
-{ 
+{
     char *str = calloc(sizeof(char), strlen(msg) + 10);
 
     sprintf(str, "%d %s", code, msg);

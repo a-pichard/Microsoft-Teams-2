@@ -49,9 +49,9 @@ void create_channel(UNUSED server_t *server, client_t *client,
     if (channel != NULL) {
         write_q(client, "300");
     } else {
-        team_add_channel(client->use_ptr,
-            channel_create(d->data, d->next->data));
-        write_q(client, "201 context"); // todo send the channel simple serialisation
+        channel = channel_create(d->data, d->next->data);
+        team_add_channel(client->use_ptr, channel);
+        write_q_responce_objet(client, 201, channel, channel_serializer);
     }
     parser_result_clean(&p, r);
 }
@@ -73,9 +73,9 @@ void create_thread(UNUSED server_t *server, client_t *client,
     if (thread != NULL) {
         write_q(client, "300");
     } else {
-        channel_add_thread(client->use_ptr, thread_create(client->user,
-            d->data, d->next->data));
-        write_q(client, "202 context"); // todo send the thread simple serialisation
+        thread = thread_create(client->user, d->data, d->next->data);
+        channel_add_thread(client->use_ptr, thread);
+        write_q_responce_objet(client, 202, thread, thread_serializer);
     }
     parser_result_clean(&p, r);
 }
@@ -84,14 +84,15 @@ void create_reply(UNUSED server_t *server, client_t *client,
     char const * const *data)
 {
     parser_result_t *r = parse(data, &STRING_PARSER);
+    comment_t *comment = NULL;
 
     if (r == NULL) {
         write_q(client, "300");
         return;
     }
-    thread_add_comment(client->use_ptr, comment_create(client->user,
-        r->data));
-    write_q(client, "203 context"); // todo send the thread simple serialisation
+    comment = comment_create(client->user, r->data);
+    thread_add_comment(client->use_ptr, comment);
+    write_q_responce_objet(client, 203, comment, comment_serializer);
     parser_result_clean(&STRING_PARSER, r);
 }
 

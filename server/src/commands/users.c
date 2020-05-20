@@ -10,8 +10,6 @@
 
 void users(server_t *server, client_t *client, char const * const *data)
 {
-    char *r = NULL;
-
     if (*data != NULL) {
         write_q(client, "500 \"Bad argument\"");
     } else {

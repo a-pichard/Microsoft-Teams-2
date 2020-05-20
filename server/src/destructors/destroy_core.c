@@ -38,7 +38,7 @@ void destroy_server(void)
     ll_destroy(&server->clients, &client_destructor);
     str_users = ll_serialize(&server->users, (serialize_fn)user_serializer);
     ll_destroy(&server->users, &free);
-    str_teams = ll_serialize(&server->teams, (serialize_fn)team_serializer);
+    str_teams = ll_serialize(&server->teams, (serialize_fn)team_saver);
     ll_destroy(&server->teams, &team_destructor);
     str_dms = ll_serialize(&server->dms, dm_serializer);
     ll_destroy(&server->dms, &dm_destructor);

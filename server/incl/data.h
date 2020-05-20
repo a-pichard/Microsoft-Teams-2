@@ -79,6 +79,7 @@ void msg_destructor(void *data);
 // Team
 char *team_serializer(const void *team);
 void team_destructor(void *data);
+char *team_saver(const void *data);
 
 // Thread
 void thread_destructor(void *data);

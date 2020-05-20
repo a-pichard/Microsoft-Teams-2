@@ -68,6 +68,8 @@ void destroy_server(void);
 void load_server_from_file(server_t *server, const char *file_name);
 const char * const *load_message(server_t *server, const char * const *data);
 const char * const *load_user(server_t *server, const char * const *data);
+const char * const *load_teams(server_t *server, const char * const *data);
+
 
 //helper
 void helper(const char *prg_name, int exit_status);

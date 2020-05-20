@@ -28,7 +28,6 @@ const char * const *load_message(server_t *server, const char * const *data)
     const char * const *remain = NULL;
     parser_result_t *r = NULL;
 
-    print_tab(data);
     AND_PARSER(message, &UUID_PARSER, &UUID_PARSER,
         &INT_PARSER, &STRING_PARSER);
     TAB_PARSER(messages_parser, &message);

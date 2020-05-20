@@ -20,6 +20,9 @@ static void load_data(server_t *server, const char *const *data)
     if (strcmp(*current, "dms"))
         return;
     current = load_message(server, current+1);
+    if (strcmp(*current, "teams"))
+        return;
+    current = load_teams(server, current+1);
 }
 
 static char **read_file(FILE *file, long size)

@@ -54,9 +54,9 @@ cmd_t read_from_human(client_t *client)
 
     req = get_client_request(client);
     data = str_to_wordtab(req, ' ', true);
-    free(req);
     if ((func = check_cmd(data, command_string)))
         client_send(client, req);
+    free(req);
     destroy_tab(data);
     return func;
 }

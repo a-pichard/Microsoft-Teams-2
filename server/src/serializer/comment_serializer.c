@@ -32,8 +32,8 @@ char *comment_serializer(const void *data)
     sprintf(time, "%ld", comment->time);
     concat_uuids(str, comment);
     strcat(str, time);
-    strcpy(str, " \"");
+    strcat(str, " \"");
     strcat(str, comment->body);
-    strcpy(str, "\"");
+    strcat(str, "\"");
     return str;
 }

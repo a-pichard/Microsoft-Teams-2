@@ -23,6 +23,18 @@ channel_t *channel_create(const char *name, const char *description)
     return team;
 }
 
+channel_t *channel_reload(uuid_t uuid, const char *name, const char *description)
+{
+    char str[37];
+    channel_t *team = malloc(sizeof(channel_t));
+
+    team->threads = NULL;
+    strcpy(team->description, description);
+    strcpy(team->name, name);
+    uuid_copy(team->uuid, uuid);
+    return team;
+}
+
 thread_t *channel_get_thread_by_uuid(channel_t *channel, uuid_t uuid)
 {
     if (channel == NULL)

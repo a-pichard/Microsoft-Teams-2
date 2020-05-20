@@ -15,7 +15,7 @@ comment_t *comment_create(user_t *creator, const char *body)
 
     strcpy(comment->body, body);
     comment->time = time(NULL);
-    uuid_copy(comment->uuid, creator->uuid);
+    uuid_copy(comment->u_creator, creator->uuid);
     uuid_generate(comment->uuid);
     return comment;
 }

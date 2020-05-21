@@ -58,7 +58,12 @@ void team_add_channel(team_t *team, channel_t *channel)
 void team_add_user(team_t *team, user_t *user)
 {
     unsigned char *uuid = malloc(sizeof(uuid_t));
+    char uuid_team[37];
+    char uuid_user[37];
 
     uuid_copy(uuid, user->uuid);
+    uuid_unparse(team->uuid, uuid_team);
+    uuid_unparse(user->uuid, uuid_user);
+    server_event_user_join_a_team(uuid_team, uuid_user);
     ll_push_back(&team->users_uuid, uuid);
 }

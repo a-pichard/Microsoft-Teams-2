@@ -11,12 +11,7 @@
 void server_add_private_message(server_t *server, msg_t *message)
 {
     dm_t *dms = NULL;
-    char id_sender[37];
-    char id_receiver[37];
 
-    uuid_unparse(message->from, id_sender);
-    uuid_unparse(message->to, id_receiver);
-    server_event_private_message_sended(id_sender, id_receiver, message->msg);
     ll_foreach(server->dms, dm_t, dm,
         if ((!uuid_compare(dm->user1, message->from) &&
             !uuid_compare(dm->user2, message->to)) ||

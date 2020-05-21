@@ -12,7 +12,12 @@
 msg_t *msg_create(uuid_t from, uuid_t to, const char *content)
 {
     msg_t *message = malloc(sizeof(msg_t));
+    char id_sender[37];
+    char id_receiver[37];
 
+    uuid_unparse(from, id_sender);
+    uuid_unparse(to, id_receiver);
+    server_event_private_message_sended(id_sender, id_receiver, content);
     ASSERT(message != NULL);
     uuid_copy(message->from, from);
     uuid_copy(message->to, to);

@@ -22,9 +22,11 @@ static void get_messages_info(int status_code, char const * const * remainer)
     }
     for (i = 1; i < get_tab_len(remainer)-2; i += 4) {
         date = (time_t)remainer[i+2];
-        client_private_message_print_messages(remainer[i], date, remainer[i + 3]);
+        client_private_message_print_messages(remainer[i], date,
+        remainer[i + 3]);
     }
 }
+
 void messages(client_t *client UNUSED, char const * recept)
 {
     char **data = str_to_wordtab((char *)recept, ' ', true);

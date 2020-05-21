@@ -13,7 +13,7 @@
 static void get_user_infos(char **data)
 {
     char uuid_str[37];
-    
+
     uuid_unparse((void *)data[1], uuid_str);
     client_error_unknown_user(uuid_str);
 }

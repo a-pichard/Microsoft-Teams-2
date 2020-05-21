@@ -20,7 +20,7 @@ static void create_team(char const * const *remainer)
     if (r) {
         user = r->data;
         uuid_unparse(user->data, uuid_str);
-        client_print_team_created(uuid_str, user->next->data, 
+        client_print_team_created(uuid_str, user->next->data,
         user->next->next->data);
     } else {
         dprintf(1, "Bad reponse.\n");
@@ -59,7 +59,7 @@ static void create_thread(char const * const *remainer)
         user = r->data;
         uuid_unparse(user->data, uuid_str);
         uuid_unparse(user->next->data, uuid2_str);
-        client_print_thread_created(uuid_str, uuid2_str, 
+        client_print_thread_created(uuid_str, uuid2_str,
         (time_t)user->next->next->data,
         user->next->next->next->data, user->next->next->next->next->data);
     } else {

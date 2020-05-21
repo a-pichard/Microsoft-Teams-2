@@ -34,7 +34,7 @@ void unsubscribe(server_t *server, client_t *client, char const * const *data)
     team = server_get_teams_by_uuid(server, (unsigned char *)(r->data));
     if (team == NULL)
         return write_q_responce(client, 404, "\"team not found\"");
-    uuid = ll_find(&team->users_uuid, (compare_fn)uuid_compare, 
+    uuid = ll_find(&team->users_uuid, (compare_fn)uuid_compare,
         client->user->uuid);
     if (uuid == NULL)
         return write_q_responce(client, 300, "\"user not sub\"");

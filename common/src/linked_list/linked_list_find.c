@@ -8,7 +8,8 @@
 #include "linked_list.h"
 #include <stdbool.h>
 
-void *ll_find(ll_t **list, int (*f)(const void *, const void *), const void *element)
+void *ll_find(ll_t **list, int (*f)(const void *, const void *),
+    const void *element)
 {
     ll_foreach(*list, void, e,
         if (!f(element, e))

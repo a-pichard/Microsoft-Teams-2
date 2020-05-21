@@ -18,7 +18,7 @@ static void subscribed_team(server_t *server, client_t *client,
     char const * const *data)
 {
     parser_result_t *r = parse(data, &UUID_PARSER);
-    
+
     parser_result_clean(&UUID_PARSER, r);
 }
 

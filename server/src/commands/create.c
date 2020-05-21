@@ -25,7 +25,6 @@ void create_team(server_t *server, client_t *client,
             write_q(client, "300");
         } else {
             teams = team_create(client->user, d->data, d->next->data);
-            server_add_team(server, teams);
             write_q_responce_objet(client, 200, teams, team_serializer);
         }
     }
@@ -49,8 +48,7 @@ void create_channel(UNUSED server_t *server, client_t *client,
     if (channel != NULL) {
         write_q(client, "300");
     } else {
-        channel = channel_create(d->data, d->next->data);
-        team_add_channel(client->use_ptr, channel);
+        channel = channel_create(client->use_ptr, d->data, d->next->data);
         write_q_responce_objet(client, 201, channel, channel_serializer);
     }
     parser_result_clean(&p, r);
@@ -73,8 +71,7 @@ void create_thread(UNUSED server_t *server, client_t *client,
     if (thread != NULL) {
         write_q(client, "300");
     } else {
-        thread = thread_create(client->user, d->data, d->next->data);
-        channel_add_thread(client->use_ptr, thread);
+        thread = thread_create(client->use_ptr, client->user, d->data, d->next->data);
         write_q_responce_objet(client, 202, thread, thread_serializer);
     }
     parser_result_clean(&p, r);
@@ -90,8 +87,7 @@ void create_reply(UNUSED server_t *server, client_t *client,
         write_q(client, "300");
         return;
     }
-    comment = comment_create(client->user, r->data);
-    thread_add_comment(client->use_ptr, comment);
+    comment = comment_create(client->use_ptr, client->user, r->data);
     write_q_responce_objet(client, 203, comment, comment_serializer);
     parser_result_clean(&STRING_PARSER, r);
 }

@@ -33,7 +33,7 @@ void *ll_pop_front(ll_t **list);
 
 //function to apply a function to each element
 void ll_apply(ll_t **list, void(*fn)(void *));
-char *ll_serialize(ll_t **list, serialize_fn);
+char *ll_serialize(ll_t * const * list, serialize_fn serializer_fn);
 
 //len
 size_t ll_len(ll_t **list);

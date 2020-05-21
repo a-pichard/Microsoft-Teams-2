@@ -7,11 +7,15 @@
 
 #include "data.h"
 #include "server.h"
+#include "logging_server.h"
 #include <string.h>
 
-thread_t *thread_create(user_t *creator, const char *name, const char *body)
+thread_t *thread_create(channel_t *channel, user_t *creator, const char *name, const char *body)
 {
     thread_t *thread = malloc(sizeof(thread_t));
+    char id_channel[37];
+    char id_thread[37];
+    char id_creator[37];
 
     strcpy(thread->title, name);
     strcpy(thread->body, body);
@@ -19,6 +23,11 @@ thread_t *thread_create(user_t *creator, const char *name, const char *body)
     thread->time = time(NULL);
     uuid_generate(thread->uuid);
     uuid_copy(thread->u_creator, creator->uuid);
+    uuid_unparse(channel->uuid, id_channel);
+    uuid_unparse(thread->uuid, id_thread);
+    uuid_unparse(thread->u_creator, id_creator);
+    server_event_thread_created(id_channel, id_thread, id_creator, body);
+    channel_add_thread(channel, thread);
     return thread;
 }
 

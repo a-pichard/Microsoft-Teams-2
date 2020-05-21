@@ -101,7 +101,7 @@ channel_t *team_get_channel_by_name(team_t *team, const char *name);
 void team_add_channel(team_t *team, channel_t *channel);
 
 //channel
-channel_t *channel_create(const char *name, const char *description);
+channel_t *channel_create(team_t *team, const char *name, const char *description);
 thread_t *channel_get_thread_by_uuid(channel_t *channel, uuid_t uuid);
 thread_t *channel_get_thread_by_name(channel_t *channel, const char *name);
 
@@ -109,12 +109,12 @@ void channel_add_thread(channel_t *channel, thread_t *thread);
 
 
 //thread
-thread_t *thread_create(user_t *creator, const char *name, const char *body);
+thread_t *thread_create(channel_t *channel, user_t *creator, const char *name, const char *body);
 void thread_add_comment(thread_t *thread, comment_t *comment);
 
 
 //comment
-comment_t *comment_create(user_t *creator, const char *body);
+comment_t *comment_create(thread_t *thread, user_t *creator, const char *body);
 char *comment_serializer(const void *data);
 
 // write queue

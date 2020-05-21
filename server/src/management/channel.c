@@ -9,24 +9,26 @@
 #include "logging_server.h"
 #include <string.h>
 
-channel_t *channel_create(const char *name, const char *description)
+channel_t *channel_create(team_t *team, const char *name, const char *description)
 {
-    char str[37];
-    channel_t *team = malloc(sizeof(channel_t));
+    channel_t *channel = malloc(sizeof(channel_t));
+    char id_team[37];
+    char id_channel[37];
 
-    team->threads = NULL;
-    strcpy(team->description, description);
-    strcpy(team->name, name);
-    uuid_generate(team->uuid);
-    uuid_unparse(team->uuid, str);
-    server_event_channel_created(str, name, description);
-    return team;
+    channel->threads = NULL;
+    strcpy(channel->description, description);
+    strcpy(channel->name, name);
+    uuid_generate(channel->uuid);
+    uuid_unparse(team->uuid, id_team);
+    uuid_unparse(channel->uuid, id_channel);
+    server_event_channel_created(id_team, id_channel, channel->name);
+    team_add_channel(team, channel);
+    return channel;
 }
 
 channel_t *channel_reload(uuid_t uuid, const char *name, const char *description)
 {
-    char str[37];
-    channel_t *team = malloc(sizeof(channel_t));
+   channel_t *team = malloc(sizeof(channel_t));
 
     team->threads = NULL;
     strcpy(team->description, description);

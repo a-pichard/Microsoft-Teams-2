@@ -9,7 +9,7 @@
 #include <common.h>
 #include <string.h>
 
-char *ll_serialize(ll_t **list, serialize_fn serializer_fn)
+char *ll_serialize(ll_t * const * list, serialize_fn serializer_fn)
 {
     char *str = strdup("[ ");
     char *tmp = NULL;

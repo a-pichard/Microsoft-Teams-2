@@ -9,7 +9,8 @@
 #include "logging_server.h"
 #include <string.h>
 
-channel_t *channel_create(team_t *team, const char *name, const char *description)
+channel_t *channel_create(team_t *team, const char *name,
+    const char *description)
 {
     channel_t *channel = malloc(sizeof(channel_t));
     char id_team[37];
@@ -26,9 +27,10 @@ channel_t *channel_create(team_t *team, const char *name, const char *descriptio
     return channel;
 }
 
-channel_t *channel_reload(uuid_t uuid, const char *name, const char *description)
+channel_t *channel_reload(uuid_t uuid, const char *name,
+    const char *description)
 {
-   channel_t *team = malloc(sizeof(channel_t));
+    channel_t *team = malloc(sizeof(channel_t));
 
     team->threads = NULL;
     strcpy(team->description, description);

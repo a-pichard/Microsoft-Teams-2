@@ -22,6 +22,9 @@
     "/create",  \
     "/list",    \
     "/info",    \
+    "/subscribe",   \
+    "/subscribed",  \
+    "/unsubscribe", \
     NULL    \
 };
 
@@ -37,6 +40,9 @@
     &create,    \
     &list,  \
     &info,  \
+    &subscribe, \
+    &subscribed,    \
+    &unsubscribe,   \
     NULL    \
 }
 
@@ -71,6 +77,9 @@ void use(server_t *server, client_t *client, char const * const *data);
 void create(server_t *server, client_t *client, char const * const *data);
 void list(server_t *server, client_t *client, char const * const *data);
 void info(server_t *server, client_t *client, char const * const *data);
+void subscribe(server_t *server, client_t *client, char const * const *data);
+void subscribed(server_t *server, client_t *client, char const * const *data);
+void unsubscribe(server_t *server, client_t *client, char const * const *data);
 
 
 #endif /* !CMD_H_ */

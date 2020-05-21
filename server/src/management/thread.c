@@ -10,7 +10,8 @@
 #include "logging_server.h"
 #include <string.h>
 
-thread_t *thread_create(channel_t *channel, user_t *creator, const char *name, const char *body)
+thread_t *thread_create(channel_t *channel, user_t *creator, const char *name,
+    const char *body)
 {
     thread_t *thread = malloc(sizeof(thread_t));
     char id_channel[37];

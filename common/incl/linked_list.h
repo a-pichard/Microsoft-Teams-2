@@ -35,6 +35,8 @@ void *ll_pop_front(ll_t **list);
 void ll_apply(ll_t **list, void(*fn)(void *));
 char *ll_serialize(ll_t * const * list, serialize_fn serializer_fn);
 
+void *find(ll_t **list, int (*f)(const void *, const void *), const void *element);
+
 //len
 size_t ll_len(ll_t **list);
 

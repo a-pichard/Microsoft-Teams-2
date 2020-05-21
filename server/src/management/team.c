@@ -54,3 +54,11 @@ void team_add_channel(team_t *team, channel_t *channel)
 {
     ll_push_back(&team->channels, channel);
 }
+
+void team_add_user(team_t *team, user_t *user)
+{
+    unsigned char *uuid = malloc(sizeof(uuid_t));
+
+    uuid_copy(uuid, user->uuid);
+    ll_push_back(&team->users_uuid, uuid);
+}

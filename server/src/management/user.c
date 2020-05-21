@@ -27,11 +27,13 @@ user_t *user_create(const char *name)
 
 user_t *user_reload(const char *name, uuid_t uuid, int status)
 {
+    char uuid_user[37];
     user_t *user = malloc(sizeof(user_t));
 
     strcpy(user->name, name);
     uuid_copy(user->uuid, uuid);
+    uuid_unparse(user->uuid, uuid_user);
     user->status = status;
-    //todo call log
+    server_event_user_loaded(uuid_user, user->name);
     return user;
 }

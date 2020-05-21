@@ -7,12 +7,6 @@
 
 #include "server.h"
 
-// static char *comment_saver(const comment_t *data)
-// {
-//     char *comment_ser = comment_serializer(data);
-
-// }
-
 static char *thread_saver(const thread_t *data)
 {
     char *thread_ser = thread_serializer(data);
@@ -37,7 +31,7 @@ static char *channel_saver(const channel_t *data)
 
 char *team_saver(const void *data)
 {
-    team_t *team = (team_t*) data;
+    team_t *team = (team_t *)(data);
     char *ser = team_serializer(data);
     char *channels = ll_serialize(&team->channels, (serialize_fn)channel_saver);
     char *r = strcat_alloc3(ser, " ", channels);

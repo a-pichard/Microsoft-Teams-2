@@ -71,7 +71,8 @@ void create_thread(UNUSED server_t *server, client_t *client,
     if (thread != NULL) {
         write_q(client, "300");
     } else {
-        thread = thread_create(client->use_ptr, client->user, d->data, d->next->data);
+        thread = thread_create(client->use_ptr, client->user, d->data,
+            d->next->data);
         write_q_responce_objet(client, 202, thread, thread_serializer);
     }
     parser_result_clean(&p, r);

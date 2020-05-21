@@ -34,7 +34,8 @@ static char *get_client_request(client_t *client)
         free(rbuff);
         exit(0);
     }
-    rbuff[strlen(rbuff) - 1] = '\0';
+    if (rbuff[r - 1] == '\n')
+        rbuff[r - 1] = '\0';
     return rbuff;
 }
 

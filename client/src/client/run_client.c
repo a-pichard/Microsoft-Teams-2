@@ -17,8 +17,6 @@ static void check_ready_fd(
 {
     char *msg = NULL;
 
-    if (FD_ISSET(0, rset))
-        *func = read_from_human(client);
     if (FD_ISSET(client->fd, rset)) {
         read_from_server(client, *func);
         *func = NULL;
@@ -26,6 +24,8 @@ static void check_ready_fd(
         msg = ll_pop_front(&client->to_send);
         dprintf(client->fd, "%s\r\n", msg);
         free(msg);
+    } else if (FD_ISSET(0, rset) && !(*func)) {
+        *func = read_from_human(client);
     }
 }
 

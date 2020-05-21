@@ -25,13 +25,11 @@ static void accept_new_client_connection(server_t *server)
     socklen_t size = sizeof(client_info);
     int client_sock;
     client_t *client = malloc(sizeof(client_t));
-    char *ok_msg = "TODO: user connected";
 
     client_sock = accept(server->server_fd, client_info, &size);
     ASSERT(client_sock != -1);
     init_new_client(client, client_sock);
     ll_push_back(&server->clients, (void *)client);
-    write_q(client, ok_msg);
 }
 
 static int reset_selected_fd(server_t *server, fd_set *rset, fd_set *wset)

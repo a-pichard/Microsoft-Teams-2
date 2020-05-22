@@ -28,7 +28,7 @@ static void thread_create_notify(channel_t *channel, thread_t *thread,
     server_t *server = server_address(NULL);
     team_t *t = get_team(server, channel);
     char *ser = thread_serializer(thread);
-    char *r = strcat("\"event\" \"create\" \"thread\" ", ser);
+    char *r = strcat_alloc("\"event\" \"create\" \"thread\" ", ser);
 
     server_team_notify_users(server_address(NULL), t, r, user->uuid);
     free(r);

@@ -16,7 +16,6 @@ static void get_users_infos(char const * const * remainer)
     AND_PARSER(user_p, &UUID_PARSER, &STRING_PARSER, &INT_PARSER);
     TAB_PARSER(users_parser, &user_p);
     parser_result_t *r = parse(remainer, &users_parser);
-    ll_t *user;
 
     if (r != NULL) {
         ll_foreach(r->data, ll_t, l,

@@ -11,14 +11,13 @@
 #include "parser.h"
 #include "command.h"
 
-static void get_messages_info(int status_code, char const * const * remainer)
+static void get_messages_info(char const * const * remainer)
 {
     char uuid_str[37];
     AND_PARSER(message_parser, &UUID_PARSER, &UUID_PARSER, 
     &STRING_PARSER, &STRING_PARSER);
     TAB_PARSER(messages_parser, &message_parser);
     parser_result_t *r = parse(remainer, &messages_parser);
-    ll_t *user;
 
     if (r != NULL) {
         ll_foreach(r->data, ll_t, l,
@@ -43,7 +42,7 @@ void messages(client_t *client UNUSED, char const * recept)
     else if (*(int *)(r_status->data) == 404)
         client_error_unknown_user(data[1]);
     else
-        get_messages_info(*(int *)(r_status->data), r_status->remainer);
+        get_messages_info(r_status->remainer);
     destroy_tab(data);
     parser_result_clean(&INT_PARSER, r_status);
 }

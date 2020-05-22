@@ -54,7 +54,6 @@ static void list_thread(char const * const *remainer)
     char uuid_str[37];
     char uuid2_str[37];
     parser_result_t *r = parse(remainer, &threads_parser);
-    ll_t *user;
 
     if (r != NULL) {
         ll_foreach(r->data, ll_t, l,
@@ -78,7 +77,6 @@ static void list_reply(char const * const *remainer)
     &STRING_PARSER);
     TAB_PARSER(replys_parser, &user_p);
     parser_result_t *r = parse(remainer, &replys_parser);
-    ll_t *user;
 
     if (r != NULL) {
         ll_foreach(r->data, ll_t, l,
@@ -94,30 +92,26 @@ static void list_reply(char const * const *remainer)
     parser_result_clean(&replys_parser, r);
 }
 
-void list(client_t *client, char const * recept)
+void list(client_t *client UNUSED, char const * recept)
 {
     char **data = str_to_wordtab((char *)recept, ' ', true);
     parser_result_t *r_status = parse((const char * const *)data, &INT_PARSER);
 
     if (r_status == NULL)
         dprintf(1, "Bad reponse.\n");
-    else
-        switch (*(int *)(r_status->data)) {
-            case 200:
-                list_team(r_status->remainer);
-                break;
-            case 201:
-                list_channel(r_status->remainer);
-                break;
-            case 202:
-                list_thread(r_status->remainer);
-                break;
-            case 203:
-                list_reply(r_status->remainer);
-                break;
-            default:
-                !*r_status->remainer ? 0 : dprintf(1, "%s\n", *(r_status->remainer));
-        }
+    if (*(int *)(r_status->data) == 200)
+        list_team(r_status->remainer);
+    else if (*(int *)(r_status->data) == 201)
+        list_channel(r_status->remainer);
+    else {
+        if (*(int *)(r_status->data) == 202)
+            list_thread(r_status->remainer);
+        else if (*(int *)(r_status->data) == 203)
+            list_reply(r_status->remainer);
+        else    
+            !*r_status->remainer ? 0 : 
+            dprintf(1, "%s\n", *(r_status->remainer));
+    }
     destroy_tab(data);
     parser_result_clean(&INT_PARSER, r_status);
 }

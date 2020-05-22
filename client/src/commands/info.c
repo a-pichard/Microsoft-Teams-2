@@ -85,7 +85,7 @@ static void info_user(char const * const *remainer)
     parser_result_clean(&user_p, r);
 }
 
-void info(client_t *client, char const * recept)
+void info(client_t *client UNUSED, char const * recept)
 {
     char **data = str_to_wordtab((char *)recept, ' ', true);
     parser_result_t *r_status = parse((const char * const *)data, &INT_PARSER);

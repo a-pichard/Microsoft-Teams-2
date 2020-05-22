@@ -54,7 +54,6 @@ static void list_thread(char const * const *remainer)
     char uuid_str[37];
     char uuid2_str[37];
     parser_result_t *r = parse(remainer, &threads_parser);
-    ll_t *user;
 
     if (r != NULL) {
         ll_foreach(r->data, ll_t, l,
@@ -78,7 +77,6 @@ static void list_reply(char const * const *remainer)
     &STRING_PARSER);
     TAB_PARSER(replys_parser, &user_p);
     parser_result_t *r = parse(remainer, &replys_parser);
-    ll_t *user;
 
     if (r != NULL) {
         ll_foreach(r->data, ll_t, l,
@@ -94,7 +92,7 @@ static void list_reply(char const * const *remainer)
     parser_result_clean(&replys_parser, r);
 }
 
-void list(client_t *client, char const * recept)
+void list(client_t *client UNUSED, char const * recept)
 {
     char **data = str_to_wordtab((char *)recept, ' ', true);
     parser_result_t *r_status = parse((const char * const *)data, &INT_PARSER);

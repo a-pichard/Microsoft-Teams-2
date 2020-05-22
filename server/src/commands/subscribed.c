@@ -18,8 +18,7 @@ static bool team_contain_user(team_t *team, user_t *user)
     return false;
 }
 
-static void subscribed_user(server_t *server, client_t *client,
-    char const * const *data)
+static void subscribed_user(server_t *server, client_t *client)
 {
     ll_t *teams = NULL;
     char *ser = NULL;
@@ -59,7 +58,7 @@ void subscribed(server_t *server, client_t *client, char const * const *data)
     size_t len = get_tab_len(data);
 
     if (len == 0) {
-        subscribed_user(server, client, data);
+        subscribed_user(server, client);
     } else if (len == 1) {
         subscribed_team(server, client, data);
     } else {

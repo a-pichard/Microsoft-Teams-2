@@ -10,6 +10,29 @@
 #include "logging_server.h"
 #include <string.h>
 
+static team_t *get_team(server_t *server, channel_t *channel)
+{
+    ll_foreach(server->teams, team_t, team, 
+        ll_foreach(team->channels, channel_t, c,
+            if (c == channel) {
+                return team;
+            }
+        );
+    );
+    return NULL;
+}
+
+static void thread_create_notify(channel_t *channel, thread_t *thread, user_t *user) {
+    server_t *server = server_address(NULL);
+    team_t *t = get_team(server, channel);
+    char *ser = thread_serializer(thread);
+    char *r = strcat("\"event\" \"create\" \"thread\" ", ser);
+
+    server_team_notify_users(server_address(NULL), t, r, user->uuid);
+    free(r);
+    free(ser);
+}
+
 thread_t *thread_create(channel_t *channel, user_t *creator, const char *name,
     const char *body)
 {
@@ -27,6 +50,7 @@ thread_t *thread_create(channel_t *channel, user_t *creator, const char *name,
     uuid_unparse(channel->uuid, id_channel);
     uuid_unparse(thread->uuid, id_thread);
     uuid_unparse(thread->u_creator, id_creator);
+    thread_create_notify(channel, thread, creator);
     server_event_thread_created(id_channel, id_thread, id_creator, body);
     channel_add_thread(channel, thread);
     return thread;

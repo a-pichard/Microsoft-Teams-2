@@ -18,8 +18,7 @@ static void check_ready_fd(
     char *msg = NULL;
 
     if (FD_ISSET(client->fd, rset)) {
-        read_from_server(client, *func);
-        *func = NULL;
+        read_from_server(client, func);
     } else if (FD_ISSET(client->fd, wset)) {
         msg = ll_pop_front(&client->to_send);
         dprintf(client->fd, "%s\r\n", msg);

@@ -12,18 +12,19 @@
 char *user_serializer(const void *data)
 {
     user_t *user = (user_t *)data;
-    char *str = malloc(sizeof(char) * (strlen(user->name) + 37 + 6));
+    char *str = NULL;
     char str_uuid[37];
+    int size = 0;
+    char *patern = "%s \"%s\" %d";
 
     uuid_unparse(user->uuid, str_uuid);
-    strcpy(str, str_uuid);
-    strcat(str, " \"");
-    strcat(str, user->name);
-    strcat(str, "\" ");
-    if (user->status == 0) {
-        strcat(str, "0");
-    } else {
-        strcat(str, "1");
-    }
+    size = snprintf(NULL, 0, patern, str_uuid, user->name, user->status);
+    if (size == -1)
+        return (NULL);
+    str = malloc(sizeof(char) * (size + 1));
+    ASSERT(str != NULL);
+    size = snprintf(str, size + 1, patern, str_uuid, user->name, user->status);
+    if (size == -1)
+        return (NULL);
     return str;
 }

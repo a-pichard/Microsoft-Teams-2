@@ -10,33 +10,25 @@
 #include <string.h>
 #include <stdio.h>
 
-static void concat_uuids(char *str, thread_t *thread)
-{
-    char str_uuid[37];
-
-    uuid_unparse(thread->uuid, str_uuid);
-    strcpy(str, str_uuid);
-    strcat(str, " ");
-    uuid_unparse(thread->u_creator, str_uuid);
-    strcat(str, str_uuid);
-    strcat(str, " ");
-}
-
 char *thread_serializer(const void *data)
 {
-    thread_t *thread = (thread_t *)data;
-    size_t len = strlen(thread->title) + strlen(thread->body) + 37 + 37 + 24;
-    char *str = malloc(sizeof(char) * (len + 9));
-    char time[24];
+    thread_t *t = (thread_t *)data;
+    char *str = NULL;
+    char tuuid[37];
+    char cuuid[37];
+    int size = 0;
+    char *patern = "%s %s %ld \"%s\" \"%s\"";
 
+    uuid_unparse(t->uuid, tuuid);
+    uuid_unparse(t->u_creator, cuuid);
+    size = snprintf(NULL, 0, patern, tuuid, cuuid, t->time, t->title, t->body);
+    if (size == -1)
+        return (NULL);
+    str = malloc(sizeof(char) * (size + 1));
     ASSERT(str != NULL);
-    sprintf(time, "%ld", thread->time);
-    concat_uuids(str, thread);
-    strcat(str, time);
-    strcat(str, " \"");
-    strcat(str, thread->title);
-    strcat(str, "\" \"");
-    strcat(str, thread->body);
-    strcat(str, "\"");
+    size = snprintf(str, size + 1, patern, tuuid, cuuid,
+        t->time, t->title, t->body);
+    if (size == -1)
+        return (NULL);
     return str;
 }

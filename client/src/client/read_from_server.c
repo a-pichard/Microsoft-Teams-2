@@ -31,7 +31,7 @@ static char *client_recieve(client_t *client)
     return (bufferizer(&client->req, buffer, REQ_END));
 }
 
-void read_from_server(client_t *client, cmd_t func)
+void read_from_server(client_t *client, cmd_t *func)
 {
     char *recept;
 
@@ -39,9 +39,9 @@ void read_from_server(client_t *client, cmd_t func)
     if (recept) {
         if (!strncmp(recept, "\"event\"", 7)) {
             parse_event(recept);
-        } else if (func) {
-            (func)(client, (char const *)recept);
-            func = NULL;
+        } else if (*func) {
+            (*func)(client, (char const *)recept);
+            *func = NULL;
         }
         free(recept);
     }

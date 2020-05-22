@@ -11,19 +11,20 @@
 
 char *team_serializer(const void *data)
 {
-    team_t *team = (team_t *)data;
-    size_t len = strlen(team->name) + strlen(team->description) + 37;
-    char *str = malloc(sizeof(char) * (len + 7));
+    team_t *t = (team_t *)data;
+    char *str = NULL;
     char str_uuid[37];
+    int size = 0;
+    char *patern = "%s \"%s\" \"%s\"";
 
+    uuid_unparse(t->uuid, str_uuid);
+    size = snprintf(NULL, 0, patern, str_uuid, t->name, t->description);
+    if (size == -1)
+        return (NULL);
+    str = malloc(sizeof(char) * (size + 1));
     ASSERT(str != NULL);
-    uuid_unparse(team->uuid, str_uuid);
-    strcpy(str, str_uuid);
-    strcat(str, " ");
-    strcat(str, "\"");
-    strcat(str, team->name);
-    strcat(str, "\" \"");
-    strcat(str, team->description);
-    strcat(str, "\"");
+    size = snprintf(str, size + 1, patern, str_uuid, t->name, t->description);
+    if (size == -1)
+        return (NULL);
     return str;
 }

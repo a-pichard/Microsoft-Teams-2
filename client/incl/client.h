@@ -13,8 +13,7 @@
 #include "uuid/uuid.h"
 #include "parser.h"
 
-typedef struct client_s
-{
+typedef struct client_s {
     int fd;
     char *req;
     ll_t *to_send;
@@ -31,6 +30,7 @@ void client_destroy(client_t *client);
 void client_run(client_t *client);
 void client_send(client_t *client, const char *msg);
 void read_from_server(client_t *client, cmd_t func);
+void parse_event(char *event);
 cmd_t read_from_human(client_t *client);
 
 cmd_t check_cmd(char **data, const char **command_string);

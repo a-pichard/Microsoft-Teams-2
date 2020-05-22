@@ -98,9 +98,10 @@ user_t *server_add_user_with_name(server_t *server, const char *username);
 team_t *server_get_teams_by_uuid(server_t *server, uuid_t uuid);
 team_t *server_get_teams_by_name(server_t *server, char *name);
 void server_add_team(server_t *server, team_t *team);
+void server_team_notify_users(server_t *server, team_t *team, const char *msg);
+
 team_t *team_create(user_t *user, const char *name, const char *description);
 void team_add_user(team_t *team, user_t *user);
-
 channel_t *team_get_channel_by_uuid(team_t *team, uuid_t uuid);
 channel_t *team_get_channel_by_name(team_t *team, const char *name);
 void team_add_channel(team_t *team, channel_t *channel);

@@ -63,6 +63,7 @@ typedef struct {
     uuid_t uuid;
     ll_t *channels;
     ll_t *users_uuid;
+    uuid_t u_creator;
 } team_t;
 
 // Dm

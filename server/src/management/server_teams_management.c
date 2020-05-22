@@ -38,7 +38,8 @@ static void team_create_event(server_t *server, team_t *team)
     char *r = strcat_alloc("\"event\" \"create\" \"team\" ", ser);
 
     ll_foreach(server->clients, client_t, client,
-        write_q(client, r);
+        if (uuid_compare(team->u_creator, client->user->uuid))
+            write_q(client, r);
     );
     free(ser);
     free(r);
@@ -48,4 +49,15 @@ void server_add_team(server_t *server, team_t *team)
 {
     team_create_event(server, team);
     ll_push_back(&server->teams, team);
+}
+
+void server_team_notify_users(server_t *server, team_t *team, const char *msg)
+{
+    client_t *client = NULL;
+
+    ll_foreach(team->users_uuid, uuid_t, uuid,
+        client = server_get_client_by_uuid(server, uuid);
+        if (client)
+            write_q(client, msg);
+    );
 }

@@ -22,6 +22,7 @@ team_t *team_create(user_t *user, const char *name, const char *description)
     uuid_unparse(team->uuid, str);
     team->users_uuid = NULL;
     uuid_unparse(user->uuid, str2);
+    uuid_copy(team->u_creator, user->uuid);
     server_event_team_created(str, name, str2);
     return team;
 }
@@ -52,6 +53,9 @@ channel_t *team_get_channel_by_name(team_t *team, const char *name)
 
 void team_add_channel(team_t *team, channel_t *channel)
 {
+    char *ser = channel_serializer(channel); 
+    char *msg = strcat_alloc("\"event\" \"create\" \"channel\" ", ser);
+
     ll_push_back(&team->channels, channel);
 }
 

@@ -25,6 +25,7 @@ void create_team(server_t *server, client_t *client,
             write_q(client, "300");
         } else {
             teams = team_create(client->user, d->data, d->next->data);
+            server_add_team(server, teams);
             write_q_responce_objet(client, 200, teams, team_serializer);
         }
     }

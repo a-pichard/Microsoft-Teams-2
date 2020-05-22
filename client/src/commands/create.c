@@ -81,7 +81,8 @@ static void create_reply(char const * const *remainer)
         user = r->data;
         uuid_unparse(user->data, uuid_str);
         uuid_unparse(user->next->data, uuid_str2);
-        client_print_reply_created(uuid_str, uuid_str2, user->next->next->data,
+        client_print_reply_created(uuid_str, uuid_str2, 
+        (time_t)user->next->next->data,
         user->next->next->next->data);
     } else {
         dprintf(1, "Bad reponse.\n");
@@ -111,7 +112,7 @@ void create(client_t *client, char const * recept)
                 create_reply(r_status->remainer);
                 break;
             default:
-                dprintf(1, "%s\n", *(r_status->remainer));
+                !*r_status->remainer ? 0 : dprintf(1, "%s\n", *(r_status->remainer));
         }
     destroy_tab(data);
     parser_result_clean(&INT_PARSER, r_status);

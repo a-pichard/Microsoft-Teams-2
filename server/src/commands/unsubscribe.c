@@ -29,8 +29,10 @@ void unsubscribe(server_t *server, client_t *client, char const * const *data)
     team_t *team = NULL;
     uuid_t *uuid = NULL;
 
-    if (r == NULL || r->remainer != NULL)
+    if (r == NULL || *r->remainer != NULL) {
         write_q(client, "300");
+        return;
+    }
     team = server_get_teams_by_uuid(server, (unsigned char *)(r->data));
     if (team == NULL)
         return write_q_responce(client, 404, "\"team not found\"");

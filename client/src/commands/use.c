@@ -8,8 +8,7 @@
 #include "client.h"
 #include <logging_client.h>
 
-void use(client_t *client, char const * recept UNUSED)
+void use(client_t *client UNUSED, char const * recept UNUSED)
 {
-    //change context, a voir plus tard
-    printf("use\n");
+    dprintf(1, "use\n");
 }

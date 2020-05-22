@@ -16,13 +16,13 @@ void info(UNUSED server_t *server, client_t *client, char const * const *data)
             write_q_responce_objet(client, 200, client->user,
                 user_serializer);
         } else if (client->state == TEAM) {
-            write_q_responce_objet(client, 200, client->use_ptr,
+            write_q_responce_objet(client, 201, client->use_ptr,
                 team_serializer);
         } else if (client->state == CHANNEL) {
-            write_q_responce_objet(client, 200, client->use_ptr,
+            write_q_responce_objet(client, 202, client->use_ptr,
                 channel_serializer);
         } else {
-            write_q_responce_objet(client, 200, client->use_ptr,
+            write_q_responce_objet(client, 203, client->use_ptr,
                 thread_serializer);
         }
     }

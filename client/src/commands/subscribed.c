@@ -12,5 +12,5 @@ void subscribed(client_t *client, char const * recept)
 {
     //if not login
     //client_error_unauthorized(void);
-    printf("subscribed\n");
+    printf("subscribed [%s]\n", recept);
 }

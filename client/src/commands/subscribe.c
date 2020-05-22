@@ -7,6 +7,8 @@
 
 #include "client.h"
 #include <logging_client.h>
+#include "common.h"
+#include "parser.h"
 
 static void parse_subscribe(char const * const *remainer)
 {
@@ -31,8 +33,6 @@ void subscribe(client_t *client, char const * recept)
 {
     char **data = str_to_wordtab((char *)recept, ' ', true);
     parser_result_t *r_status = parse((const char * const *)data, &INT_PARSER);
-    for (int i = 0; data[i]; i++)
-        printf("%s\n", data[i]);
     if (r_status == NULL)
         dprintf(1, "Bad reponse.\n");
     else if (*(int *)(r_status->data) != 200)

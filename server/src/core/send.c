@@ -18,7 +18,7 @@ void write_q(client_t *client, const char *msg)
 
 void write_q_responce(client_t *client, int code, const char *msg)
 {
-    char *str = calloc(sizeof(char), strlen(msg) + 10);
+    char *str = calloc(sizeof(char), strlen(msg) + 24);
 
     sprintf(str, "%d %s", code, msg);
     ll_push_back(&client->write_q, str);
@@ -28,7 +28,7 @@ void write_q_responce_objet(client_t *client, int code, void *objet,
     serialize_fn serilizer)
 {
     char *objet_str = serilizer(objet);
-    char *str = calloc(sizeof(char), strlen(objet_str) + 10);
+    char *str = calloc(sizeof(char), strlen(objet_str) + 24);
 
     sprintf(str, "%d %s", code, objet_str);
     ll_push_back(&client->write_q, str);
@@ -39,7 +39,7 @@ void write_q_responce_objet_list(client_t *client, int code, ll_t *objets,
     serialize_fn serilizer)
 {
     char *objet_str = ll_serialize(&objets, serilizer);
-    char *str = calloc(sizeof(char), strlen(objet_str) + 10);
+    char *str = calloc(sizeof(char), strlen(objet_str) + 24);
 
     sprintf(str, "%d %s", code, objet_str);
     ll_push_back(&client->write_q, str);

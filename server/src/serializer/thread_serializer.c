@@ -8,6 +8,7 @@
 #include "server.h"
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 static void concat_uuids(char *str, thread_t *thread)
 {
@@ -24,9 +25,9 @@ static void concat_uuids(char *str, thread_t *thread)
 char *thread_serializer(const void *data)
 {
     thread_t *thread = (thread_t *)data;
-    size_t len = strlen(thread->title) + strlen(thread->body) + 37 + 37 + 10;
+    size_t len = strlen(thread->title) + strlen(thread->body) + 37 + 37 + 24;
     char *str = malloc(sizeof(char) * (len + 9));
-    char time[10];
+    char time[24];
 
     ASSERT(str != NULL);
     sprintf(time, "%ld", thread->time);

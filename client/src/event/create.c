@@ -42,7 +42,7 @@ static void channel(const char * const *recept)
         uuid_unparse(cc->data, uuid_str);
         channel_name = cc->next->data;
         channel_desc = cc->next->next->data;
-        client_event_team_created(uuid_str, channel_name, channel_desc);
+        client_event_channel_created(uuid_str, channel_name, channel_desc);
     }
     parser_result_clean(&cc_p, r);
 }

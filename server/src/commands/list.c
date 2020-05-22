@@ -10,9 +10,9 @@
 
 static char *serial_comment(thread_t *thread, comment_t *comment)
 {
-    size_t len = strlen(comment->body) + 37 + 37 + 10;
+    size_t len = strlen(comment->body) + 37 + 37 + 24;
     char *str = malloc(sizeof(char) * (len + 6));
-    char time[10];
+    char time[24];
     char str_uuid[37];
 
     ASSERT(str != NULL);

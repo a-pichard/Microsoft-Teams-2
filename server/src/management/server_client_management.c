@@ -7,7 +7,7 @@
 
 #include "server.h"
 
-client_t *server_get_client_by_uuid(server_t *s, uuid_t *uuid)
+client_t *server_get_client_by_uuid(server_t *s, uuid_t uuid)
 {
     ll_foreach(s->clients, client_t, client, 
         if (client->user != NULL && !uuid_compare(client->user->uuid, uuid)) {

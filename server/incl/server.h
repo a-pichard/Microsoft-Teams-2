@@ -83,7 +83,7 @@ char **parse_cmd(char **buffer, const char *req);
 
 
 //Client
-client_t *server_get_client_by_uuid(server_t *s, uuid_t *uuid);
+client_t *server_get_client_by_uuid(server_t *s, uuid_t uuid);
 
 //User
 user_t *user_create(const char *name);
@@ -98,7 +98,8 @@ user_t *server_add_user_with_name(server_t *server, const char *username);
 team_t *server_get_teams_by_uuid(server_t *server, uuid_t uuid);
 team_t *server_get_teams_by_name(server_t *server, char *name);
 void server_add_team(server_t *server, team_t *team);
-void server_team_notify_users(server_t *server, team_t *team, const char *msg);
+void server_team_notify_users(server_t *server, team_t *team,
+    const char *msg, uuid_t exep);
 
 team_t *team_create(user_t *user, const char *name, const char *description);
 void team_add_user(team_t *team, user_t *user);
@@ -108,7 +109,7 @@ void team_add_channel(team_t *team, channel_t *channel);
 
 //channel
 channel_t *channel_create(team_t *team, const char *name,
-    const char *description);
+    const char *description, user_t *creator);
 thread_t *channel_get_thread_by_uuid(channel_t *channel, uuid_t uuid);
 thread_t *channel_get_thread_by_name(channel_t *channel, const char *name);
 

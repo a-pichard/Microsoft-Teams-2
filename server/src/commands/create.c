@@ -49,7 +49,8 @@ void create_channel(UNUSED server_t *server, client_t *client,
     if (channel != NULL) {
         write_q(client, "300");
     } else {
-        channel = channel_create(client->use_ptr, d->data, d->next->data);
+        channel = channel_create(client->use_ptr, d->data, d->next->data,
+            client->user);
         write_q_responce_objet(client, 201, channel, channel_serializer);
     }
     parser_result_clean(&p, r);

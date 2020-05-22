@@ -51,13 +51,14 @@ void server_add_team(server_t *server, team_t *team)
     ll_push_back(&server->teams, team);
 }
 
-void server_team_notify_users(server_t *server, team_t *team, const char *msg)
+void server_team_notify_users(server_t *server, team_t *team,
+    const char *msg, uuid_t exep)
 {
     client_t *client = NULL;
 
-    ll_foreach(team->users_uuid, uuid_t, uuid,
+    ll_foreach(team->users_uuid, unsigned char, uuid,
         client = server_get_client_by_uuid(server, uuid);
-        if (client)
+        if (client && (exep == NULL || uuid_compare(uuid, exep)))
             write_q(client, msg);
     );
 }

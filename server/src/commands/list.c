@@ -7,9 +7,27 @@
 
 #include "server.h"
 
-static void list_none(server_t *server, client_t *client)
+
+static char *serial_comment(thread_t *thread, comment_t *comment)
 {
-    write_q_responce_objet_list(client, 200, server->teams, team_serializer);
+    size_t len = strlen(comment->body) + 37 + 37 + 10;
+    char *str = malloc(sizeof(char) * (len + 6));
+    char time[10];
+    char str_uuid[37];
+
+    ASSERT(str != NULL);
+    uuid_unparse(thread->uuid, str_uuid);
+    strcpy(str, str_uuid);
+    strcat(str, " ");
+    uuid_unparse(comment->uuid, str_uuid);
+    strcat(str, str_uuid);
+    strcat(str, " ");
+    sprintf(time, "%ld", comment->time);
+    strcat(str, time);
+    strcat(str, " \"");
+    strcat(str, comment->body);
+    strcat(str, "\"");
+    return str;
 }
 
 static void list_team(client_t *client)
@@ -30,10 +48,22 @@ static void list_channel(client_t *client)
 
 static void list_thread(client_t *client)
 {
-    // thread_t *thread = client->use_ptr;
+    thread_t *thread = client->use_ptr;
+    char *str = strdup("[ ");
+    char *temp_ser = NULL;
+    char *temp = NULL;
 
-    write_q_responce(client, 789546546, "not implemented");
-    // write_q_responce_objet_list(client, 202, thread->comments, comment);
+    ll_foreach(thread->comments, comment_t, comment,
+        temp_ser = serial_comment(thread, comment);
+        temp = strcat_alloc3(str, " ", temp_ser);
+        free(str);
+        free(temp_ser);
+        str = temp;
+    );
+    temp = strcat_alloc(str, " ]");
+    write_q_responce(client, 203, temp);
+    free(temp);
+    free(str);
 }
 
 void list(server_t *server, client_t *client, char const * const *data)
@@ -43,7 +73,8 @@ void list(server_t *server, client_t *client, char const * const *data)
         return;
     }
     if (client->state == NONE) {
-        list_none(server, client);
+        write_q_responce_objet_list(client, 200, server->teams,
+            team_serializer);
     } else if (client->state == TEAM) {
         list_team(client);
     } else if (client->state == CHANNEL) {

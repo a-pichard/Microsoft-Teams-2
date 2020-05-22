@@ -32,14 +32,12 @@ typedef struct {
 } dm_t;
 
 // teams, channels, threads and comments
-
 typedef struct {
     char body[MAX_BODY_LENGTH];
     long time;
     uuid_t u_creator;
     uuid_t uuid;
 } comment_t;
-
 
 typedef struct {
     char title[MAX_NAME_LENGTH];
@@ -55,6 +53,7 @@ typedef struct {
     char description[MAX_DESCRIPTION_LENGTH];
     ll_t *threads;
     uuid_t uuid;
+    uuid_t u_creator;
 } channel_t;
 
 typedef struct {

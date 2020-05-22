@@ -10,7 +10,7 @@
 #include <string.h>
 
 channel_t *channel_create(team_t *team, const char *name,
-    const char *description)
+    const char *description, user_t *creator)
 {
     channel_t *channel = malloc(sizeof(channel_t));
     char id_team[37];
@@ -19,6 +19,7 @@ channel_t *channel_create(team_t *team, const char *name,
     channel->threads = NULL;
     strcpy(channel->description, description);
     strcpy(channel->name, name);
+    uuid_copy(channel->u_creator, creator->uuid);
     uuid_generate(channel->uuid);
     uuid_unparse(team->uuid, id_team);
     uuid_unparse(channel->uuid, id_channel);

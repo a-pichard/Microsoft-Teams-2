@@ -8,10 +8,28 @@
 #include "server.h"
 #include "logging_server.h"
 
+static void notify(server_t *server, msg_t *message)
+{
+    client_t *to = server_get_client_by_uuid(server, message->to);
+    char *r = NULL;
+    char *msg = NULL;
+    char user_id[37];
+
+    if (to == NULL)
+        return;
+    uuid_unparse(message->to, user_id);
+    msg = strcat_alloc3(user_id, " \"", message->msg);
+    r = strcat_alloc3("\"event\" \"message\" \"user\" ", msg, "\"");
+    write_q(to, r);
+    free(r);
+    free(msg);
+}
+
 void server_add_private_message(server_t *server, msg_t *message)
 {
     dm_t *dms = NULL;
 
+    notify(server, message);
     ll_foreach(server->dms, dm_t, dm,
         if ((!uuid_compare(dm->user1, message->from) &&
             !uuid_compare(dm->user2, message->to)) ||

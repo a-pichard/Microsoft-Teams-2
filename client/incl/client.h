@@ -11,6 +11,7 @@
 #include "common.h"
 #include "linked_list.h"
 #include "uuid/uuid.h"
+#include "parser.h"
 
 typedef struct client_s
 {

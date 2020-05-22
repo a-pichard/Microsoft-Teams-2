@@ -13,18 +13,24 @@
 
 static void get_messages_info(int status_code, char const * const * remainer)
 {
-    time_t date;
-    size_t i;
+    char uuid_str[37];
+    AND_PARSER(message_parser, &UUID_PARSER, &UUID_PARSER, 
+    &STRING_PARSER, &STRING_PARSER);
+    TAB_PARSER(messages_parser, &message_parser);
+    parser_result_t *r = parse(remainer, &messages_parser);
+    ll_t *user;
 
-    if (status_code != 200) {
-        dprintf(1, "%s\n", *(remainer));
-        return;
+    if (r != NULL) {
+        ll_foreach(r->data, ll_t, l,
+            uuid_unparse(l->data, uuid_str);
+            client_private_message_print_messages(uuid_str, 
+            (time_t)l->next->next->data,
+            l->next->next->next->data);
+        );
+    } else {
+        dprintf(1, "Bad reponse.\n");
     }
-    for (i = 1; i < get_tab_len(remainer)-2; i += 4) {
-        date = (time_t)remainer[i+2];
-        client_private_message_print_messages(remainer[i], date,
-        remainer[i + 3]);
-    }
+    parser_result_clean(&messages_parser, r);
 }
 
 void messages(client_t *client UNUSED, char const * recept)

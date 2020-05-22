@@ -35,7 +35,7 @@ void login(client_t *client UNUSED, char const * recept)
     if (r_status == NULL)
         dprintf(1, "Bad reponse.\n");
     else if (*(int *)(r_status->data) != 200)
-        dprintf(1, "%s\n", *(r_status->remainer));
+        !*r_status->remainer ? 0 : dprintf(1, "%s\n", *(r_status->remainer));
     else
         get_user_infos(r_status->remainer);
     destroy_tab(data);

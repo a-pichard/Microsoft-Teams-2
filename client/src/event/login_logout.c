@@ -14,7 +14,7 @@ static void handle_auth_event(const char * const *recept,
     char uuid_str[37];
     AND_PARSER(user_p, &UUID_PARSER, &STRING_PARSER, &INT_PARSER);
     parser_result_t *r = parse(recept, &user_p);
-    ll_t *user;
+    ll_t *user = NULL;
 
     if (r) {
         user = r->data;

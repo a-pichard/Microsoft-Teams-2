@@ -14,7 +14,7 @@ static void dm(const char * const *recept)
     char uuid_str[37];
     AND_PARSER(dm_p, &UUID_PARSER, &STRING_PARSER);
     parser_result_t *r = parse(recept, &dm_p);
-    ll_t *dm;
+    ll_t *dm = NULL;
 
     if (r) {
         dm = r->data;
@@ -31,7 +31,7 @@ static void thread(const char * const *recept)
     char user_uuid[37];
     AND_PARSER(tm_p, &UUID_PARSER, &UUID_PARSER, &UUID_PARSER, &STRING_PARSER);
     parser_result_t *r = parse(recept, &tm_p);
-    ll_t *tm;
+    ll_t *tm = NULL;
 
     if (r) {
         tm = r->data;

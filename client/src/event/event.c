@@ -24,7 +24,7 @@ void parse_event(char *event_str)
     char **event_tab = str_to_wordtab(event_str, ' ', true);
     AND_PARSER(event_p, &STRING_PARSER, &STRING_PARSER);
     parser_result_t *r = parse((const char * const *)event_tab, &event_p);
-    event_t event;
+    event_t event = NULL;
 
     if (r) {
         event = get_event_type((char *)((ll_t *)(r->data))->next->data);

@@ -12,11 +12,22 @@
 
 static void get_users_infos(char const * const * remainer)
 {
-    size_t i;
+    char uuid_str[37];
+    AND_PARSER(user_p, &UUID_PARSER, &STRING_PARSER, &INT_PARSER);
+    TAB_PARSER(users_parser, &user_p);
+    parser_result_t *r = parse(remainer, &users_parser);
+    ll_t *user;
 
-    for (i = 1; i < get_tab_len(remainer)-2; i += 3) {
-        client_print_user(remainer[i], remainer[i +1], atoi(remainer[i+2]));
+    if (r != NULL) {
+        ll_foreach(r->data, ll_t, l,
+            uuid_unparse(l->data, uuid_str);
+            client_print_user(uuid_str, l->next->data,
+            *(int *)l->next->next->data);
+        );
+    } else {
+        dprintf(1, "Bad reponse.\n");
     }
+    parser_result_clean(&users_parser, r);
 }
 
 void users(client_t *client UNUSED, char const * recept)

@@ -12,7 +12,7 @@
 
 static team_t *get_team(server_t *server, thread_t *thread)
 {
-    ll_foreach(server->teams, team_t, team, 
+    ll_foreach(server->teams, team_t, team,
         ll_foreach(team->channels, channel_t, channel,
             ll_foreach(channel->threads, thread_t, t,
                 if (t == thread) {
@@ -24,7 +24,9 @@ static team_t *get_team(server_t *server, thread_t *thread)
     return NULL;
 }
 
-static void comment_create_notify(thread_t *thread, comment_t *comment, user_t *user) {
+static void comment_create_notify(thread_t *thread, comment_t *comment,
+    user_t *user)
+{
     server_t *server = server_address(NULL);
     team_t *t = get_team(server, thread);
     char *ser = comment_serializer(comment);

@@ -12,7 +12,7 @@ static bool team_contain_user(team_t *team, user_t *user)
 {
     ll_foreach(team->users_uuid, unsigned char, uuid,
         if (!uuid_compare(user->uuid, uuid)) {
-            return true;;
+            return true;
         }
     );
     return false;

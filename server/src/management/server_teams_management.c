@@ -32,7 +32,20 @@ team_t *server_get_teams_by_name(server_t *server, char *name)
     return NULL;
 }
 
+static void team_create_event(server_t *server, team_t *team)
+{
+    char *ser = team_serializer(team);
+    char *r = strcat_alloc("\"event\" \"create\" \"team\" ", ser);
+
+    ll_foreach(server->clients, client_t, client,
+        write_q(client, r);
+    );
+    free(ser);
+    free(r);
+}
+
 void server_add_team(server_t *server, team_t *team)
 {
+    team_create_event(server, team);
     ll_push_back(&server->teams, team);
 }

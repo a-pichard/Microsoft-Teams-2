@@ -81,6 +81,10 @@ void run_server(server_t *);
 void handle_client(server_t *server, client_t *client);
 char **parse_cmd(char **buffer, const char *req);
 
+
+//Client
+client_t *server_get_client_by_uuid(server_t *s, uuid_t *uuid);
+
 //User
 user_t *user_create(const char *name);
 user_t *user_reload(const char *name, uuid_t uuid, int status);

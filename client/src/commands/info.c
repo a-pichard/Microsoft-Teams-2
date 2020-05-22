@@ -92,23 +92,18 @@ void info(client_t *client UNUSED, char const * recept)
 
     if (r_status == NULL)
         dprintf(1, "Bad reponse.\n");
+    if (*(int *)(r_status->data) == 200)
+        info_user(r_status->remainer);
+    else if (*(int *)(r_status->data) == 201)
+        info_team(r_status->remainer);
     else {
-        switch (*(int *)(r_status->data)) {
-            case 200:
-                info_user(r_status->remainer);
-                break;
-            case 201:
-                info_team(r_status->remainer);
-                break;
-            case 202:
-                info_channel(r_status->remainer);
-                break;
-            case 203:
-                info_thread(r_status->remainer);
-                break;
-            default:
-                dprintf(1, "%s\n", *(r_status->remainer));
-        }
+        if (*(int *)(r_status->data) == 202)
+            info_channel(r_status->remainer);
+        else if (*(int *)(r_status->data) == 203)
+            info_thread(r_status->remainer);
+        else    
+            !*r_status->remainer ? 0 : 
+            dprintf(1, "%s\n", *(r_status->remainer));
     }
     destroy_tab(data);
     parser_result_clean(&INT_PARSER, r_status);

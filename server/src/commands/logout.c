@@ -8,6 +8,20 @@
 #include "cmd.h"
 #include "logging_server.h"
 
+static void event_user_logout(server_t *server, user_t *user)
+{
+    char *ser = user_serializer(user);
+    char *msg = strcat_alloc("\"event\" \"logout\" ", ser);
+
+    ll_foreach(server->clients, client_t, client,
+        if (client->user != user) {
+            write_q(client, msg);
+        }
+    );
+    free(ser);
+    free(msg);
+}
+
 void logout(server_t *server UNUSED, client_t *client,
     char const * const *data UNUSED)
 {
@@ -21,6 +35,7 @@ void logout(server_t *server UNUSED, client_t *client,
         } else {
             uuid_unparse(client->user->uuid, uuid_str);
             server_event_user_logged_out(uuid_str);
+            event_user_logout(server, client->user);
             write_q_responce_objet(client, 200, client->user,
                 user_serializer);
             client->user->status--;

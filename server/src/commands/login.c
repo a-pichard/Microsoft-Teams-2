@@ -10,6 +10,20 @@
 #include "common.h"
 #include <logging_server.h>
 
+static void event_user_login(server_t *server, user_t *user)
+{
+    char *ser = user_serializer(user);
+    char *msg = strcat_alloc("\"event\" \"login\" ", ser);
+
+    ll_foreach(server->clients, client_t, client,
+        if (client->user != user) {
+            write_q(client, msg);
+        }
+    );
+    free(ser);
+    free(msg);
+}
+
 void login(server_t *server, client_t *client, char const * const *data)
 {
     user_t *user = NULL;
@@ -28,6 +42,7 @@ void login(server_t *server, client_t *client, char const * const *data)
         client->user = user;
         client->user->status++;
         uuid_unparse(user->uuid, uuid_str);
+        event_user_login(server, client->user);
         server_event_user_logged_in(uuid_str);
         write_q_responce_objet(client, 200, client->user, user_serializer);
     }

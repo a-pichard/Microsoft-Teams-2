@@ -53,7 +53,7 @@ channel_t *team_get_channel_by_name(team_t *team, const char *name)
 
 void team_add_channel(team_t *team, channel_t *channel)
 {
-    char *ser = channel_serializer(channel); 
+    char *ser = channel_serializer(channel);
     char *msg = strcat_alloc("\"event\" \"create\" \"channel\" ", ser);
 
     server_team_notify_users(server_address(NULL), team, msg,

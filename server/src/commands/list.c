@@ -6,7 +6,7 @@
 */
 
 #include "server.h"
-
+#include <string.h>
 
 static char *serial_comment(thread_t *thread, comment_t *comment)
 {

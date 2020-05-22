@@ -49,6 +49,26 @@ static void channel(const char * const *recept)
 
 static void thread(const char * const *recept)
 {
+    char tuuid[37];
+    char uuuid[37];
+    AND_PARSER(ct_p, &UUID_PARSER, &UUID_PARSER, &INT_PARSER,
+        &STRING_PARSER, &STRING_PARSER);
+    parser_result_t *r = parse(recept, &ct_p);
+    ll_t *ct = NULL;
+    char *name = NULL;
+    char *body = NULL;
+    time_t t = 0;
+
+    if (r) {
+        ct = r-> data;
+        uuid_unparse(ct->data, tuuid);
+        uuid_unparse(ct->next->data, uuuid);
+        t = *(time_t *)ct->next->next->data;
+        name = ct->next->next->next->data;
+        body = ct->next->next->next->next->data;
+        client_event_thread_created(tuuid, uuuid, t, name, body);
+    }
+    parser_result_clean(&ct_p, r);
 }
 
 void create_e(const char * const *recept)

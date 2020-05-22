@@ -50,7 +50,7 @@ static void create_thread(char const * const *remainer)
 {
     char uuid_str[37];
     char uuid2_str[37];
-    AND_PARSER(user_p, &UUID_PARSER, &UUID_PARSER, &STRING_PARSER,
+    AND_PARSER(user_p, &UUID_PARSER, &UUID_PARSER, &INT_PARSER,
     &STRING_PARSER, &STRING_PARSER);
     parser_result_t *r = parse(remainer, &user_p);
     ll_t *user;
@@ -60,7 +60,7 @@ static void create_thread(char const * const *remainer)
         uuid_unparse(user->data, uuid_str);
         uuid_unparse(user->next->data, uuid2_str);
         client_print_thread_created(uuid_str, uuid2_str,
-        (time_t)user->next->next->data,
+        *(int *)user->next->next->data,
         user->next->next->next->data, user->next->next->next->next->data);
     } else {
         dprintf(1, "Bad reponse.\n");
@@ -72,7 +72,7 @@ static void create_reply(char const * const *remainer)
 {
     char uuid_str[37];
     char uuid_str2[37];
-    AND_PARSER(user_p, &UUID_PARSER, &STRING_PARSER, &STRING_PARSER,
+    AND_PARSER(user_p, &UUID_PARSER, &UUID_PARSER, &INT_PARSER,
     &STRING_PARSER);
     parser_result_t *r = parse(remainer, &user_p);
     ll_t *user;
@@ -82,7 +82,7 @@ static void create_reply(char const * const *remainer)
         uuid_unparse(user->data, uuid_str);
         uuid_unparse(user->next->data, uuid_str2);
         client_print_reply_created(uuid_str, uuid_str2, 
-        (time_t)user->next->next->data,
+        *(int *)user->next->next->data,
         user->next->next->next->data);
     } else {
         dprintf(1, "Bad reponse.\n");

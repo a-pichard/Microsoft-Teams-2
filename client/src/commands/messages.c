@@ -15,7 +15,7 @@ static void get_messages_info(char const * const * remainer)
 {
     char uuid_str[37];
     AND_PARSER(message_parser, &UUID_PARSER, &UUID_PARSER, 
-    &STRING_PARSER, &STRING_PARSER);
+    &INT_PARSER, &STRING_PARSER);
     TAB_PARSER(messages_parser, &message_parser);
     parser_result_t *r = parse(remainer, &messages_parser);
 
@@ -23,7 +23,7 @@ static void get_messages_info(char const * const * remainer)
         ll_foreach(r->data, ll_t, l,
             uuid_unparse(l->data, uuid_str);
             client_private_message_print_messages(uuid_str, 
-            (time_t)l->next->next->data,
+            *(int *)l->next->next->data,
             l->next->next->next->data);
         );
     } else {

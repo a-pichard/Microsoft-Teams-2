@@ -49,7 +49,7 @@ static void list_channel(char const * const *remainer)
 static void list_thread(char const * const *remainer)
 {
     AND_PARSER(thread_parser, &UUID_PARSER, &UUID_PARSER,
-    &STRING_PARSER, &STRING_PARSER, &STRING_PARSER);
+    &INT_PARSER, &STRING_PARSER, &STRING_PARSER);
     TAB_PARSER(threads_parser, &thread_parser);
     char uuid_str[37];
     char uuid2_str[37];
@@ -60,7 +60,7 @@ static void list_thread(char const * const *remainer)
             uuid_unparse(l->data, uuid_str);
             uuid_unparse(l->next->data, uuid2_str);
             client_channel_print_threads(uuid_str, uuid2_str,
-            (time_t)l->next->next->data,
+            *(int *)l->next->next->data,
             l->next->next->next->data,
             l->next->next->next->next->data);
         );
@@ -73,7 +73,7 @@ static void list_reply(char const * const *remainer)
 {
     char uuid_str[37];
     char uuid_str2[37];
-    AND_PARSER(user_p, &UUID_PARSER, &UUID_PARSER, &STRING_PARSER, 
+    AND_PARSER(user_p, &UUID_PARSER, &UUID_PARSER, &INT_PARSER, 
     &STRING_PARSER);
     TAB_PARSER(replys_parser, &user_p);
     parser_result_t *r = parse(remainer, &replys_parser);
@@ -83,7 +83,7 @@ static void list_reply(char const * const *remainer)
             uuid_unparse(l->data, uuid_str);
             uuid_unparse(l->next->data, uuid_str2);
             client_thread_print_replies(uuid_str, uuid_str2,
-            (time_t)l->next->next->data,
+            *(int *)l->next->next->data,
             l->next->next->next->data);
         );
     } else {

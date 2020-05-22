@@ -48,7 +48,7 @@ static void info_thread(char const * const *remainer)
 {
     char uuid_str[37];
     char uuid2_str[37];
-    AND_PARSER(user_p, &UUID_PARSER, &UUID_PARSER, &STRING_PARSER,
+    AND_PARSER(user_p, &UUID_PARSER, &UUID_PARSER, &INT_PARSER,
     &STRING_PARSER, &STRING_PARSER);
     parser_result_t *r = parse(remainer, &user_p);
     ll_t *user;
@@ -58,7 +58,7 @@ static void info_thread(char const * const *remainer)
         uuid_unparse(user->data, uuid_str);
         uuid_unparse(user->next->data, uuid2_str);
         client_print_thread(uuid_str, uuid2_str,
-        (time_t)user->next->next->data,
+        *(int *)user->next->next->data,
         user->next->next->next->data, 
         user->next->next->next->next->data);
     } else {

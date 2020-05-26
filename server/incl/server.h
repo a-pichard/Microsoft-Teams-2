@@ -93,6 +93,7 @@ char *user_serializer(const void *user);
 user_t *get_user_by_name(server_t *server, const char *username);
 user_t *get_user_by_uuid(server_t *server, uuid_t uuid);
 user_t *server_add_user_with_name(server_t *server, const char *username);
+ll_t *get_user_to_notify(server_t *server, user_t *user);
 
 //teams
 team_t *server_get_teams_by_uuid(server_t *server, uuid_t uuid);

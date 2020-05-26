@@ -17,7 +17,7 @@ static void notify(server_t *server, msg_t *message)
 
     if (to == NULL)
         return;
-    uuid_unparse(message->to, user_id);
+    uuid_unparse(message->from, user_id);
     msg = strcat_alloc3(user_id, " \"", message->msg);
     r = strcat_alloc3("\"event\" \"message\" \"user\" ", msg, "\"");
     write_q(to, r);

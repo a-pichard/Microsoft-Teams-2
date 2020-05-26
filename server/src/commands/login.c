@@ -14,12 +14,16 @@ static void event_user_login(server_t *server, user_t *user)
 {
     char *ser = user_serializer(user);
     char *msg = strcat_alloc("\"event\" \"login\" ", ser);
+    ll_t *todo = get_user_to_notify(server, user);
 
     ll_foreach(server->clients, client_t, client,
-        if (client->user != user) {
-            write_q(client, msg);
-        }
+        ll_foreach(todo, user_t, to_not,
+            if (client->user == to_not) {
+                write_q(client, msg);
+            }
+        );
     );
+    ll_destroy(&todo, NULL);
     free(ser);
     free(msg);
 }

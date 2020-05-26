@@ -73,7 +73,7 @@ static void list_reply(char const * const *remainer)
 {
     char uuid_str[37];
     char uuid_str2[37];
-    AND_PARSER(user_p, &UUID_PARSER, &UUID_PARSER, &INT_PARSER, 
+    AND_PARSER(user_p, &UUID_PARSER, &UUID_PARSER, &INT_PARSER,
     &STRING_PARSER);
     TAB_PARSER(replys_parser, &user_p);
     parser_result_t *r = parse(remainer, &replys_parser);
@@ -108,8 +108,8 @@ void list(client_t *client UNUSED, char const * recept)
             list_thread(r_status->remainer);
         else if (*(int *)(r_status->data) == 203)
             list_reply(r_status->remainer);
-        else    
-            !*r_status->remainer ? 0 : 
+        else
+            !*r_status->remainer ? 0 :
             dprintf(1, "%s\n", *(r_status->remainer));
     }
     destroy_tab(data);

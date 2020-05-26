@@ -42,6 +42,8 @@ static void subscribed_team(server_t *server, client_t *client,
     user_t *user;
     char *ser = NULL;
 
+    if (team == NULL)
+        return write_q(client, "404");
     ll_foreach(team->users_uuid, unsigned char, uuid,
         user = get_user_by_uuid(server, uuid);
         ll_push_front(&users, user)

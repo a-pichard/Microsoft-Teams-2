@@ -78,7 +78,7 @@ static void info_user(char const * const *remainer)
         user = r->data;
         uuid_unparse(user->data, uuid_str);
         client_print_user(uuid_str, user->next->data,
-        *(int *)user->next->next->data);
+        *(int *)user->next->next->data >= 1 ? 1 : 0);
     } else {
         dprintf(1, "Bad reponse.\n");
     }

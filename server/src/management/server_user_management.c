@@ -36,10 +36,12 @@ user_t *server_add_user_with_name(server_t *server, const char *username)
     return user;
 }
 
-static void add_user_from_team(server_t *server, team_t *team, ll_t **list, user_t *user)
+static void add_user_from_team(server_t *server, team_t *team, ll_t **list,
+    user_t *user)
 {
     ll_foreach(team->users_uuid, unsigned char, uuid,
-        if (uuid_compare(user->uuid, uuid) && !ll_find(list, uuid_compare, uuid)) {
+        if (uuid_compare(user->uuid, uuid) && !ll_find(list,
+        (int (*)(const void *, const void *))uuid_compare, uuid)) {
             ll_push_back(list, get_user_by_uuid(server, uuid));
         }
     );

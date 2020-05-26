@@ -81,7 +81,7 @@ static void create_reply(char const * const *remainer)
         user = r->data;
         uuid_unparse(user->data, uuid_str);
         uuid_unparse(user->next->data, uuid_str2);
-        client_print_reply_created(uuid_str, uuid_str2, 
+        client_print_reply_created(uuid_str, uuid_str2,
         *(int *)user->next->next->data,
         user->next->next->next->data);
     } else {
@@ -106,8 +106,8 @@ void create(client_t *client UNUSED, char const * recept)
             create_thread(r_status->remainer);
         else if (*(int *)(r_status->data) == 203)
             create_reply(r_status->remainer);
-        else    
-            !*r_status->remainer ? 0 : 
+        else
+            !*r_status->remainer ? 0 :
             dprintf(1, "%s\n", *(r_status->remainer));
     }
     destroy_tab(data);

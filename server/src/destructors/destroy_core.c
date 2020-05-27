@@ -43,6 +43,7 @@ void destroy_server(void)
     str_dms = ll_serialize(&server->dms, dm_serializer);
     ll_destroy(&server->dms, &dm_destructor);
     server_write(str_users, str_teams, str_dms);
+    close(server->server_fd);
     free(str_users);
     free(str_teams);
     free(str_dms);

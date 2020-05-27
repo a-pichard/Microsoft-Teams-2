@@ -16,13 +16,13 @@ static void load_data(server_t *server, const char *const *data)
     const char * const *current = data;
     if (strcmp(*current, "users"))
         return;
-    current = load_user(server, (current+1));
+    current = load_user(server, (current + 1));
     if (strcmp(*current, "dms"))
         return;
-    current = load_message(server, current+1);
+    current = load_message(server, current + 1);
     if (strcmp(*current, "teams"))
         return;
-    current = load_teams(server, current+1);
+    current = load_teams(server, current + 1);
 }
 
 static char **read_file(FILE *file, long size)

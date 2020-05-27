@@ -23,7 +23,7 @@ static void check_ready_fd(
         msg = ll_pop_front(&client->to_send);
         dprintf(client->fd, "%s\r\n", msg);
         free(msg);
-    } else if (FD_ISSET(0, rset) && !(*func)) {
+    } else if (FD_ISSET(0, rset)) {
         *func = read_from_human(client);
     }
 }

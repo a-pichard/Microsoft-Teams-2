@@ -43,7 +43,7 @@ static void subscribed_team(server_t *server, client_t *client,
     char *ser = NULL;
 
     if (team == NULL)
-        return write_q(client, "404");
+        return write_q_responce_objet(client, 401, r->data, uuid_serialize);
     ll_foreach(team->users_uuid, unsigned char, uuid,
         user = get_user_by_uuid(server, uuid);
         ll_push_front(&users, user)
@@ -64,6 +64,6 @@ void subscribed(server_t *server, client_t *client, char const * const *data)
     } else if (len == 1) {
         subscribed_team(server, client, data);
     } else {
-        write_q(client, "300");
+        write_q(client, "500");
     }
 }

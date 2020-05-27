@@ -30,16 +30,16 @@ void unsubscribe(server_t *server, client_t *client, char const * const *data)
     uuid_t *uuid = NULL;
 
     if (r == NULL || *r->remainer != NULL) {
-        write_q(client, "300");
+        write_q(client, "500");
         return;
     }
     team = server_get_teams_by_uuid(server, (unsigned char *)(r->data));
     if (team == NULL)
-        return write_q_responce(client, 404, "\"team not found\"");
+        return write_q_responce_objet(client, 401, r->data, uuid_serialize);
     uuid = ll_find(&team->users_uuid, (compare_fn)uuid_compare,
         client->user->uuid);
     if (uuid == NULL)
-        return write_q_responce(client, 300, "\"user not sub\"");
+        return write_q_responce(client, 500, "\"user not sub\"");
     ll_erase(&team->users_uuid, uuid, free);
     unsubscribe_response(client, team);
 }

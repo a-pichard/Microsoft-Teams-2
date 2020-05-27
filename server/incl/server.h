@@ -143,4 +143,6 @@ void write_q_destructor(void *data);
 void server_add_private_message(server_t *server, msg_t *message);
 dm_t *get_dms(server_t *server, uuid_t user1, uuid_t user2);
 
+char *uuid_serialize(const void *data);
+
 #endif /* !SERVER_H_ */

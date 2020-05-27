@@ -10,7 +10,7 @@
 void info(UNUSED server_t *server, client_t *client, char const * const *data)
 {
     if (*data != NULL) {
-        write_q_responce(client, 300, "");
+        write_q_responce(client, 500, "");
     } else {
         if (client->state == NONE)
             write_q_responce_objet(client, 200, client->user,

@@ -16,7 +16,7 @@ char *msg_serializer(const void *data)
     char fuuid[37];
     char tuuid[37];
     int size = 0;
-    char *patern = "%s %s %d\"%s\"";
+    char *patern = "%s %s %d \"%s\"";
 
     uuid_unparse(msg->from, fuuid);
     uuid_unparse(msg->to, tuuid);

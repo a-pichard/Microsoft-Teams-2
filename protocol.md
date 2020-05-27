@@ -58,65 +58,65 @@ response = 200 sp user* end | 300 end
 ### user
 ```
 request = 'user' end
-response = 200 sp user end | 300 end | 404 end
+response = 200 sp user end | 300 end | 4xx end
 ```
 
 ### send
 ```
 request = 'send' user_uuid message_body
-response = 200 end | 300 end | 404 sp user_uuid sp end 
+response = 200 end | 300 end | 4xx sp user_uuid sp end 
 ```
 
 ### messages
 ```
 request = 'messages' user_uuid
-response = 200 (user_uuid time message_body)* end | 300 end | 404 sp user_uuid sp end
+response = 200 (user_uuid time message_body)* end | 300 end | 4xx sp user_uuid sp end
 ```
 
 ### subscribe
 ```
 request = 'subscribe' team_uuid
-response = 200 sp user_uuid sp team_uuid end | 300  end | 404 end
+response = 200 sp user_uuid sp team_uuid end | 300  end | 4xx end
 ```
 
 ### subscribed
 ```
 request = 'subscribed' [team_uuid]
-response = 200 (team_uuid name description)* end | 200 (team_uuid name description) end | 300 end | 404 sp  end
+response = 200 (team_uuid name description)* end | 200 (team_uuid name description) end | 300 end | 4xx sp  end
 ```
 
 ### unsubscribe
 ```
 request = 'unsubscribe' team_uuid
-response = 200 (user_uuid team_uuid) end | 300 end | 404 end
+response = 200 (user_uuid team_uuid) end | 300 end | 4xx end
 ```
 
 ### use 
 ```
 request = 'use' [team_uuid | (team_uuid channel_uuid) | (team_uuid channel_uuid thread_uuid)]
-response = 200 end |  300 end | 404 end
+response = 200 end |  300 end | 4xx end
 ```
 
 ### create
 - Not define
 ```
 request = 'create' (name description) :  create a new team
-response = 200 (team_uuid name description) | 300 end | 404 end
+response = 200 (team_uuid name description) | 300 end | 4xx end
 ```
 - team 
 ```
 request = 'create' (name description) : create a new channel
-response = 201 (channel_uuid name description) | 300 end | 404 end
+response = 201 (channel_uuid name description) | 300 end | 4xx end
 ```
 - channel
 ```
 request = 'create' (name message_body) :  create a new thread
-response = 202 (thread_uuid user_uuid time name thread_body) | 300 end | 404 end
+response = 202 (thread_uuid user_uuid time name thread_body) | 300 end | 4xx end
 ```
 - thread
 ```
 request = 'create' (message_body) : create a new reply
-response = 203 (thread_uuid user_uuid time message_body) | 300 end | 404 end
+response = 203 (thread_uuid user_uuid time message_body) | 300 end | 4xx end
 ```
 
 ### list
@@ -163,8 +163,23 @@ response = 203 (thread_uuid user_uuid time name message_body) end | 300 end
 ### code
 ```
 2xx = success
-3xx = not logged in
+200 = normal
+201 = use est dans un team
+202 = use est dans un channe
+203 = use est dans un thread
+
+300 = not logged in
+
+4xx uuid =  uuid not found
+400 = user not foud
+401 = team not found
+402 = channel not found
+403 = thread not found
+
 5xx = error
+
+6xx = already exist
+
 ```
 
 ## event

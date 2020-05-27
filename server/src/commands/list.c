@@ -69,7 +69,7 @@ static void list_thread(client_t *client)
 void list(server_t *server, client_t *client, char const * const *data)
 {
     if (*data != NULL) {
-        write_q(client, "300");
+        write_q(client, "500");
         return;
     }
     if (client->state == NONE)

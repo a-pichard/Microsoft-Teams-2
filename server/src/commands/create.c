@@ -17,12 +17,12 @@ void create_team(server_t *server, client_t *client,
     ll_t *d;
 
     if (r == NULL || *r->remainer != NULL) {
-        write_q(client, "300");
+        write_q(client, "500");
     } else {
         d = r->data;
         teams = server_get_teams_by_name(server, d->data);
         if (teams != NULL) {
-            write_q(client, "300");
+            write_q(client, "600");
         } else {
             teams = team_create(client->user, d->data, d->next->data);
             server_add_team(server, teams);
@@ -40,14 +40,14 @@ void create_channel(UNUSED server_t *server, client_t *client,
     channel_t *channel;
     ll_t *d;
 
-    if (r == NULL|| *r->remainer != NULL) {
-        write_q(client, "300");
+    if (r == NULL || *r->remainer != NULL) {
+        write_q(client, "500");
         return;
     }
     d = r->data;
     channel = team_get_channel_by_name(client->use_ptr, d->data);
     if (channel != NULL) {
-        write_q(client, "300");
+        write_q(client, "600");
     } else {
         channel = channel_create(client->use_ptr, d->data, d->next->data,
             client->user);
@@ -65,13 +65,13 @@ void create_thread(UNUSED server_t *server, client_t *client,
     ll_t *d;
 
     if (r == NULL || *r->remainer != NULL) {
-        write_q(client, "300");
+        write_q(client, "500");
         return;
     }
     d = r->data;
     thread = channel_get_thread_by_name(client->use_ptr, d->data);
     if (thread != NULL) {
-        write_q(client, "300");
+        write_q(client, "600");
     } else {
         thread = thread_create(client->use_ptr, client->user, d->data,
             d->next->data);
@@ -87,7 +87,7 @@ void create_reply(UNUSED server_t *server, client_t *client,
     comment_t *comment = NULL;
 
     if (r == NULL || *r->remainer != NULL) {
-        write_q(client, "300");
+        write_q(client, "500");
         return;
     }
     comment = comment_create(client->use_ptr, client->user, r->data);

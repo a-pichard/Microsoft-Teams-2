@@ -19,6 +19,4 @@ void subscribed(client_t *client UNUSED, char const * recept)
         dprintf(1, "Bad reponse.\n");
     if (*(int *)r_status->data == 300)
         client_error_unauthorized();
-    else if (*(int *)r_status->data == 404)
-        dprintf(1, "%s\n", *(r_status->remainer));
 }

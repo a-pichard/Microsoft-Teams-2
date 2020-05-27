@@ -33,7 +33,7 @@ void user(server_t *server, client_t *client, char const * const *data)
     } else {
         user = get_user_by_uuid(server, (unsigned char *) r->data);
         if (user == NULL) {
-            write_q(client, "404 \"user not found\"");
+            write_q_responce_objet(client, 400, r->data, uuid_serialize);
         } else {
             result = get_responce_user(user);
             write_q(client, result);

@@ -16,7 +16,7 @@ char *comment_serializer(const void *data)
     char cuuid[37];
     char uuuid[37];
     int size = 0;
-    char *patern = "%s %s %ld \"%s\"";
+    char *patern = "%s %s %d \"%s\"";
 
     uuid_unparse(c->uuid, cuuid);
     uuid_unparse(c->u_creator, uuuid);

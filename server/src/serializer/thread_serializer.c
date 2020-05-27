@@ -17,7 +17,7 @@ char *thread_serializer(const void *data)
     char tuuid[37];
     char cuuid[37];
     int size = 0;
-    char *patern = "%s %s %ld \"%s\" \"%s\"";
+    char *patern = "%s %s %d \"%s\" \"%s\"";
 
     uuid_unparse(t->uuid, tuuid);
     uuid_unparse(t->u_creator, cuuid);

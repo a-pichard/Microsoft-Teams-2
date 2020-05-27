@@ -18,10 +18,10 @@ static void get_users_infos(char const * const * remainer)
     parser_result_t *r = parse(remainer, &users_parser);
 
     if (r != NULL) {
-        ll_foreach(r->data, ll_t, l,
-            uuid_unparse(l->data, uuid_str);
-            client_print_user(uuid_str, l->next->data,
-            *(int *)l->next->next->data >= 1 ? 1 : 0);
+        ll_foreach(r->data, ll_t, list,
+            uuid_unparse(list->data, uuid_str);
+            client_print_user(uuid_str, list->next->data,
+            *(int *)list->next->next->data >= 1 ? 1 : 0);
         );
     } else {
         dprintf(1, "Bad reponse.\n");

@@ -17,11 +17,11 @@ const char * const *load_user(server_t *server, const char * const *data)
     parser_result_t *r = parse(data, &users_parser);
 
     if (r != NULL) {
-        ll_foreach(r->data, ll_t, l,
+        ll_foreach(r->data, ll_t, usr,
             user_t *t = user_reload(
-                (const char *)l->next->data,
-                (unsigned char *)l->data,
-                *(int *)(l->next->next->data));
+                (const char *)usr->next->data,
+                (unsigned char *)usr->data,
+                *(int *)(usr->next->next->data));
             ll_push_back(&server->users, t);
         );
     }

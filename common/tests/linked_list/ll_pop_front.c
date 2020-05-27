@@ -10,21 +10,21 @@
 
 Test(Test_linked_list, linked_list_pop_front)
 {
-    ll_t *l = NULL;
+    ll_t *list = NULL;
     char *data = strdup("toto");
     char *data2 = strdup("toto2");
     char *ret = NULL;
 
-    ll_push_front(&l, data);
-    ll_push_front(&l, data2);
-    ret = ll_pop_front(&l);
-    cr_assert_eq(l->data, data);
-    cr_assert_eq(l->next, NULL);
+    ll_push_front(&list, data);
+    ll_push_front(&list, data2);
+    ret = ll_pop_front(&list);
+    cr_assert_eq(list->data, data);
+    cr_assert_eq(list->next, NULL);
     cr_assert_eq(ret, data2);
-    ret = ll_pop_front(&l);
-    cr_assert_eq(l, NULL);
-    ret = ll_pop_front(&l);
-    cr_assert_eq(l, NULL);
+    ret = ll_pop_front(&list);
+    cr_assert_eq(list, NULL);
+    ret = ll_pop_front(&list);
+    cr_assert_eq(list, NULL);
     free(data);
     free(data2);
 }

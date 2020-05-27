@@ -18,9 +18,10 @@ static void list_team(char const * const *remainer)
     parser_result_t *r = parse(remainer, &teams_parser);
 
     if (r != NULL) {
-        ll_foreach(r->data, ll_t, l,
-            uuid_unparse(l->data, uuid_str);
-            client_print_teams(uuid_str, l->next->data, l->next->next->data);
+        ll_foreach(r->data, ll_t, list,
+            uuid_unparse(list->data, uuid_str);
+            client_print_teams(uuid_str, list->next->data,
+            list->next->next->data);
         );
     } else {
         dprintf(1, "Bad reponse.\n");
@@ -36,9 +37,10 @@ static void list_channel(char const * const *remainer)
     parser_result_t *r = parse(remainer, &channels_parser);
 
     if (r != NULL) {
-        ll_foreach(r->data, ll_t, l,
-            uuid_unparse(l->data, uuid_str);
-            client_print_channel(uuid_str, l->next->data, l->next->next->data);
+        ll_foreach(r->data, ll_t, list,
+            uuid_unparse(list->data, uuid_str);
+            client_print_channel(uuid_str, list->next->data,
+            list->next->next->data);
         );
     } else {
         dprintf(1, "Bad reponse.\n");
@@ -56,13 +58,13 @@ static void list_thread(char const * const *remainer)
     parser_result_t *r = parse(remainer, &threads_parser);
 
     if (r != NULL) {
-        ll_foreach(r->data, ll_t, l,
-            uuid_unparse(l->data, uuid_str);
-            uuid_unparse(l->next->data, uuid2_str);
+        ll_foreach(r->data, ll_t, list,
+            uuid_unparse(list->data, uuid_str);
+            uuid_unparse(list->next->data, uuid2_str);
             client_channel_print_threads(uuid_str, uuid2_str,
-            *(int *)l->next->next->data,
-            l->next->next->next->data,
-            l->next->next->next->next->data);
+            *(int *)list->next->next->data,
+            list->next->next->next->data,
+            list->next->next->next->next->data);
         );
     } else
         dprintf(1, "Bad reponse.\n");
@@ -79,12 +81,12 @@ static void list_reply(char const * const *remainer)
     parser_result_t *r = parse(remainer, &replys_parser);
 
     if (r != NULL) {
-        ll_foreach(r->data, ll_t, l,
-            uuid_unparse(l->data, uuid_str);
-            uuid_unparse(l->next->data, uuid_str2);
+        ll_foreach(r->data, ll_t, list,
+            uuid_unparse(list->data, uuid_str);
+            uuid_unparse(list->next->data, uuid_str2);
             client_thread_print_replies(uuid_str, uuid_str2,
-            *(int *)l->next->next->data,
-            l->next->next->next->data);
+            *(int *)list->next->next->data,
+            list->next->next->next->data);
         );
     } else {
         dprintf(1, "Bad reponse.\n");

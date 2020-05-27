@@ -16,18 +16,18 @@ void add_1(void *a)
 
 Test(Test_linked_list, linked_list_apply)
 {
-    ll_t *l = NULL;
+    ll_t *list = NULL;
     int *ret = NULL;
     int *a = malloc(sizeof(int));
     int *b = malloc(sizeof(int));
 
     *a = 10;
     *b = 42;
-    ll_push_front(&l, a);
-    ll_push_front(&l, b);
-    ll_apply(&l, add_1);
-    ret = ll_pop_front(&l);
+    ll_push_front(&list, a);
+    ll_push_front(&list, b);
+    ll_apply(&list, add_1);
+    ret = ll_pop_front(&list);
     cr_assert_eq(*(int *)(ret), 43);
-    ret = ll_pop_front(&l);
+    ret = ll_pop_front(&list);
     cr_assert_eq(*(int *)(ret), 11);
 }

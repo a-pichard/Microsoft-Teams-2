@@ -10,11 +10,11 @@
 
 Test(Test_linked_list, linked_list_len)
 {
-    ll_t *l = NULL;
+    ll_t *list = NULL;
 
-    cr_assert_eq(0, ll_len(&l));
-    ll_push_back(&l, NULL);
-    cr_assert_eq(1, ll_len(&l));
-    ll_push_back(&l, NULL);
-    cr_assert_eq(2, ll_len(&l));
+    cr_assert_eq(0, ll_len(&list));
+    ll_push_back(&list, NULL);
+    cr_assert_eq(1, ll_len(&list));
+    ll_push_back(&list, NULL);
+    cr_assert_eq(2, ll_len(&list));
 }

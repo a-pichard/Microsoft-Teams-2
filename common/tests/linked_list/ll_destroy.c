@@ -16,12 +16,12 @@ static void destructor(void *data)
 
 Test(Test_linked_list, linked_list_destroy)
 {
-    ll_t *l = NULL;
+    ll_t *list = NULL;
     char *data = strdup("toto");
     char *data2 = strdup("toto2");
 
-    ll_push_front(&l, data);
-    ll_push_front(&l, data2);
-    ll_destroy(&l, &destructor);
-    cr_assert_eq(l, NULL);
+    ll_push_front(&list, data);
+    ll_push_front(&list, data2);
+    ll_destroy(&list, &destructor);
+    cr_assert_eq(list, NULL);
 }

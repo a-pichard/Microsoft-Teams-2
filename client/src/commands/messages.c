@@ -20,11 +20,11 @@ static void get_messages_info(char const * const * remainer)
     parser_result_t *r = parse(remainer, &messages_parser);
 
     if (r != NULL) {
-        ll_foreach(r->data, ll_t, l,
-            uuid_unparse(l->data, uuid_str);
+        ll_foreach(r->data, ll_t, list,
+            uuid_unparse(list->data, uuid_str);
             client_private_message_print_messages(uuid_str,
-            *(int *)l->next->next->data,
-            l->next->next->next->data);
+            *(int *)list->next->next->data,
+            list->next->next->next->data);
         );
     } else {
         dprintf(1, "Bad reponse.\n");

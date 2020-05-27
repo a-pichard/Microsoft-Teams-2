@@ -12,12 +12,12 @@
 static void loop_in_dms(server_t *server, parser_result_t *r)
 {
     ll_foreach(r->data, ll_t, dm,
-        ll_foreach(dm->next->next->data, ll_t, l,
+        ll_foreach(dm->next->next->data, ll_t, m,
             msg_t *msg = message_reload(
-                (unsigned char *)l->data,
-                (unsigned char *)l->next->data,
-                *(time_t *)(l->next->next->data),
-                (char *)(l->next->next->next->data));
+                (unsigned char *)m->data,
+                (unsigned char *)m->next->data,
+                *(time_t *)(m->next->next->data),
+                (char *)(m->next->next->next->data));
             server_add_private_message(server, msg);
         );
     );

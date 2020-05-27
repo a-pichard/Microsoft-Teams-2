@@ -185,7 +185,7 @@ response = "event" "message" "user" (user_uuid message_body)
 ```
 - thread 
 ```
-response = "event" "message" "thread" (team_uuid thread_uuid user_uuid time message_body)
+response = "event" "message" "thread" (team_uuid thread_uuid comment_uuid user_uuid time message_body)
 ```
 
 ### creation

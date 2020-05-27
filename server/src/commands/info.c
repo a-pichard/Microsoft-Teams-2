@@ -12,18 +12,17 @@ void info(UNUSED server_t *server, client_t *client, char const * const *data)
     if (*data != NULL) {
         write_q_responce(client, 300, "");
     } else {
-        if (client->state == NONE) {
+        if (client->state == NONE)
             write_q_responce_objet(client, 200, client->user,
                 user_serializer);
-        } else if (client->state == TEAM) {
+        if (client->state == TEAM)
             write_q_responce_objet(client, 201, client->use_ptr,
                 team_serializer);
-        } else if (client->state == CHANNEL) {
+        if (client->state == CHANNEL)
             write_q_responce_objet(client, 202, client->use_ptr,
                 channel_serializer);
-        } else {
+        if (client->state == THREAD)
             write_q_responce_objet(client, 203, client->use_ptr,
                 thread_serializer);
-        }
     }
 }

@@ -35,12 +35,13 @@ static void parser_clean(const parser_t *p, void *r)
         return;
     if (p->type == VALUE) {
         p->destructor(r);
-    } else if (p->type == AND) {
-        and_parser_destructor(p, r);
-    } else if (p->type == TAB) {
-        tab_parser_destructor(p, r);
-    } else if (p->type == SUROUNDED || p->type == SEP) {
-        parser_clean(p->parser, r);
+    } else {
+        if (p->type == AND)
+            and_parser_destructor(p, r);
+        if (p->type == TAB)
+            tab_parser_destructor(p, r);
+        if (p->type == SUROUNDED || p->type == SEP)
+            parser_clean(p->parser, r);
     }
 }
 

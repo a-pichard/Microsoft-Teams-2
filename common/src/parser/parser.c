@@ -68,19 +68,15 @@ static parser_result_t *parse_sep(char const *const *token, const parser_t *p)
 
 parser_result_t *parse(char const * const * token, const parser_t *p)
 {
+    parser_type_t types[] = {VALUE, AND, TAB, SUROUNDED, SEP};
+    parser_result_t *(*f[])(char const * const * token, const parser_t *p) =
+        {&parse_value, &parse_and, &parse_tab, &parse_surounded, &parse_sep};
+
     if (*token == NULL)
         return NULL;
-    if (p->type == VALUE) {
-        return parse_value(token, p);
-    } else if (p->type == AND) {
-        return parse_and(token, p);
-    } else if (p->type == TAB) {
-        return parse_tab(token, p);
-    } else if (p->type == SUROUNDED) {
-        return parse_surounded(token, p);
-    } else if (p->type == SEP) {
-        return parse_sep(token, p);
-    } else {
-        return NULL;
+    for (int i = 0; i < 5; i++) {
+        if (p->type == types[i])
+            return f[i](token, p);
     }
+    return NULL;
 }

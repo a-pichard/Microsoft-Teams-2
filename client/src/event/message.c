@@ -29,8 +29,8 @@ static void thread(const char * const *recept)
     char team_uuid[37];
     char thread_uuid[37];
     char user_uuid[37];
-    AND_PARSER(tm_p, &UUID_PARSER, &UUID_PARSER, &UUID_PARSER, &INT_PARSER,
-        &STRING_PARSER);
+    AND_PARSER(tm_p, &UUID_PARSER, &UUID_PARSER, &UUID_PARSER, &UUID_PARSER,
+    &INT_PARSER, &STRING_PARSER);
     parser_result_t *r = parse(recept, &tm_p);
     ll_t *tm = NULL;
 
@@ -38,9 +38,9 @@ static void thread(const char * const *recept)
         tm = r->data;
         uuid_unparse(tm->data, team_uuid);
         uuid_unparse(tm->next->data, thread_uuid);
-        uuid_unparse(tm->next->next->data, user_uuid);
+        uuid_unparse(tm->next->next->next->data, user_uuid);
         client_event_thread_message_received(team_uuid, thread_uuid, user_uuid,
-        tm->next->next->next->next->data);
+        tm->next->next->next->next->next->data);
     }
     parser_result_clean(&tm_p, r);
 }

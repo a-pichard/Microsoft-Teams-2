@@ -72,14 +72,13 @@ void list(server_t *server, client_t *client, char const * const *data)
         write_q(client, "300");
         return;
     }
-    if (client->state == NONE) {
+    if (client->state == NONE)
         write_q_responce_objet_list(client, 200, server->teams,
             team_serializer);
-    } else if (client->state == TEAM) {
+    if (client->state == TEAM)
         list_team(client);
-    } else if (client->state == CHANNEL) {
+    if (client->state == CHANNEL)
         list_channel(client);
-    } else if (client->state == THREAD) {
+    if (client->state == THREAD)
         list_thread(client);
-    }
 }

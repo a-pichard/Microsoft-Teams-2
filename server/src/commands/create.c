@@ -97,13 +97,12 @@ void create_reply(UNUSED server_t *server, client_t *client,
 
 void create(server_t *server, client_t *client, char const * const *data)
 {
-    if (client->state == NONE) {
+    if (client->state == NONE)
         create_team(server, client, data);
-    } else if (client->state == TEAM) {
+    if (client->state == TEAM)
         create_channel(server, client, data);
-    } else if (client->state == CHANNEL) {
+    if (client->state == CHANNEL)
         create_thread(server, client, data);
-    } else {
+    if (client->state == THREAD)
         create_reply(server, client, data);
-    }
 }

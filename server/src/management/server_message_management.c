@@ -10,7 +10,7 @@
 
 static void notify(server_t *server, msg_t *message)
 {
-    client_t *to = server_get_client_by_uuid(server, message->to);
+    user_t *to = get_user_by_uuid(server, message->to);
     char *r = NULL;
     char *msg = NULL;
     char user_id[37];
@@ -20,7 +20,10 @@ static void notify(server_t *server, msg_t *message)
     uuid_unparse(message->from, user_id);
     msg = strcat_alloc3(user_id, " \"", message->msg);
     r = strcat_alloc3("\"event\" \"message\" \"user\" ", msg, "\"");
-    write_q(to, r);
+    ll_foreach(server->clients, client_t, client,
+        if (client->user == to)
+            write_q(client, r);
+    );
     free(r);
     free(msg);
 }

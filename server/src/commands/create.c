@@ -16,7 +16,7 @@ void create_team(server_t *server, client_t *client,
     team_t *teams;
     ll_t *d;
 
-    if (r == NULL) {
+    if (r == NULL || *r->remainer != NULL) {
         write_q(client, "300");
     } else {
         d = r->data;
@@ -40,7 +40,7 @@ void create_channel(UNUSED server_t *server, client_t *client,
     channel_t *channel;
     ll_t *d;
 
-    if (r == NULL) {
+    if (r == NULL|| *r->remainer != NULL) {
         write_q(client, "300");
         return;
     }
@@ -64,7 +64,7 @@ void create_thread(UNUSED server_t *server, client_t *client,
     thread_t *thread;
     ll_t *d;
 
-    if (r == NULL) {
+    if (r == NULL || *r->remainer != NULL) {
         write_q(client, "300");
         return;
     }
@@ -86,7 +86,7 @@ void create_reply(UNUSED server_t *server, client_t *client,
     parser_result_t *r = parse(data, &STRING_PARSER);
     comment_t *comment = NULL;
 
-    if (r == NULL) {
+    if (r == NULL || *r->remainer != NULL) {
         write_q(client, "300");
         return;
     }

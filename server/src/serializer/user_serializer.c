@@ -16,9 +16,10 @@ char *user_serializer(const void *data)
     char str_uuid[37];
     int size = 0;
     char *patern = "%s \"%s\" %d";
+    int status = user->status?1:0;
 
     uuid_unparse(user->uuid, str_uuid);
-    size = snprintf(NULL, 0, patern, str_uuid, user->name, user->status);
+    size = snprintf(NULL, 0, patern, str_uuid, user->name, status);
     if (size == -1)
         return (NULL);
     str = malloc(sizeof(char) * (size + 1));

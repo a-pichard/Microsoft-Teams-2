@@ -18,4 +18,5 @@ void use(client_t *client UNUSED, char const * recept)
     else
         dprintf(1, "Context changed.\n");
     parser_result_clean(&INT_PARSER, r);
+    destroy_tab(data);
 }

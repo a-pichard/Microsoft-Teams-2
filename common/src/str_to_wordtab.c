@@ -25,7 +25,7 @@ static char **init_tab(char *s, char *delim, bool quotes)
             size += (length != 0) ? 1 : 0;
             s = &s[length];
             length = strcspn(s + 1, "\"") + 1;
-            size += (length != 0) ? 1 : 0;
+            size += 1;
             s = &s[length + 1];
         }
     }
@@ -56,7 +56,8 @@ static void loop_in_string(char **res, char *s, char *delim, bool quotes)
             set_value(res, &i, s, length);
             s = &s[length + 1];
             length = strcspn(s, "\"");
-            set_value(res, &i, s, length);
+            res[i++] = strndup(s, length);
+            res[i] = NULL;
             s = &s[length + 1];
         }
     }

@@ -41,12 +41,13 @@ void *ll_find(ll_t **list, compare_fn compare_function, const void *element);
 //len
 size_t ll_len(ll_t **list);
 
-#define ll_foreach(list, type, element, code) do {    \
-    for (ll_t *current_foreach = list; current_foreach != NULL; \
-        current_foreach = current_foreach->next) {    \
-        type *element = (type*)(current_foreach->data); \
-        code;   \
-    }   \
-} while (0);
+#define ll_foreach(list, type, element, code)   \
+    do {    \
+        for (ll_t *current_foreach = list; current_foreach != NULL; \
+            current_foreach = current_foreach->next) {  \
+            type *element = (type*)(current_foreach->data); \
+            code;   \
+        }   \
+    } while (0);
 
 #endif

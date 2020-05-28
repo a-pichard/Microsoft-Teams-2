@@ -31,7 +31,7 @@ static thread_t *reload_thread(ll_t *data)
     thread->time = *(time_t *)data->next->next->data;
     strcpy(thread->title, data->next->next->next->data);
     strcpy(thread->body, data->next->next->next->next->data);
-    ll_foreach(comments, ll_t, comment, 
+    ll_foreach(comments, ll_t, comment,
         ll_push_back(&thread->comments, reload_comment(comment));
     );
     return thread;
@@ -47,7 +47,7 @@ channel_t *reload_channel(ll_t *data)
     uuid_copy(channel->uuid, data->data);
     uuid_copy(channel->u_creator, data->next->data);
     strcpy(channel->name, data->next->next->data);
-    strcpy(channel->description, data->next->next->next->data);    
+    strcpy(channel->description, data->next->next->next->data);
     ll_foreach(threads, ll_t, thread,
         ll_push_back(&channel->threads, reload_thread(thread));
     );

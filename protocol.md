@@ -98,22 +98,22 @@ response = 200 end |  300 end | 4xx end
 ```
 
 ### create
-- Not define
+- Not define (team created)
 ```
 request = 'create' (name description) :  create a new team
 response = 200 (team_uuid name description) | 300 end | 4xx end
 ```
-- team 
+- team (channel created)
 ```
 request = 'create' (name description) : create a new channel
 response = 201 (channel_uuid name description) | 300 end | 4xx end
 ```
-- channel
+- channel (thread created)
 ```
 request = 'create' (name message_body) :  create a new thread
 response = 202 (thread_uuid user_uuid time name thread_body) | 300 end | 4xx end
 ```
-- thread
+- thread (reply created)
 ```
 request = 'create' (message_body) : create a new reply
 response = 203 (thread_uuid user_uuid time message_body) | 300 end | 4xx end
@@ -121,41 +121,41 @@ response = 203 (thread_uuid user_uuid time message_body) | 300 end | 4xx end
 
 ### list
 request = 'list' 
-- Not define
+- Not define (ask for teams)
 ```
 response = 200 (team_uuid name description)* end | 300 end
 ```
-- team 
+- team (ask for channels)
 ```
 response = 201 (channel_uuid name description)* end | 300 end
 ```
-- channel
+- channel (ask for threads)
 ```
 response = 202 (thread_uuid user_uuid time name thread_body)* end | 300 end
 
 ```
-- thread
+- thread (ask for replies)
 ```
 response = 203 (thread_uuid user_uuid time message_body)* end | 300 sp 
 ```
 
 ### info
 request = 'info' 
-- Not define
+- Not define (ask for teams)
 ```
 response = 200 context user end | 300 end
 ```
-- team
+- team (ask for channels)
 ```
 response = 201 (team_uuid name description) end | 300 end
 ```
 
-- channel
+- channel (ask for threads)
 ```
 response = 202 (channel_uuid name description) end | 300 end
 ```
 
-- thread
+- thread (ask for replies)
 ```
 response = 203 (thread_uuid user_uuid time name message_body) end | 300 end
 ```

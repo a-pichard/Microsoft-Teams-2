@@ -60,12 +60,12 @@ const char * const *load_teams(server_t *server, const char * const *data)
     AND_PARSER(thread_parser, &UUID_PARSER, &UUID_PARSER, &INT_PARSER,
         &STRING_PARSER, &STRING_PARSER, &comments_parser);
     TAB_PARSER(threads_parser, &thread_parser);
-    AND_PARSER(channel_parser, &UUID_PARSER, &UUID_PARSER, &STRING_PARSER, &STRING_PARSER,
-        &threads_parser);
+    AND_PARSER(channel_parser, &UUID_PARSER, &UUID_PARSER, &STRING_PARSER,
+        &STRING_PARSER, &threads_parser);
     TAB_PARSER(channels_parsers, &channel_parser);
     TAB_PARSER(members_parser, &UUID_PARSER);
-    AND_PARSER(team_parser, &UUID_PARSER, &UUID_PARSER, &STRING_PARSER, &STRING_PARSER,
-        &channels_parsers, &members_parser);
+    AND_PARSER(team_parser, &UUID_PARSER, &UUID_PARSER, &STRING_PARSER,
+        &STRING_PARSER, &channels_parsers, &members_parser);
     TAB_PARSER(teams_parser, &team_parser);
     parser_result_t *r = parse(data, &teams_parser);
 

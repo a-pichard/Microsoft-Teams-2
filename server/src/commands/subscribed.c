@@ -29,7 +29,7 @@ static void subscribed_user(server_t *server, client_t *client)
         }
     );
     ser = ll_serialize(&teams, team_serializer);
-    write_q_responce(client, 200, ser);
+    write_q_responce(client, 201, ser);
     ll_destroy(&teams, NULL);
 }
 

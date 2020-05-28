@@ -19,7 +19,7 @@ static char *serial_comment(thread_t *thread, comment_t *comment)
     uuid_unparse(thread->uuid, str_uuid);
     strcpy(str, str_uuid);
     strcat(str, " ");
-    uuid_unparse(comment->uuid, str_uuid);
+    uuid_unparse(comment->u_creator, str_uuid);
     strcat(str, str_uuid);
     strcat(str, " ");
     sprintf(time, "%ld", comment->time);

@@ -95,7 +95,7 @@ void create_reply(UNUSED server_t *server, client_t *client,
     }
     comment = comment_create(client->use_ptr, client->user, r->data);
     ser = comment_serializer(comment);
-    uuid_unparse(client->use_ptr, uuid);
+    uuid_unparse(((thread_t *)(client->use_ptr))->uuid, uuid);
     res = strcat_alloc3(uuid, " ", ser);
     write_q_responce(client, 203, res);
     free(res);

@@ -14,6 +14,7 @@ void team_destructor(void *data)
 
     if (team) {
         ll_destroy(&team->channels, &channel_destructor);
+        ll_destroy(&team->users_uuid, &free);
         free(team);
     }
 }

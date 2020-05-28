@@ -30,7 +30,7 @@ static void comment_create_notify(thread_t *thread, comment_t *comment,
     server_t *server = server_address(NULL);
     team_t *t = get_team(server, thread);
     char *ser = comment_serializer(comment);
-    char *tmp = calloc(3*37, sizeof(char));
+    char *tmp = calloc(3*37 + strlen(ser), sizeof(char));
     char *r;
     char uuid_str_team[37];
     char uuid_str_thread[37];

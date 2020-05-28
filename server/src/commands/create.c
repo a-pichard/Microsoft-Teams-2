@@ -85,13 +85,21 @@ void create_reply(UNUSED server_t *server, client_t *client,
 {
     parser_result_t *r = parse(data, &STRING_PARSER);
     comment_t *comment = NULL;
+    char *ser;
+    char uuid[37];
+    char *res;
 
     if (r == NULL || *r->remainer != NULL) {
         write_q(client, "500");
         return;
     }
     comment = comment_create(client->use_ptr, client->user, r->data);
-    write_q_responce_objet(client, 203, comment, comment_serializer);
+    ser = comment_serializer(comment);
+    uuid_unparse(client->use_ptr, uuid);
+    res = strcat_alloc3(uuid, " ", ser);
+    write_q_responce(client, 203, res);
+    free(res);
+    free(ser);
     parser_result_clean(&STRING_PARSER, r);
 }
 

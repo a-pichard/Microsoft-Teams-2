@@ -116,7 +116,7 @@ response = 202 (thread_uuid user_uuid time name thread_body) | 300 end | 4xx end
 - thread
 ```
 request = 'create' (message_body) : create a new reply
-response = 203 (thread_uuid user_uuid time message_body) | 300 end | 4xx end
+response = 203 (thread_uuid reply_uuid user_uuid time message_body) | 300 end | 4xx end
 ```
 
 ### list

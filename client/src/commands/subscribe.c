@@ -37,7 +37,6 @@ void subscribe(client_t *client UNUSED, char const * recept)
         dprintf(1, "Bad reponse.\n");
     else if (*(int *)(r_status->data) != 200)
         !*r_status->remainer ? 0 : dprintf(1, "%s\n", *(r_status->remainer));
-
     else
         parse_subscribe(r_status->remainer);
     destroy_tab(data);

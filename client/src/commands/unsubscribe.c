@@ -33,8 +33,11 @@ void unsubscribe(client_t *client UNUSED, char const * recept)
 {
     char **data = str_to_wordtab((char *)recept, ' ', true);
     parser_result_t *r_status = parse((const char * const *)data, &INT_PARSER);
-    if (r_status == NULL)
+
+    if (r_status == NULL) {
         dprintf(1, "Bad reponse.\n");
+        return;
+    }
     else if (*(int *)(r_status->data) != 200)
         !*r_status->remainer ? 0 : dprintf(1, "%s\n", *(r_status->remainer));
     else

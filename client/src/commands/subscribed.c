@@ -53,8 +53,10 @@ void subscribed(client_t *client UNUSED, char const * recept)
     char **data = str_to_wordtab((char *)recept, ' ', true);
     parser_result_t *r_status = parse((const char * const *)data, &INT_PARSER);
 
-    if (!r_status)
+    if (!r_status) {
         dprintf(1, "Bad reponse.\n");
+        return;
+    }
     if (*(int *)r_status->data == 300)
         client_error_unauthorized();
     else if (*(int *)r_status->data == 404)

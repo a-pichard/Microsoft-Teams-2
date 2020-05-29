@@ -146,4 +146,7 @@ dm_t *get_dms(server_t *server, uuid_t user1, uuid_t user2);
 char *uuid_serialize(const void *data);
 channel_t *reload_channel(ll_t *data);
 
+void event_user_logout(server_t *server, client_t *c);
+
+
 #endif /* !SERVER_H_ */

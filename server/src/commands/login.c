@@ -10,20 +10,15 @@
 #include "common.h"
 #include <logging_server.h>
 
-static void event_user_login(server_t *server, user_t *user)
+static void event_user_login(server_t *server, client_t *c)
 {
-    char *ser = user_serializer(user);
+    char *ser = user_serializer(c->user);
     char *msg = strcat_alloc("\"event\" \"login\" ", ser);
-    ll_t *todo = get_user_to_notify(server, user);
 
     ll_foreach(server->clients, client_t, client,
-        ll_foreach(todo, user_t, to_not,
-            if (client->user == to_not) {
-                write_q(client, msg);
-            }
-        );
+        if (client->user && client != c)
+            write_q(client, msg);
     );
-    ll_destroy(&todo, NULL);
     free(ser);
     free(msg);
 }
@@ -46,7 +41,7 @@ void login(server_t *server, client_t *client, char const * const *data)
         client->user = user;
         client->user->status++;
         uuid_unparse(user->uuid, uuid_str);
-        event_user_login(server, client->user);
+        event_user_login(server, client);
         server_event_user_logged_in(uuid_str);
         write_q_responce_objet(client, 200, client->user, user_serializer);
     }

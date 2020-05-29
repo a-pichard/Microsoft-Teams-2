@@ -22,7 +22,7 @@ static char *serial_comment(thread_t *thread, comment_t *comment)
     uuid_unparse(comment->u_creator, str_uuid);
     strcat(str, str_uuid);
     strcat(str, " ");
-    sprintf(time, "%ld", comment->time);
+    sprintf(time, "%d", comment->time);
     strcat(str, time);
     strcat(str, " \"");
     strcat(str, comment->body);

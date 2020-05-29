@@ -13,6 +13,7 @@
 static void sig_handler(int sig UNUSED)
 {
     client_t *client = client_save(NULL);
+
     if (client) {
         client_destroy(client);
     }

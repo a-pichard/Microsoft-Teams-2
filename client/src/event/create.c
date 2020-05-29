@@ -63,7 +63,7 @@ static void thread(const char * const *recept)
         ct = r-> data;
         uuid_unparse(ct->data, tuuid);
         uuid_unparse(ct->next->data, uuuid);
-        t = *(time_t *)ct->next->next->data;
+        t = *(int *)ct->next->next->data;
         name = ct->next->next->next->data;
         body = ct->next->next->next->next->data;
         client_event_thread_created(tuuid, uuuid, t, name, body);

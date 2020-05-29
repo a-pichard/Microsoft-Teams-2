@@ -8,7 +8,7 @@
 #include "cmd.h"
 #include "logging_server.h"
 
-static void event_user_logout(server_t *server, client_t *c)
+void event_user_logout(server_t *server, client_t *c)
 {
     char *ser = user_serializer(c->user);
     char *msg = strcat_alloc("\"event\" \"logout\" ", ser);

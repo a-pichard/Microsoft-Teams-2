@@ -20,6 +20,8 @@ void messages(server_t *server, client_t *c, char const * const *data)
         if (get_user_by_uuid(server, r->data) == NULL)
             return write_q_responce_objet(c, 400, r->data, uuid_serialize);
         dm = get_dms(server, c->user->uuid, r->data);
+        if (!dm)
+            return write_q(c, "200 [  ]");
         write_q_responce_objet_list(c, 200, dm->msgs,
             msg_serializer);
     }

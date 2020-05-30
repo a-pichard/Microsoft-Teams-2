@@ -37,11 +37,14 @@ static void subscribed_team(server_t *server, client_t *client,
     char const * const *data)
 {
     parser_result_t *r = parse(data, &UUID_PARSER);
-    team_t *team = server_get_teams_by_uuid(server, (unsigned char *)(r->data));
+    team_t *team;
     ll_t *users = NULL;
     user_t *user;
     char *ser = NULL;
 
+    if (r == NULL)
+        return write_q(client, "500");
+    team = server_get_teams_by_uuid(server, (unsigned char *)(r->data));
     if (team == NULL)
         return write_q_responce_objet(client, 401, r->data, uuid_serialize);
     ll_foreach(team->users_uuid, unsigned char, uuid,

@@ -16,14 +16,16 @@ team_t *team_create(user_t *user, const char *name, const char *description)
     team_t *team = malloc(sizeof(team_t));
 
     team->channels = NULL;
-    strcpy(team->description, description);
-    strcpy(team->name, name);
+    strncpy(team->description, description, MAX_DESCRIPTION_LENGTH - 1);
+    team->description[MAX_DESCRIPTION_LENGTH - 1] = '\0';
+    strncpy(team->name, name, MAX_NAME_LENGTH - 1);
+    team->name[MAX_NAME_LENGTH - 1] = '\0';
     uuid_generate(team->uuid);
     uuid_unparse(team->uuid, str);
     team->users_uuid = NULL;
     uuid_unparse(user->uuid, str2);
     uuid_copy(team->u_creator, user->uuid);
-    server_event_team_created(str, name, str2);
+    server_event_team_created(str, team->name, str2);
     return team;
 }
 

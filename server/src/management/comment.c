@@ -51,14 +51,15 @@ comment_t *comment_create(thread_t *thread, user_t *creator, const char *body)
     char id_thread[37];
     char id_user[37];
 
-    strcpy(comment->body, body);
+    strncpy(comment->body, body, MAX_BODY_LENGTH - 1);
+    comment->body[MAX_BODY_LENGTH - 1] = '\0';
     comment->time = time(NULL);
     uuid_copy(comment->u_creator, creator->uuid);
     uuid_generate(comment->uuid);
     uuid_unparse(thread->uuid, id_thread);
     uuid_unparse(creator->uuid, id_user);
     comment_create_notify(thread, comment, creator);
-    server_event_thread_new_message(id_thread, id_user, body);
+    server_event_thread_new_message(id_thread, id_user, comment->body);
     thread_add_comment(thread, comment);
     return comment;
 }

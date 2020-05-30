@@ -43,8 +43,10 @@ thread_t *thread_create(channel_t *channel, user_t *creator, const char *name,
     char id_thread[37];
     char id_creator[37];
 
-    strcpy(thread->title, name);
-    strcpy(thread->body, body);
+    strncpy(thread->title, name, MAX_NAME_LENGTH - 1);
+    thread->title[MAX_NAME_LENGTH - 1] = '\0';
+    strncpy(thread->body, body, MAX_BODY_LENGTH - 1);
+    thread->body[MAX_BODY_LENGTH - 1] = '\0';
     thread->comments = NULL;
     thread->time = time(NULL);
     uuid_generate(thread->uuid);
@@ -53,7 +55,8 @@ thread_t *thread_create(channel_t *channel, user_t *creator, const char *name,
     uuid_unparse(thread->uuid, id_thread);
     uuid_unparse(thread->u_creator, id_creator);
     thread_create_notify(channel, thread, creator);
-    server_event_thread_created(id_channel, id_thread, id_creator, body);
+    server_event_thread_created(id_channel, id_thread, id_creator,
+    thread->body);
     channel_add_thread(channel, thread);
     return thread;
 }

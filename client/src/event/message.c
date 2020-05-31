@@ -51,6 +51,8 @@ void message_e(const char * const *recept)
     event_t f[] = {&dm, &thread, NULL};
     parser_result_t *r = parse(recept, &STRING_PARSER);
 
+    if (!r)
+        return;
     for (size_t i = 0; f_name[i]; i++) {
         if (!strcmp(f_name[i], (char *)r->data))
             (f[i])(r->remainer);

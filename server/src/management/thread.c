@@ -38,15 +38,13 @@ static void thread_create_notify(channel_t *channel, thread_t *thread,
 thread_t *thread_create(channel_t *channel, user_t *creator, const char *name,
     const char *body)
 {
-    thread_t *thread = malloc(sizeof(thread_t));
+    thread_t *thread = calloc(1, sizeof(thread_t));
     char id_channel[37];
     char id_thread[37];
     char id_creator[37];
 
-    strncpy(thread->title, name, MAX_NAME_LENGTH - 1);
-    thread->title[MAX_NAME_LENGTH - 1] = '\0';
-    strncpy(thread->body, body, MAX_BODY_LENGTH - 1);
-    thread->body[MAX_BODY_LENGTH - 1] = '\0';
+    strncpy(thread->title, name, MAX_NAME_LENGTH);
+    strncpy(thread->body, body, MAX_BODY_LENGTH);
     thread->comments = NULL;
     thread->time = time(NULL);
     uuid_generate(thread->uuid);

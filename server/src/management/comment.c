@@ -47,12 +47,11 @@ static void comment_create_notify(thread_t *thread, comment_t *comment,
 
 comment_t *comment_create(thread_t *thread, user_t *creator, const char *body)
 {
-    comment_t *comment = malloc(sizeof(comment_t));
+    comment_t *comment = calloc(1, sizeof(comment_t));
     char id_thread[37];
     char id_user[37];
 
-    strncpy(comment->body, body, MAX_BODY_LENGTH - 1);
-    comment->body[MAX_BODY_LENGTH - 1] = '\0';
+    strncpy(comment->body, body, MAX_BODY_LENGTH);
     comment->time = time(NULL);
     uuid_copy(comment->u_creator, creator->uuid);
     uuid_generate(comment->uuid);

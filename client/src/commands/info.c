@@ -88,24 +88,24 @@ static void info_user(char const * const *remainer)
 
 void info(client_t *client UNUSED, char const * recept)
 {
+    int status[] = {200, 201, 202, 203};
+    void (*f[])(char const * const *) = {info_user, info_team,
+    info_channel, info_thread, NULL};
     char **data = str_to_wordtab((char *)recept, ' ', true);
     parser_result_t *r_status = parse((const char * const *)data, &INT_PARSER);
+    size_t i = 0;
 
-    if (r_status == NULL)
+    if (r_status == NULL) {
         dprintf(1, "Bad reponse.\n");
-    if (*(int *)(r_status->data) == 200)
-        info_user(r_status->remainer);
-    else if (*(int *)(r_status->data) == 201)
-        info_team(r_status->remainer);
-    else {
-        if (*(int *)(r_status->data) == 202)
-            info_channel(r_status->remainer);
-        else if (*(int *)(r_status->data) == 203)
-            info_thread(r_status->remainer);
-        else
-            !*r_status->remainer ? 0 :
-            dprintf(1, "%s\n", *(r_status->remainer));
+        return;
     }
+    for (i = 0; f[i] != NULL; i++) {
+        if (status[i] == *(int *)(r_status->data)) {
+            f[i](r_status->remainer);
+        }
+    }
+    if (f[i] == NULL && !*r_status->remainer)
+        dprintf(1, "%s\n", *(r_status->remainer));
     destroy_tab(data);
     parser_result_clean(&INT_PARSER, r_status);
 }

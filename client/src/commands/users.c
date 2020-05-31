@@ -20,7 +20,7 @@ static void get_users_infos(char const * const * remainer)
     if (r != NULL) {
         ll_foreach(r->data, ll_t, list,
             uuid_unparse(list->data, uuid_str);
-            client_print_user(uuid_str, list->next->data,
+            client_print_users(uuid_str, list->next->data,
             *(int *)list->next->next->data >= 1 ? 1 : 0);
         );
     } else {

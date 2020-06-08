@@ -96,24 +96,24 @@ static void list_reply(char const * const *remainer)
 
 void list(client_t *client UNUSED, char const * recept)
 {
+    int status[] = {200, 201, 202, 203};
+    void (*f[])(char const * const *) = {list_team, list_channel,
+    list_thread, list_reply, NULL};
     char **data = str_to_wordtab((char *)recept, ' ', true);
     parser_result_t *r_status = parse((const char * const *)data, &INT_PARSER);
+    size_t i = 0;
 
-    if (r_status == NULL)
+    if (r_status == NULL) {
         dprintf(1, "Bad reponse.\n");
-    if (*(int *)(r_status->data) == 200)
-        list_team(r_status->remainer);
-    else if (*(int *)(r_status->data) == 201)
-        list_channel(r_status->remainer);
-    else {
-        if (*(int *)(r_status->data) == 202)
-            list_thread(r_status->remainer);
-        else if (*(int *)(r_status->data) == 203)
-            list_reply(r_status->remainer);
-        else
-            !*r_status->remainer ? 0 :
-            dprintf(1, "%s\n", *(r_status->remainer));
+        return;
     }
+    for (i = 0; f[i] != NULL; i++) {
+        if (status[i] == *(int *)(r_status->data)) {
+            f[i](r_status->remainer);
+        }
+    }
+    if (f[i] == NULL && !*r_status->remainer)
+        dprintf(1, "%s\n", *(r_status->remainer));
     destroy_tab(data);
     parser_result_clean(&INT_PARSER, r_status);
 }

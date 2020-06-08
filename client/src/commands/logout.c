@@ -30,7 +30,6 @@ static void get_user_infos(char const * const *remainer)
 void logout(client_t *client UNUSED, char const * recept)
 {
     char **data = str_to_wordtab((char *)recept, ' ', true);
-
     parser_result_t *r_status = parse((const char * const *)data, &INT_PARSER);
 
     if (r_status == NULL)

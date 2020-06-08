@@ -13,13 +13,11 @@ team_t *team_create(user_t *user, const char *name, const char *description)
 {
     char str[37];
     char str2[37];
-    team_t *team = malloc(sizeof(team_t));
+    team_t *team = calloc(1, sizeof(team_t));
 
     team->channels = NULL;
-    strncpy(team->description, description, MAX_DESCRIPTION_LENGTH - 1);
-    team->description[MAX_DESCRIPTION_LENGTH - 1] = '\0';
-    strncpy(team->name, name, MAX_NAME_LENGTH - 1);
-    team->name[MAX_NAME_LENGTH - 1] = '\0';
+    strncpy(team->description, description, MAX_DESCRIPTION_LENGTH);
+    strncpy(team->name, name, MAX_NAME_LENGTH);
     uuid_generate(team->uuid);
     uuid_unparse(team->uuid, str);
     team->users_uuid = NULL;

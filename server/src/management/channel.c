@@ -12,15 +12,13 @@
 channel_t *channel_create(team_t *team, const char *name,
     const char *description, user_t *creator)
 {
-    channel_t *channel = malloc(sizeof(channel_t));
+    channel_t *channel = calloc(1, sizeof(channel_t));
     char id_team[37];
     char id_channel[37];
 
     channel->threads = NULL;
-    strncpy(channel->description, description, MAX_DESCRIPTION_LENGTH - 1);
-    channel->description[MAX_DESCRIPTION_LENGTH - 1] = '\0';
-    strncpy(channel->name, name, MAX_NAME_LENGTH - 1);
-    channel->name[MAX_NAME_LENGTH - 1] = '\0';
+    strncpy(channel->description, description, MAX_DESCRIPTION_LENGTH);
+    strncpy(channel->name, name, MAX_NAME_LENGTH);
     uuid_copy(channel->u_creator, creator->uuid);
     uuid_generate(channel->uuid);
     uuid_unparse(team->uuid, id_team);

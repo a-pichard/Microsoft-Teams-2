@@ -33,15 +33,15 @@ typedef struct {
 
 // teams, channels, threads and comments
 typedef struct {
-    char body[MAX_BODY_LENGTH];
+    char body[MAX_BODY_LENGTH + 1];
     long time;
     uuid_t u_creator;
     uuid_t uuid;
 } comment_t;
 
 typedef struct {
-    char title[MAX_NAME_LENGTH];
-    char body[MAX_BODY_LENGTH];
+    char title[MAX_NAME_LENGTH + 1];
+    char body[MAX_BODY_LENGTH + 1];
     ll_t *comments;
     long time;
     uuid_t uuid;
@@ -49,16 +49,16 @@ typedef struct {
 } thread_t;
 
 typedef struct {
-    char name[MAX_NAME_LENGTH];
-    char description[MAX_DESCRIPTION_LENGTH];
+    char name[MAX_NAME_LENGTH + 1];
+    char description[MAX_DESCRIPTION_LENGTH + 1];
     ll_t *threads;
     uuid_t uuid;
     uuid_t u_creator;
 } channel_t;
 
 typedef struct {
-    char name[MAX_NAME_LENGTH];
-    char description[MAX_DESCRIPTION_LENGTH];
+    char name[MAX_NAME_LENGTH + 1];
+    char description[MAX_DESCRIPTION_LENGTH + 1];
     uuid_t uuid;
     ll_t *channels;
     ll_t *users_uuid;

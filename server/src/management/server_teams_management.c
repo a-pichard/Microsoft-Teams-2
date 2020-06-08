@@ -38,7 +38,7 @@ static void team_create_event(server_t *server, team_t *team)
     char *r = strcat_alloc("\"event\" \"create\" \"team\" ", ser);
 
     ll_foreach(server->clients, client_t, client,
-        if (uuid_compare(team->u_creator, client->user->uuid))
+        if (client->user && uuid_compare(team->u_creator, client->user->uuid))
             write_q(client, r);
     );
     free(ser);
